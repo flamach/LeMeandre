@@ -1,9 +1,9 @@
 // Le Méandre — contenu et données du site (français + anglais).
-// Chargé en <script> classique avant que lemeandre.html n'évalue son
+// Chargé en <script> classique avant que index.html n'évalue son
 // Component : tout ici est posé sur `window` pour être lu depuis
 // Component.renderVals(). C'est le fichier à modifier pour changer un texte,
 // un plat de la carte, un gîte ou une traduction — pas besoin de toucher au
-// gabarit HTML dans lemeandre.html pour ça.
+// gabarit HTML dans index.html pour ça.
 
 // ── Easing (fonctions de courbe d'animation), utilisées par l'écran de
 //    chargement dans Component._loaderVals(). ──

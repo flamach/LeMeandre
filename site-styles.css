@@ -1,6 +1,6 @@
 /* Le Méandre — feuille de style du site.
    Variables (--or, --bg, --serif, etc.) sont posées en inline sur le conteneur
-   racine par Component.renderVals() dans lemeandre.html (thème piloté par
+   racine par Component.renderVals() dans index.html (thème piloté par
    les props éditables du fichier .dc.html). */
 
 html{scroll-behavior:auto}
@@ -40,7 +40,7 @@ a{color:var(--or,#c9a24b);text-decoration:none}a:hover{color:var(--orClair,#e0be
 /* ── Écran de chargement ──
    Structure statique seulement : toute l'animation (opacité, transform,
    tracés SVG) est calculée frame par frame par Component._loaderVals()
-   et injectée via des bindings {{ }} — voir lemeandre.html. */
+   et injectée via des bindings {{ }} — voir index.html. */
 .loader-screen{position:fixed;inset:0;z-index:1000;display:flex;align-items:center;justify-content:center;background:#0e0c0a}
 .loader-glow{position:absolute;left:50%;top:50%;width:min(340px,60vw);height:min(340px,60vw);transform:translate(-50%,-50%);border-radius:50%;background:radial-gradient(circle,rgba(200,162,78,.55),transparent 70%);filter:blur(6px)}
 .loader-logo-wrap{position:absolute;left:50%;top:50%;width:210px;height:195px}

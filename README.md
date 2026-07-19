@@ -13,7 +13,7 @@ quel HTML.
 
 | Fichier | Rôle | À éditer pour... |
 |---|---|---|
-| `lemeandre.html` | Structure des 5 pages + logique (classe `Component`) | Changer la mise en page, le comportement (nav, carrousel, langue, écran de chargement) |
+| `index.html` | Structure des 5 pages + logique (classe `Component`) | Changer la mise en page, le comportement (nav, carrousel, langue, écran de chargement) |
 | `site-data.js` | Tous les textes FR/EN, le menu, les gîtes, le spa | Changer un texte, un plat, un gîte, une traduction |
 | `site-styles.css` | Feuille de style (nav, animations de révélation au scroll, écran de chargement) | Changer une couleur/taille fixe, une media query |
 | `support.js` | Moteur du gabarit `.dc.html` (généré par Claude Design) | Ne pas éditer à la main |
@@ -35,7 +35,7 @@ Depuis ce dossier :
 python3 -m http.server 8080
 ```
 
-puis ouvrir `http://localhost:8080/lemeandre.html`.
+puis ouvrir `http://localhost:8080/index.html`.
 
 ## Comment le site fonctionne
 
@@ -56,9 +56,9 @@ puis ouvrir `http://localhost:8080/lemeandre.html`.
 - **Réglages éditables** sans toucher au code : dans l'éditeur Claude
   Design, un panneau expose couleurs, polices, coins arrondis, nom du
   domaine, coordonnées, options du carrousel, etc. (voir `data-props` sur la
-  balise `<script data-dc-script>` dans `lemeandre.html`).
+  balise `<script data-dc-script>` dans `index.html`).
 
-## Structure de `Component` (dans `lemeandre.html`)
+## Structure de `Component` (dans `index.html`)
 
 `renderVals()` ne fait qu'assembler le résultat de méthodes plus petites,
 chacune responsable d'une chose :
