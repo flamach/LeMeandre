@@ -11,21 +11,51 @@ a{color:var(--or,#c9a24b);text-decoration:none}a:hover{color:var(--orClair,#e0be
 /* Transition douce entre les 5 "pages" (accueil/restaurant/gîtes/spa/contact) */
 @keyframes fadeUp{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}
 
-/* ── Navigation ── */
-@media (max-width:680px){
+/* ── Navigation ──
+   Sous 860px, les liens + le bouton contact + le sélecteur de langue
+   passent dans un panneau déroulant (.site-nav-panel) ouvert par le
+   bouton burger (.site-nav-burger), pour garder la barre à une seule
+   ligne compacte au lieu de wrapper sur 3 lignes. display:contents sur
+   .site-nav-panel au-dessus de 860px la rend invisible en layout : les
+   liens/CTA restent des enfants flex directs de .site-nav, donc la
+   mise en page desktop est inchangée. Les !important sont nécessaires
+   car les styles de base sont posés en inline par le moteur de gabarit
+   (voir Component.renderVals) — une règle externe sans !important ne
+   peut jamais l'emporter sur un style inline. */
+.site-nav-burger{display:none}
+.site-nav-panel{display:contents !important}
+
+@media (max-width:860px){
   .site-nav{padding:14px 18px;gap:12px}
-  .site-nav .site-logo{font-size:18px;letter-spacing:3px}
-  .site-nav .site-logo-img{height:32px}
-  .site-nav .site-nav-links{gap:16px;font-size:11px}
-  .site-nav .site-nav-cta{padding:9px 20px;font-size:11px}
-  .nav-spacer{height:118px}
+  .site-nav .site-logo{font-size:17px;letter-spacing:2.5px}
+  .site-nav .site-logo-img{height:30px}
+  .site-nav-burger{display:flex}
+  .site-nav-panel{display:none !important}
+  .site-nav-panel.is-open{
+    display:flex !important;
+    flex-direction:column;
+    align-items:stretch;
+    gap:0;
+    position:absolute;
+    top:100%;left:0;right:0;
+    max-height:calc(100vh - 66px);
+    overflow-y:auto;
+    padding:6px 18px 22px;
+    background:var(--bg,#0a0a08);
+    border-bottom:1px solid color-mix(in srgb,var(--or,#c9a24b) 28%,transparent);
+    box-shadow:0 18px 30px -12px rgba(0,0,0,.5);
+  }
+  .site-nav-panel.is-open .site-nav-links{flex-direction:column;gap:0 !important;width:100%}
+  .site-nav-panel.is-open .site-nav-links>div{width:100%;padding:15px 2px !important;font-size:13px;border-bottom:1px solid color-mix(in srgb,var(--or,#c9a24b) 14%,transparent)}
+  .site-nav-panel.is-open .site-nav-actions{flex-direction:column;align-items:stretch;gap:10px !important;width:100%;margin-top:16px}
+  .site-nav-panel.is-open .site-nav-cta{width:100%;box-sizing:border-box;text-align:center;padding:14px 20px !important}
+  .nav-spacer{height:66px}
 }
 @media (max-width:420px){
-  .site-nav{padding:12px 14px;gap:10px}
-  .site-nav .site-nav-links{gap:11px;font-size:10px;letter-spacing:1.5px}
-  .site-nav .site-logo{font-size:16px;letter-spacing:2px}
+  .site-nav{padding:12px 14px}
+  .site-nav .site-logo{font-size:15px;letter-spacing:2px}
   .site-nav .site-logo-img{height:26px}
-  .nav-spacer{height:150px}
+  .nav-spacer{height:60px}
 }
 
 /* ── Révélation au scroll (voir .reveal sur les blocs de contenu) ──

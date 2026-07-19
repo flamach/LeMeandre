@@ -55,19 +55,25 @@
 <!-- ============ NAVIGATION (fixe, partagée par toutes les pages) ============ -->
 <nav class="site-nav" style="position:fixed;top:0;left:0;right:0;z-index:50;display:flex;align-items:center;justify-content:space-between;gap:20px;flex-wrap:wrap;padding:18px 44px;background:color-mix(in srgb,var(--bg,#0a0a08) 88%,transparent);backdrop-filter:blur(10px);border-bottom:1px solid color-mix(in srgb,var(--or,#c9a24b) 28%,transparent)">
   <div class="site-logo" onClick="{{ goAccueil }}" style="font-family:var(--serif,'Cormorant Garamond',serif);font-size:21px;letter-spacing:4px;cursor:pointer;color:var(--txt,#f2ede3);display:flex;align-items:center;gap:10px"><img class="site-logo-img" src="./images/logo_transparent_ST.png" alt="{{ nomDomaine }}" style="height:40px;width:auto;display:block"><sc-if value="{{ logoMono }}" hint-placeholder-val="{{ false }}"><span style="color:var(--or,#c9a24b)">{{ monogramme }}</span></sc-if><sc-if value="{{ logoFull }}" hint-placeholder-val="{{ true }}"><span>{{ nomNavA }}</span><span style="color:var(--or,#c9a24b)">{{ nomNavB }}</span></sc-if></div>
-  <div class="site-nav-links" style="display:flex;gap:34px;font-size:12px;letter-spacing:2.5px;flex-wrap:wrap">
-    <div onClick="{{ goRestaurant }}" style="cursor:pointer;padding:4px 0;color:{{ cRestaurant }};border-bottom:1px solid {{ bRestaurant }}" style-hover="color:var(--or,#c9a24b)">{{ t.navRestaurant }}</div>
-    <div onClick="{{ goGites }}" style="cursor:pointer;padding:4px 0;color:{{ cGites }};border-bottom:1px solid {{ bGites }}" style-hover="color:var(--or,#c9a24b)">{{ t.navGites }}</div>
-    <div onClick="{{ goSpa }}" style="cursor:pointer;padding:4px 0;color:{{ cSpa }};border-bottom:1px solid {{ bSpa }}" style-hover="color:var(--or,#c9a24b)">{{ t.navSpa }}</div>
+  <div class="site-nav-burger" onClick="{{ toggleMenu }}" role="button" aria-label="Menu" style="cursor:pointer;width:38px;height:38px;align-items:center;justify-content:center;border:1px solid color-mix(in srgb,var(--or,#c9a24b) 45%,transparent);border-radius:var(--rad,0px);color:var(--or,#c9a24b);font-size:17px;flex-shrink:0">
+    <sc-if value="{{ menuOpen }}" hint-placeholder-val="{{ false }}">✕</sc-if>
+    <sc-if value="{{ menuClosed }}" hint-placeholder-val="{{ true }}">☰</sc-if>
   </div>
-  <div style="display:flex;align-items:center;gap:12px">
-    <sc-if value="{{ contactPlein }}" hint-placeholder-val="{{ false }}">
-      <div class="site-nav-cta" onClick="{{ goContact }}" style="cursor:pointer;padding:10px 26px;border-radius:var(--rad,0px);background:var(--or,#c9a24b);color:var(--bg,#0a0a08);font-size:12px;letter-spacing:2.5px" style-hover="background:var(--orClair,#e0be6d)">{{ t.navContact }}</div>
-    </sc-if>
-    <sc-if value="{{ contactContour }}" hint-placeholder-val="{{ true }}">
-      <div class="site-nav-cta" onClick="{{ goContact }}" style="cursor:pointer;padding:10px 26px;border-radius:var(--rad,0px);border:1px solid var(--or,#c9a24b);color:var(--or,#c9a24b);font-size:12px;letter-spacing:2.5px" style-hover="background:var(--or,#c9a24b);color:var(--bg,#0a0a08)">{{ t.navContact }}</div>
-    </sc-if>
-    <div class="site-nav-cta" onClick="{{ toggleLang }}" title="Switch language / Changer de langue" style="cursor:pointer;padding:10px 16px;border-radius:var(--rad,0px);border:1px solid color-mix(in srgb,var(--or,#c9a24b) 60%,transparent);color:var(--or,#c9a24b);font-size:11px;letter-spacing:2px" style-hover="background:var(--or,#c9a24b);color:var(--bg,#0a0a08)">{{ t.langBtn }}</div>
+  <div class="site-nav-panel{{ menuOpenSuffix }}" style="display:flex;align-items:center;gap:20px;flex-wrap:wrap">
+    <div class="site-nav-links" style="display:flex;gap:34px;font-size:12px;letter-spacing:2.5px;flex-wrap:wrap">
+      <div onClick="{{ goRestaurant }}" style="cursor:pointer;padding:4px 0;color:{{ cRestaurant }};border-bottom:1px solid {{ bRestaurant }}" style-hover="color:var(--or,#c9a24b)">{{ t.navRestaurant }}</div>
+      <div onClick="{{ goGites }}" style="cursor:pointer;padding:4px 0;color:{{ cGites }};border-bottom:1px solid {{ bGites }}" style-hover="color:var(--or,#c9a24b)">{{ t.navGites }}</div>
+      <div onClick="{{ goSpa }}" style="cursor:pointer;padding:4px 0;color:{{ cSpa }};border-bottom:1px solid {{ bSpa }}" style-hover="color:var(--or,#c9a24b)">{{ t.navSpa }}</div>
+    </div>
+    <div class="site-nav-actions" style="display:flex;align-items:center;gap:12px">
+      <sc-if value="{{ contactPlein }}" hint-placeholder-val="{{ false }}">
+        <div class="site-nav-cta" onClick="{{ goContact }}" style="cursor:pointer;padding:10px 26px;border-radius:var(--rad,0px);background:var(--or,#c9a24b);color:var(--bg,#0a0a08);font-size:12px;letter-spacing:2.5px" style-hover="background:var(--orClair,#e0be6d)">{{ t.navContact }}</div>
+      </sc-if>
+      <sc-if value="{{ contactContour }}" hint-placeholder-val="{{ true }}">
+        <div class="site-nav-cta" onClick="{{ goContact }}" style="cursor:pointer;padding:10px 26px;border-radius:var(--rad,0px);border:1px solid var(--or,#c9a24b);color:var(--or,#c9a24b);font-size:12px;letter-spacing:2.5px" style-hover="background:var(--or,#c9a24b);color:var(--bg,#0a0a08)">{{ t.navContact }}</div>
+      </sc-if>
+      <div class="site-nav-cta" onClick="{{ toggleLang }}" title="Switch language / Changer de langue" style="cursor:pointer;padding:10px 16px;border-radius:var(--rad,0px);border:1px solid color-mix(in srgb,var(--or,#c9a24b) 60%,transparent);color:var(--or,#c9a24b);font-size:11px;letter-spacing:2px" style-hover="background:var(--or,#c9a24b);color:var(--bg,#0a0a08)">{{ t.langBtn }}</div>
+    </div>
   </div>
 </nav>
 <div class="nav-spacer" style="height:76px"></div>
@@ -322,7 +328,7 @@
 // site-data.js (window.MEANDRE_*) ; ce fichier ne fait que les mettre en
 // forme selon la page et la langue courantes.
 class Component extends DCLogic {
-  state = { page: 'accueil', car: 0, lang: 'fr', loading: true };
+  state = { page: 'accueil', car: 0, lang: 'fr', loading: true, menuOpen: false };
 
   // ── Cycle de vie ──
   componentDidMount() {
@@ -338,8 +344,9 @@ class Component extends DCLogic {
   }
 
   // ── Navigation entre pages ──
-  go(page) { this.setState({ page }); window.scrollTo(0, 0); }
+  go(page) { this.setState({ page, menuOpen: false }); window.scrollTo(0, 0); }
   toggleLang() { this.setState(s => ({ lang: (s.lang ?? 'fr') === 'fr' ? 'en' : 'fr' })); }
+  toggleMenu() { this.setState(s => ({ menuOpen: !(s.menuOpen ?? false) })); }
 
   // ── Carrousel photo (page Restaurant) ──
   _startCarouselAutoplay() {
@@ -534,6 +541,9 @@ class Component extends DCLogic {
       adresse: this.props.adresse ?? '12 route des Étangs, 62170 Estrée',
       contactPlein: contactStyle === 'plein', contactContour: contactStyle !== 'plein',
       toggleLang: () => this.toggleLang(),
+      menuOpen: this.state.menuOpen ?? false, menuClosed: !(this.state.menuOpen ?? false),
+      menuOpenSuffix: (this.state.menuOpen ?? false) ? ' is-open' : '',
+      toggleMenu: () => this.toggleMenu(),
     };
   }
 }
