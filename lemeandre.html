@@ -1,0 +1,542 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<!--
+  Le Méandre — site vitrine (fichier Claude Design .dc.html)
+  Voir README.md pour la vue d'ensemble du projet.
+
+  Fichiers du projet :
+    lemeandre.html   ce fichier — structure des pages + logique (Component)
+    site-data.js        tous les textes/traductions FR-EN + données (menu, gîtes, spa)
+    site-styles.css      feuille de style
+    support.js           moteur du gabarit .dc.html (généré, ne pas éditer à la main)
+    image-slot.js         composant photo déposable (généré, ne pas éditer à la main)
+    images/               logos et visuels
+
+  Pour éditer un texte ou une donnée (plat, gîte, traduction) → site-data.js
+  Pour éditer une couleur/taille/mise en page → site-styles.css ou le style
+    inline du bloc concerné ci-dessous
+  Pour éditer la structure d'une page ou le comportement (nav, carrousel,
+    langue, écran de chargement) → le <script data-dc-script> en bas de ce fichier
+-->
+<script src="./support.js"></script>
+<script src="./site-data.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet data-dc-atomics>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Jost:wght@300;400;500&family=Playfair+Display:ital,wght@0,400;0,500;1,400&family=Marcellus&family=EB+Garamond:ital,wght@0,400;0,500;1,400&family=Montserrat:wght@300;400;500&family=Lato:wght@300;400&family=Raleway:wght@300;400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="./site-styles.css">
+</helmet>
+<div style="min-height:100vh;display:flex;flex-direction:column;background:var(--bg,#0a0a08);color:var(--txt,#f2ede3);font-family:var(--sans,'Jost',sans-serif);--or:{{ or }};--orClair:{{ orClair }};--bg:{{ bg }};--bg2:{{ bg2 }};--txt:{{ txt }};--serif:{{ serif }};--sans:{{ sans }};--rad:{{ rad }};--anim:{{ anim }};--heroH:{{ heroH }}">
+<!-- ============ ÉCRAN DE CHARGEMENT (une seule fois, au premier chargement) ============ -->
+<sc-if value="{{ loading }}" hint-placeholder-val="{{ true }}">
+<div class="loader-screen" style="opacity:{{ loaderOverlayOpacity }}">
+  <div class="loader-glow" style="opacity:{{ loaderGlowOpacity }}"></div>
+  <div class="loader-logo-wrap" style="transform:{{ loaderTransform }};filter:{{ loaderFilter }}">
+    <svg viewBox="0 0 518 482" style="position:absolute;inset:0;width:100%;height:100%;opacity:{{ loaderSvgOpacity }}">
+      <sc-for list="{{ loaderStrokes }}" as="s" hint-placeholder-count="3">
+        <path d="{{ s.d }}" fill="none" stroke="#f1e9dc" stroke-width="{{ s.w }}" stroke-linecap="round" pathLength="1" stroke-dasharray="1" stroke-dashoffset="{{ s.off }}"></path>
+      </sc-for>
+      <sc-for list="{{ loaderLeaves }}" as="l" hint-placeholder-count="6">
+        <g transform="translate({{ l.x }} {{ l.y }}) rotate({{ l.r }}) scale({{ l.sc }})">
+          <path d="M 0 0 C 6 -28 26 -46 48 -50 C 44 -26 26 -6 0 0 Z" fill="#f1e9dc" fill-opacity="{{ l.fill }}" stroke="#f1e9dc" stroke-width="4" pathLength="1" stroke-dasharray="1" stroke-dashoffset="{{ l.draw }}"></path>
+          <sc-if value="{{ l.veinShow }}" hint-placeholder-val="{{ false }}"><path d="M 6 -6 C 16 -20 30 -34 42 -42" fill="none" stroke="#0e0c0a" stroke-width="3" opacity="{{ l.veinOpacity }}"></path></sc-if>
+        </g>
+      </sc-for>
+    </svg>
+    <img src="./images/logo_transparent_ST.png" alt="{{ nomDomaine }}" style="position:absolute;inset:0;width:100%;height:100%;opacity:{{ loaderImgOpacity }}">
+  </div>
+</div>
+</sc-if>
+<!-- ============ NAVIGATION (fixe, partagée par toutes les pages) ============ -->
+<nav class="site-nav" style="position:fixed;top:0;left:0;right:0;z-index:50;display:flex;align-items:center;justify-content:space-between;gap:20px;flex-wrap:wrap;padding:18px 44px;background:color-mix(in srgb,var(--bg,#0a0a08) 88%,transparent);backdrop-filter:blur(10px);border-bottom:1px solid color-mix(in srgb,var(--or,#c9a24b) 28%,transparent)">
+  <div class="site-logo" onClick="{{ goAccueil }}" style="font-family:var(--serif,'Cormorant Garamond',serif);font-size:21px;letter-spacing:4px;cursor:pointer;color:var(--txt,#f2ede3);display:flex;align-items:center;gap:10px"><img class="site-logo-img" src="./images/logo_transparent_ST.png" alt="{{ nomDomaine }}" style="height:40px;width:auto;display:block"><sc-if value="{{ logoMono }}" hint-placeholder-val="{{ false }}"><span style="color:var(--or,#c9a24b)">{{ monogramme }}</span></sc-if><sc-if value="{{ logoFull }}" hint-placeholder-val="{{ true }}"><span>{{ nomNavA }}</span><span style="color:var(--or,#c9a24b)">{{ nomNavB }}</span></sc-if></div>
+  <div class="site-nav-links" style="display:flex;gap:34px;font-size:12px;letter-spacing:2.5px;flex-wrap:wrap">
+    <div onClick="{{ goRestaurant }}" style="cursor:pointer;padding:4px 0;color:{{ cRestaurant }};border-bottom:1px solid {{ bRestaurant }}" style-hover="color:var(--or,#c9a24b)">{{ t.navRestaurant }}</div>
+    <div onClick="{{ goGites }}" style="cursor:pointer;padding:4px 0;color:{{ cGites }};border-bottom:1px solid {{ bGites }}" style-hover="color:var(--or,#c9a24b)">{{ t.navGites }}</div>
+    <div onClick="{{ goSpa }}" style="cursor:pointer;padding:4px 0;color:{{ cSpa }};border-bottom:1px solid {{ bSpa }}" style-hover="color:var(--or,#c9a24b)">{{ t.navSpa }}</div>
+  </div>
+  <div style="display:flex;align-items:center;gap:12px">
+    <sc-if value="{{ contactPlein }}" hint-placeholder-val="{{ false }}">
+      <div class="site-nav-cta" onClick="{{ goContact }}" style="cursor:pointer;padding:10px 26px;border-radius:var(--rad,0px);background:var(--or,#c9a24b);color:var(--bg,#0a0a08);font-size:12px;letter-spacing:2.5px" style-hover="background:var(--orClair,#e0be6d)">{{ t.navContact }}</div>
+    </sc-if>
+    <sc-if value="{{ contactContour }}" hint-placeholder-val="{{ true }}">
+      <div class="site-nav-cta" onClick="{{ goContact }}" style="cursor:pointer;padding:10px 26px;border-radius:var(--rad,0px);border:1px solid var(--or,#c9a24b);color:var(--or,#c9a24b);font-size:12px;letter-spacing:2.5px" style-hover="background:var(--or,#c9a24b);color:var(--bg,#0a0a08)">{{ t.navContact }}</div>
+    </sc-if>
+    <div class="site-nav-cta" onClick="{{ toggleLang }}" title="Switch language / Changer de langue" style="cursor:pointer;padding:10px 16px;border-radius:var(--rad,0px);border:1px solid color-mix(in srgb,var(--or,#c9a24b) 60%,transparent);color:var(--or,#c9a24b);font-size:11px;letter-spacing:2px" style-hover="background:var(--or,#c9a24b);color:var(--bg,#0a0a08)">{{ t.langBtn }}</div>
+  </div>
+</nav>
+<div class="nav-spacer" style="height:76px"></div>
+
+<!-- ============ PAGE : ACCUEIL ============ -->
+<sc-if value="{{ pageAccueil }}" hint-placeholder-val="{{ true }}">
+<main style="animation:var(--anim,fadeUp) .5s ease both">
+  <div class="reveal" style="position:relative;height:var(--heroH,calc(100vh - 76px));min-height:540px">
+    <image-slot id="site-hero" class="cms-editable" data-cms-name="Hero — Accueil" shape="rect" placeholder="{{ t.phHero }}"></image-slot>
+    <div style="position:absolute;inset:0;background:color-mix(in srgb,var(--bg,#0a0a08) {{ voilePct }},transparent);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:22px;text-align:center;padding:0 24px;pointer-events:none">
+      <div style="font-size:12px;letter-spacing:7px;color:var(--or,#c9a24b)">{{ heroSur }}</div>
+      <div style="font-family:var(--serif,'Cormorant Garamond',serif);font-size:clamp(44px,8vw,84px);font-weight:500;line-height:1.05">{{ nomDomaine }}</div>
+      <div style="font-weight:300;font-size:17px;color:color-mix(in srgb,var(--txt,#f2ede3) 85%,transparent);max-width:540px;line-height:1.7">{{ t.heroTagline }}</div>
+      <div style="width:60px;height:1px;background:var(--or,#c9a24b);margin-top:6px"></div>
+    </div>
+  </div>
+  <div class="reveal" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(300px,100%),1fr));gap:1px;background:color-mix(in srgb,var(--or,#c9a24b) 28%,transparent);border-top:1px solid color-mix(in srgb,var(--or,#c9a24b) 28%,transparent);border-bottom:1px solid color-mix(in srgb,var(--or,#c9a24b) 28%,transparent)">
+    <div onClick="{{ goRestaurant }}" style="cursor:pointer;background:var(--bg,#0a0a08);padding:0 0 34px;display:flex;flex-direction:column;gap:20px" style-hover="background:var(--bg2,#0f0e0b)">
+      <div style="height:clamp(180px,34vw,260px)"><image-slot id="site-acc-rest" class="cms-editable" data-cms-name="Accueil — Vignette Restaurant" shape="rect" placeholder="{{ t.phAccRest }}"></image-slot></div>
+      <div style="padding:0 32px;display:flex;flex-direction:column;gap:10px">
+        <div style="font-family:var(--serif,'Cormorant Garamond',serif);font-size:28px">{{ t.cardRestTitle }}</div>
+        <div style="font-weight:300;font-size:14px;color:color-mix(in srgb,var(--txt,#f2ede3) 65%,transparent);line-height:1.7">{{ t.cardRestDesc }}</div>
+        <div style="font-size:12px;letter-spacing:2.5px;color:var(--or,#c9a24b)">{{ t.discover }}</div>
+      </div>
+    </div>
+    <div onClick="{{ goGites }}" style="cursor:pointer;background:var(--bg,#0a0a08);padding:0 0 34px;display:flex;flex-direction:column;gap:20px" style-hover="background:var(--bg2,#0f0e0b)">
+      <div style="height:clamp(180px,34vw,260px)"><image-slot id="site-acc-gites" class="cms-editable" data-cms-name="Accueil — Vignette Gîtes" shape="rect" placeholder="{{ t.phAccGites }}"></image-slot></div>
+      <div style="padding:0 32px;display:flex;flex-direction:column;gap:10px">
+        <div style="font-family:var(--serif,'Cormorant Garamond',serif);font-size:28px">{{ t.cardGitesTitle }}</div>
+        <div style="font-weight:300;font-size:14px;color:color-mix(in srgb,var(--txt,#f2ede3) 65%,transparent);line-height:1.7">{{ t.cardGitesDesc }}</div>
+        <div style="font-size:12px;letter-spacing:2.5px;color:var(--or,#c9a24b)">{{ t.discover }}</div>
+      </div>
+    </div>
+    <div onClick="{{ goSpa }}" style="cursor:pointer;background:var(--bg,#0a0a08);padding:0 0 34px;display:flex;flex-direction:column;gap:20px" style-hover="background:var(--bg2,#0f0e0b)">
+      <div style="height:clamp(180px,34vw,260px)"><image-slot id="site-acc-spa" class="cms-editable" data-cms-name="Accueil — Vignette Spa" shape="rect" placeholder="{{ t.phAccSpa }}"></image-slot></div>
+      <div style="padding:0 32px;display:flex;flex-direction:column;gap:10px">
+        <div style="font-family:var(--serif,'Cormorant Garamond',serif);font-size:28px">{{ t.cardSpaTitle }}</div>
+        <div style="font-weight:300;font-size:14px;color:color-mix(in srgb,var(--txt,#f2ede3) 65%,transparent);line-height:1.7">{{ t.cardSpaDesc }}</div>
+        <div style="font-size:12px;letter-spacing:2.5px;color:var(--or,#c9a24b)">{{ t.discover }}</div>
+      </div>
+    </div>
+  </div>
+  <div class="reveal" style="display:flex;flex-direction:column;align-items:center;gap:20px;text-align:center;padding:90px 24px">
+    <div style="font-size:11px;letter-spacing:5px;color:var(--or,#c9a24b)">{{ t.artEyebrow }}</div>
+    <div style="font-family:var(--serif,'Cormorant Garamond',serif);font-size:clamp(28px,4vw,40px);font-weight:500;max-width:640px;line-height:1.3">{{ t.artTitle1 }}<br><span style="font-style:italic;color:var(--or,#c9a24b)">{{ t.artTitle2 }}</span></div>
+    <div style="font-weight:300;font-size:15px;color:color-mix(in srgb,var(--txt,#f2ede3) 65%,transparent);max-width:520px;line-height:1.8">{{ t.artParagraph }}</div>
+    <div onClick="{{ goContact }}" style="cursor:pointer;margin-top:8px;padding:13px 40px;border-radius:var(--rad,0px);border:1px solid var(--or,#c9a24b);color:var(--or,#c9a24b);font-size:12px;letter-spacing:3px" style-hover="background:var(--or,#c9a24b);color:var(--bg,#0a0a08)">{{ t.ctaContact }}</div>
+  </div>
+</main>
+</sc-if>
+
+<!-- ============ PAGE : RESTAURANT ============ -->
+<sc-if value="{{ pageRestaurant }}" hint-placeholder-val="{{ false }}">
+<main style="animation:var(--anim,fadeUp) .5s ease both">
+  <div class="reveal" style="position:relative;height:clamp(260px,45vw,420px)">
+    <image-slot id="site-rest-hero" class="cms-editable" data-cms-name="Restaurant — Bandeau" shape="rect" placeholder="{{ t.phRestHero }}"></image-slot>
+    <div style="position:absolute;inset:0;background:color-mix(in srgb,var(--bg,#0a0a08) 60%,transparent);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:16px;text-align:center;padding:0 24px;pointer-events:none">
+      <div style="font-size:11px;letter-spacing:6px;color:var(--or,#c9a24b)">{{ t.restEyebrow }}</div>
+      <div style="font-family:var(--serif,'Cormorant Garamond',serif);font-size:clamp(38px,6vw,62px);font-weight:500">{{ t.restTitle }}</div>
+      <div style="font-weight:300;font-size:15px;color:color-mix(in srgb,var(--txt,#f2ede3) 80%,transparent);max-width:480px;line-height:1.7">{{ t.restTagline }}</div>
+    </div>
+  </div>
+  <div class="reveal" style="max-width:860px;margin:0 auto;padding:80px 24px 40px;display:flex;flex-direction:column;gap:60px">
+    <div style="text-align:center;display:flex;flex-direction:column;gap:12px;align-items:center">
+      <div style="font-size:11px;letter-spacing:5px;color:var(--or,#c9a24b)">{{ t.menuEyebrow }}</div>
+      <div style="font-family:var(--serif,'Cormorant Garamond',serif);font-size:38px;font-weight:500">{{ t.menuTitle }}</div>
+      <div style="width:50px;height:1px;background:var(--or,#c9a24b)"></div>
+    </div>
+    <sc-for list="{{ menu }}" as="cat" hint-placeholder-count="3">
+      <div style="display:flex;flex-direction:column;gap:26px">
+        <div style="display:flex;align-items:center;gap:18px"><div style="flex:1;height:1px;background:color-mix(in srgb,var(--or,#c9a24b) 30%,transparent)"></div><div style="font-family:var(--serif,'Cormorant Garamond',serif);font-size:26px;font-style:italic;color:var(--or,#c9a24b)">{{ cat.nom }}</div><div style="flex:1;height:1px;background:color-mix(in srgb,var(--or,#c9a24b) 30%,transparent)"></div></div>
+        <sc-for list="{{ cat.plats }}" as="p" hint-placeholder-count="3">
+          <div style="display:flex;align-items:baseline;gap:14px">
+            <div style="display:flex;flex-direction:column;gap:4px;min-width:0">
+              <div style="font-family:var(--serif,'Cormorant Garamond',serif);font-size:21px">{{ p.nom }}</div>
+              <div style="font-weight:300;font-size:13.5px;color:color-mix(in srgb,var(--txt,#f2ede3) 55%,transparent);line-height:1.6">{{ p.desc }}</div>
+            </div>
+            <div style="flex:1;border-bottom:1px dotted color-mix(in srgb,var(--or,#c9a24b) 35%,transparent);transform:translateY(-6px)"></div>
+            <sc-if value="{{ afficherPrix }}" hint-placeholder-val="{{ true }}"><div style="color:var(--or,#c9a24b);font-size:15px;letter-spacing:1px;white-space:nowrap">{{ p.prix }}</div></sc-if>
+          </div>
+        </sc-for>
+      </div>
+    </sc-for>
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(260px,100%),1fr));gap:1px;background:color-mix(in srgb,var(--or,#c9a24b) 30%,transparent);border:1px solid color-mix(in srgb,var(--or,#c9a24b) 30%,transparent)">
+      <div style="background:var(--bg2,#0f0e0b);padding:30px 34px;display:flex;flex-direction:column;gap:8px;text-align:center">
+        <div style="font-family:var(--serif,'Cormorant Garamond',serif);font-size:23px">{{ t.menuTerroirTitle }}</div>
+        <div style="font-weight:300;font-size:13px;color:color-mix(in srgb,var(--txt,#f2ede3) 55%,transparent)">{{ t.menuTerroirSub }}</div>
+        <sc-if value="{{ afficherPrix }}" hint-placeholder-val="{{ true }}"><div style="color:var(--or,#c9a24b);font-size:17px">68 €</div></sc-if>
+      </div>
+      <div style="background:var(--bg2,#0f0e0b);padding:30px 34px;display:flex;flex-direction:column;gap:8px;text-align:center">
+        <div style="font-family:var(--serif,'Cormorant Garamond',serif);font-size:23px">{{ t.menuEstreeTitle }}</div>
+        <div style="font-weight:300;font-size:13px;color:color-mix(in srgb,var(--txt,#f2ede3) 55%,transparent)">{{ t.menuEstreeSub }}</div>
+        <sc-if value="{{ afficherPrix }}" hint-placeholder-val="{{ true }}"><div style="color:var(--or,#c9a24b);font-size:17px">95 €</div></sc-if>
+      </div>
+    </div>
+  </div>
+  <div class="reveal" style="max-width:1100px;margin:0 auto;padding:50px 24px;display:flex;flex-direction:column;gap:26px">
+    <div style="display:flex;align-items:baseline;justify-content:space-between;gap:16px;flex-wrap:wrap">
+      <div style="display:flex;flex-direction:column;gap:8px"><div style="font-size:11px;letter-spacing:5px;color:var(--or,#c9a24b)">{{ t.galleryEyebrow }}</div><div style="font-family:var(--serif,'Cormorant Garamond',serif);font-size:32px;font-weight:500">{{ t.galleryTitle }}</div></div>
+      <div style="display:flex;gap:10px">
+        <div onClick="{{ carPrev }}" style="cursor:pointer;width:44px;height:44px;border-radius:var(--rad,0px);border:1px solid var(--or,#c9a24b);color:var(--or,#c9a24b);display:flex;align-items:center;justify-content:center;font-size:18px" style-hover="background:var(--or,#c9a24b);color:var(--bg,#0a0a08)">←</div>
+        <div onClick="{{ carNext }}" style="cursor:pointer;width:44px;height:44px;border-radius:var(--rad,0px);border:1px solid var(--or,#c9a24b);color:var(--or,#c9a24b);display:flex;align-items:center;justify-content:center;font-size:18px" style-hover="background:var(--or,#c9a24b);color:var(--bg,#0a0a08)">→</div>
+      </div>
+    </div>
+    <div style="overflow:hidden;border:1px solid color-mix(in srgb,var(--or,#c9a24b) 30%,transparent)">
+      <div style="display:flex;transition:transform .6s cubic-bezier(.4,0,.2,1);transform:translateX({{ carX }})">
+        <sc-for list="{{ carSlides }}" as="cs" hint-placeholder-count="5"><div style="flex:none;width:100%;height:clamp(220px,55vw,480px)"><image-slot id="{{ cs.slot }}" class="cms-editable" data-cms-name="{{ cs.ph }}" shape="rect" placeholder="{{ cs.ph }}"></image-slot></div></sc-for>
+
+
+
+
+      </div>
+    </div>
+    <div style="display:flex;gap:8px;justify-content:center">
+      <sc-for list="{{ carDots }}" as="d" hint-placeholder-count="5">
+        <div onClick="{{ d.go }}" style="cursor:pointer;width:26px;height:2px;background:{{ d.bg }}"></div>
+      </sc-for>
+    </div>
+  </div>
+  <div class="reveal" style="max-width:1100px;margin:0 auto;padding:40px 24px 100px;display:grid;grid-template-columns:repeat(auto-fit,minmax(min(280px,100%),1fr));gap:1px;background:color-mix(in srgb,var(--or,#c9a24b) 30%,transparent);border:1px solid color-mix(in srgb,var(--or,#c9a24b) 30%,transparent)">
+    <div style="background:var(--bg2,#0f0e0b);padding:36px;display:flex;flex-direction:column;gap:14px">
+      <div style="font-size:11px;letter-spacing:4px;color:var(--or,#c9a24b)">{{ t.hoursEyebrow }}</div>
+      <div style="font-weight:300;font-size:14.5px;line-height:2;color:color-mix(in srgb,var(--txt,#f2ede3) 80%,transparent)">{{ t.hoursText }}<br>{{ t.hoursLunch }}<br>{{ t.hoursDinner }}<br><span style="color:color-mix(in srgb,var(--txt,#f2ede3) 50%,transparent)">{{ t.hoursClosed }}</span></div>
+    </div>
+    <div style="background:var(--bg2,#0f0e0b);padding:36px;display:flex;flex-direction:column;gap:14px">
+      <div style="font-size:11px;letter-spacing:4px;color:var(--or,#c9a24b)">{{ t.cuisineEyebrow }}</div>
+      <div style="font-weight:300;font-size:14.5px;line-height:2;color:color-mix(in srgb,var(--txt,#f2ede3) 80%,transparent)">{{ t.cuisineText }}<br>{{ t.cuisineText2 }}<br>{{ t.cuisineText3 }}</div>
+    </div>
+    <div style="background:var(--bg2,#0f0e0b);padding:36px;display:flex;flex-direction:column;gap:14px">
+      <div style="font-size:11px;letter-spacing:4px;color:var(--or,#c9a24b)">{{ t.resaEyebrow }}</div>
+      <div style="font-weight:300;font-size:14.5px;line-height:2;color:color-mix(in srgb,var(--txt,#f2ede3) 80%,transparent)">{{ t.resaText }}<br><span style="color:var(--or,#c9a24b)">{{ telephone }}</span><br>{{ adresse }}</div>
+    </div>
+  </div>
+</main>
+</sc-if>
+
+<!-- ============ PAGE : GÎTES ============ -->
+<sc-if value="{{ pageGites }}" hint-placeholder-val="{{ false }}">
+<main style="animation:var(--anim,fadeUp) .5s ease both">
+  <div class="reveal" style="max-width:1100px;margin:0 auto;padding:80px 24px 60px;display:flex;flex-direction:column;gap:18px;text-align:center;align-items:center">
+    <div style="font-size:11px;letter-spacing:6px;color:var(--or,#c9a24b)">{{ t.gitesEyebrow }}</div>
+    <div style="font-family:var(--serif,'Cormorant Garamond',serif);font-size:clamp(38px,6vw,58px);font-weight:500">{{ t.gitesTitle }}</div>
+    <div style="font-weight:300;font-size:15.5px;color:color-mix(in srgb,var(--txt,#f2ede3) 70%,transparent);max-width:560px;line-height:1.8">{{ t.gitesTagline }}</div>
+    <div style="width:50px;height:1px;background:var(--or,#c9a24b);margin-top:6px"></div>
+  </div>
+  <div style="max-width:1100px;margin:0 auto;padding:0 24px 60px;display:flex;flex-direction:column;gap:70px">
+    <sc-for list="{{ gites }}" as="g" hint-placeholder-count="4">
+      <div class="reveal" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(320px,100%),1fr));gap:0;border:1px solid color-mix(in srgb,var(--or,#c9a24b) 30%,transparent)">
+        <div style="min-height:clamp(260px,45vw,400px);display:grid;grid-template-rows:minmax(0,1fr) 110px;grid-template-columns:repeat(3,minmax(0,1fr))">
+          <div style="grid-column:1/-1;min-height:0"><image-slot id="{{ g.slotA }}" class="cms-editable" data-cms-name="{{ g.phA }}" shape="rect" placeholder="{{ g.phA }}"></image-slot></div>
+          <div style="border-top:1px solid color-mix(in srgb,var(--or,#c9a24b) 30%,transparent)"><image-slot id="{{ g.slotB }}" class="cms-editable" data-cms-name="{{ g.nom }} — Détail 1" shape="rect" placeholder="{{ t.gitesDetail1 }}"></image-slot></div>
+          <div style="border-top:1px solid color-mix(in srgb,var(--or,#c9a24b) 30%,transparent);border-left:1px solid color-mix(in srgb,var(--or,#c9a24b) 30%,transparent)"><image-slot id="{{ g.slotC }}" class="cms-editable" data-cms-name="{{ g.nom }} — Détail 2" shape="rect" placeholder="{{ t.gitesDetail2 }}"></image-slot></div>
+          <div style="border-top:1px solid color-mix(in srgb,var(--or,#c9a24b) 30%,transparent);border-left:1px solid color-mix(in srgb,var(--or,#c9a24b) 30%,transparent)"><image-slot id="{{ g.slotD }}" class="cms-editable" data-cms-name="{{ g.nom }} — Détail 3" shape="rect" placeholder="{{ t.gitesDetail3 }}"></image-slot></div>
+        </div>
+        <div style="padding:44px 46px;display:flex;flex-direction:column;gap:18px;justify-content:center;background:var(--bg2,#0f0e0b)">
+          <div style="display:flex;align-items:baseline;gap:14px"><span style="font-family:var(--serif,'Cormorant Garamond',serif);font-size:15px;color:var(--or,#c9a24b)">{{ g.num }}</span><span style="font-family:var(--serif,'Cormorant Garamond',serif);font-size:32px">{{ g.nom }}</span></div>
+          <div style="font-size:12px;letter-spacing:3px;color:var(--or,#c9a24b)">{{ g.capacite }}</div>
+          <div style="font-weight:300;font-size:14.5px;color:color-mix(in srgb,var(--txt,#f2ede3) 70%,transparent);line-height:1.8">{{ g.desc }}</div>
+          <div style="display:flex;flex-wrap:wrap;gap:8px;margin-top:4px">
+            <sc-for list="{{ g.equip }}" as="e" hint-placeholder-count="4">
+              <div style="padding:6px 14px;border-radius:var(--rad,0px);border:1px solid color-mix(in srgb,var(--or,#c9a24b) 40%,transparent);font-weight:300;font-size:12px;letter-spacing:1px;color:color-mix(in srgb,var(--txt,#f2ede3) 75%,transparent)">{{ e }}</div>
+            </sc-for>
+          </div>
+        </div>
+      </div>
+    </sc-for>
+  </div>
+  <div class="reveal" style="border-top:1px solid color-mix(in srgb,var(--or,#c9a24b) 28%,transparent);padding:80px 24px;display:flex;flex-direction:column;align-items:center;gap:18px;text-align:center">
+    <div style="font-family:var(--serif,'Cormorant Garamond',serif);font-size:32px;font-weight:500">{{ t.gitesCtaTitle }}</div>
+    <div style="font-weight:300;font-size:15px;color:color-mix(in srgb,var(--txt,#f2ede3) 65%,transparent);max-width:460px;line-height:1.8">{{ t.gitesCtaText }}</div>
+    <div onClick="{{ goContact }}" style="cursor:pointer;margin-top:6px;padding:13px 40px;border-radius:var(--rad,0px);background:var(--or,#c9a24b);color:var(--bg,#0a0a08);font-size:12px;letter-spacing:3px" style-hover="background:var(--orClair,#e0be6d)">{{ t.ctaContact }}</div>
+  </div>
+</main>
+</sc-if>
+
+<!-- ============ PAGE : SPA ============ -->
+<sc-if value="{{ pageSpa }}" hint-placeholder-val="{{ false }}">
+<main style="animation:var(--anim,fadeUp) .5s ease both">
+  <div class="reveal" style="position:relative;height:clamp(280px,50vw,520px)">
+    <image-slot id="site-spa-hero" class="cms-editable" data-cms-name="Spa — Bandeau" shape="rect" placeholder="{{ t.phSpaHero }}"></image-slot>
+    <div style="position:absolute;inset:0;background:color-mix(in srgb,var(--bg,#0a0a08) 55%,transparent);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:16px;text-align:center;padding:0 24px;pointer-events:none">
+      <div style="font-size:11px;letter-spacing:6px;color:var(--or,#c9a24b)">{{ t.spaEyebrow }}</div>
+      <div style="font-family:var(--serif,'Cormorant Garamond',serif);font-size:clamp(38px,6vw,62px);font-weight:500">{{ t.spaTitle }}</div>
+      <div style="font-weight:300;font-size:15px;color:color-mix(in srgb,var(--txt,#f2ede3) 80%,transparent);max-width:480px;line-height:1.7">{{ t.spaTagline }}</div>
+    </div>
+  </div>
+  <div style="max-width:1100px;margin:0 auto;padding:90px 24px;display:flex;flex-direction:column;gap:80px">
+    <sc-for list="{{ spas }}" as="s" hint-placeholder-count="3">
+      <div class="reveal" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(320px,100%),1fr));gap:50px;align-items:center;direction:{{ s.dir }}">
+        <div style="height:clamp(260px,45vw,420px);direction:ltr"><image-slot id="{{ s.slot }}" class="cms-editable" data-cms-name="{{ s.nom }}" shape="rect" placeholder="{{ s.ph }}"></image-slot></div>
+        <div style="display:flex;flex-direction:column;gap:16px;direction:ltr">
+          <div style="display:flex;align-items:center;gap:14px"><div style="width:36px;height:1px;background:var(--or,#c9a24b)"></div><div style="font-size:11px;letter-spacing:5px;color:var(--or,#c9a24b)">{{ s.sur }}</div></div>
+          <div style="font-family:var(--serif,'Cormorant Garamond',serif);font-size:38px;font-weight:500">{{ s.nom }}</div>
+          <div style="font-weight:300;font-size:15px;color:color-mix(in srgb,var(--txt,#f2ede3) 70%,transparent);line-height:1.9">{{ s.desc }}</div>
+          <div style="font-weight:300;font-size:13px;letter-spacing:1px;color:var(--or,#c9a24b)">{{ s.info }}</div>
+        </div>
+      </div>
+    </sc-for>
+  </div>
+  <div class="reveal" style="border-top:1px solid color-mix(in srgb,var(--or,#c9a24b) 28%,transparent);border-bottom:1px solid color-mix(in srgb,var(--or,#c9a24b) 28%,transparent);background:var(--bg2,#0f0e0b)">
+    <div style="max-width:860px;margin:0 auto;padding:70px 24px;display:flex;flex-direction:column;gap:28px;text-align:center;align-items:center">
+      <div style="font-size:11px;letter-spacing:5px;color:var(--or,#c9a24b)">{{ t.practiceEyebrow }}</div>
+      <div style="font-family:var(--serif,'Cormorant Garamond',serif);font-size:30px;font-weight:500">{{ t.practiceTitle }}</div>
+      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(220px,100%),1fr));gap:34px;width:100%;text-align:center">
+        <div style="display:flex;flex-direction:column;gap:6px"><div style="font-family:var(--serif,'Cormorant Garamond',serif);font-size:20px">{{ t.practice1Title }}</div><div style="font-weight:300;font-size:13.5px;color:color-mix(in srgb,var(--txt,#f2ede3) 60%,transparent)">{{ t.practice1Text }}</div></div>
+        <div style="display:flex;flex-direction:column;gap:6px"><div style="font-family:var(--serif,'Cormorant Garamond',serif);font-size:20px">{{ t.practice2Title }}</div><div style="font-weight:300;font-size:13.5px;color:color-mix(in srgb,var(--txt,#f2ede3) 60%,transparent)">{{ t.practice2Text }}</div></div>
+        <div style="display:flex;flex-direction:column;gap:6px"><div style="font-family:var(--serif,'Cormorant Garamond',serif);font-size:20px">{{ t.practice3Title }}</div><div style="font-weight:300;font-size:13.5px;color:color-mix(in srgb,var(--txt,#f2ede3) 60%,transparent)">{{ t.practice3Text }}</div></div>
+      </div>
+      <div onClick="{{ goContact }}" style="cursor:pointer;margin-top:8px;padding:13px 40px;border-radius:var(--rad,0px);border:1px solid var(--or,#c9a24b);color:var(--or,#c9a24b);font-size:12px;letter-spacing:3px" style-hover="background:var(--or,#c9a24b);color:var(--bg,#0a0a08)">{{ t.ctaBookSlot }}</div>
+    </div>
+  </div>
+</main>
+</sc-if>
+
+<!-- ============ PAGE : CONTACT ============ -->
+<sc-if value="{{ pageContact }}" hint-placeholder-val="{{ false }}">
+<main style="animation:var(--anim,fadeUp) .5s ease both">
+  <div class="reveal" style="max-width:1100px;margin:0 auto;padding:80px 24px 100px;display:grid;grid-template-columns:repeat(auto-fit,minmax(min(320px,100%),1fr));gap:60px;align-items:center">
+    <div style="display:flex;flex-direction:column;gap:24px">
+      <div style="font-size:11px;letter-spacing:6px;color:var(--or,#c9a24b)">{{ t.contactEyebrow }}</div>
+      <div style="font-family:var(--serif,'Cormorant Garamond',serif);font-size:clamp(36px,5vw,52px);font-weight:500;line-height:1.1">{{ t.contactTitle1 }}<br><span style="font-style:italic;color:var(--or,#c9a24b)">{{ t.contactTitle2 }}</span></div>
+      <div style="display:flex;flex-direction:column">
+        <div style="display:flex;flex-direction:column;gap:4px;padding:20px 0;border-top:1px solid color-mix(in srgb,var(--or,#c9a24b) 30%,transparent)"><div style="font-size:11px;letter-spacing:3px;color:var(--or,#c9a24b)">{{ t.addressLabel }}</div><div style="font-weight:300;font-size:16px;line-height:1.7">{{ nomDomaine }}<br>{{ adresse }}</div></div>
+        <div style="display:flex;flex-direction:column;gap:4px;padding:20px 0;border-top:1px solid color-mix(in srgb,var(--or,#c9a24b) 30%,transparent)"><div style="font-size:11px;letter-spacing:3px;color:var(--or,#c9a24b)">{{ t.phoneLabel }}</div><div style="font-weight:300;font-size:16px">{{ telephone }}</div></div>
+        <div style="display:flex;flex-direction:column;gap:4px;padding:20px 0;border-top:1px solid color-mix(in srgb,var(--or,#c9a24b) 30%,transparent);border-bottom:1px solid color-mix(in srgb,var(--or,#c9a24b) 30%,transparent)"><div style="font-size:11px;letter-spacing:3px;color:var(--or,#c9a24b)">{{ t.emailLabel }}</div><div style="font-weight:300;font-size:16px">{{ email }}</div></div>
+      </div>
+      <div style="font-weight:300;font-size:13.5px;color:color-mix(in srgb,var(--txt,#f2ede3) 55%,transparent);line-height:1.8">{{ t.contactHours }}<br>{{ t.contactHours2 }}</div>
+    </div>
+    <div style="height:clamp(280px,50vw,520px)"><image-slot id="site-contact" class="cms-editable" data-cms-name="Contact — Photo" shape="rect" placeholder="{{ t.phContact }}"></image-slot></div>
+  </div>
+</main>
+</sc-if>
+
+<sc-if value="{{ vignette }}" hint-placeholder-val="{{ false }}"><div style="position:fixed;inset:0;pointer-events:none;z-index:40;background:radial-gradient(ellipse at center,transparent 55%,rgba(0,0,0,.55) 100%)"></div></sc-if>
+<!-- ============ PIED DE PAGE (partagé par toutes les pages) ============ -->
+<footer style="margin-top:auto;border-top:1px solid color-mix(in srgb,var(--or,#c9a24b) 28%,transparent);padding:44px;display:flex;align-items:center;justify-content:space-between;gap:24px;flex-wrap:wrap">
+  <div style="font-family:var(--serif,'Cormorant Garamond',serif);font-size:18px;letter-spacing:3px;color:var(--txt,#f2ede3);display:flex;gap:8px"><span>{{ nomNavA }}</span><span style="color:var(--or,#c9a24b)">{{ nomNavB }}</span></div>
+  <div style="display:flex;gap:28px;font-size:11px;letter-spacing:2.5px;color:color-mix(in srgb,var(--txt,#f2ede3) 60%,transparent);flex-wrap:wrap">
+    <div onClick="{{ goRestaurant }}" style="cursor:pointer" style-hover="color:var(--or,#c9a24b)">{{ t.navRestaurant }}</div>
+    <div onClick="{{ goGites }}" style="cursor:pointer" style-hover="color:var(--or,#c9a24b)">{{ t.navGites }}</div>
+    <div onClick="{{ goSpa }}" style="cursor:pointer" style-hover="color:var(--or,#c9a24b)">{{ t.navSpa }}</div>
+    <div onClick="{{ goContact }}" style="cursor:pointer" style-hover="color:var(--or,#c9a24b)">{{ t.navContact }}</div>
+  </div>
+  <div style="font-weight:300;font-size:12px;color:color-mix(in srgb,var(--txt,#f2ede3) 40%,transparent)">{{ adresse }} · {{ telephone }}</div>
+</footer>
+</div>
+<div style="width:0;height:0;overflow:hidden;position:absolute"><x-import component-from-global-scope="image-slot" from="./image-slot.js" style="width:0;height:0" hint-size="0,0"></x-import></div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;couleurOr&quot;:{&quot;editor&quot;:&quot;color&quot;,&quot;default&quot;:&quot;#c9a24b&quot;,&quot;options&quot;:[&quot;#c9a24b&quot;,&quot;#d4c07a&quot;,&quot;#b08d3e&quot;,&quot;#8f6b2a&quot;],&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;Couleurs&quot;},&quot;couleurFond&quot;:{&quot;editor&quot;:&quot;color&quot;,&quot;default&quot;:&quot;#0a0a08&quot;,&quot;options&quot;:[&quot;#0a0a08&quot;,&quot;#050505&quot;,&quot;#12100e&quot;,&quot;#101014&quot;],&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;Couleurs&quot;},&quot;couleurFondCartes&quot;:{&quot;editor&quot;:&quot;color&quot;,&quot;default&quot;:&quot;#171410&quot;,&quot;options&quot;:[&quot;#0f0e0b&quot;,&quot;#171410&quot;,&quot;#0b0b0b&quot;,&quot;#181820&quot;],&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;Couleurs&quot;},&quot;couleurTexte&quot;:{&quot;editor&quot;:&quot;color&quot;,&quot;default&quot;:&quot;#f2ede3&quot;,&quot;options&quot;:[&quot;#f2ede3&quot;,&quot;#ffffff&quot;,&quot;#e9e2d0&quot;,&quot;#efe8db&quot;],&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;Couleurs&quot;},&quot;policeTitres&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;default&quot;:&quot;Cormorant Garamond&quot;,&quot;options&quot;:[&quot;Cormorant Garamond&quot;,&quot;Playfair Display&quot;,&quot;Marcellus&quot;,&quot;EB Garamond&quot;],&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;Typographie&quot;},&quot;policeTexte&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;default&quot;:&quot;Montserrat&quot;,&quot;options&quot;:[&quot;Jost&quot;,&quot;Montserrat&quot;,&quot;Lato&quot;,&quot;Raleway&quot;],&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;Typographie&quot;},&quot;coinsArrondis&quot;:{&quot;editor&quot;:&quot;range&quot;,&quot;default&quot;:4,&quot;min&quot;:0,&quot;max&quot;:24,&quot;step&quot;:1,&quot;unit&quot;:&quot;px&quot;,&quot;tsType&quot;:&quot;number&quot;,&quot;section&quot;:&quot;Typographie&quot;},&quot;nomDomaine&quot;:{&quot;editor&quot;:&quot;text&quot;,&quot;default&quot;:&quot;Le Méandre&quot;,&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;Navigation&quot;},&quot;boutonContact&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;default&quot;:&quot;contour&quot;,&quot;options&quot;:[&quot;contour&quot;,&quot;plein&quot;],&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;Navigation&quot;},&quot;logoMonogramme&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:false,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;Navigation&quot;},&quot;voileHero&quot;:{&quot;editor&quot;:&quot;range&quot;,&quot;default&quot;:0.5,&quot;min&quot;:0.2,&quot;max&quot;:0.85,&quot;step&quot;:0.05,&quot;tsType&quot;:&quot;number&quot;,&quot;section&quot;:&quot;Accueil&quot;},&quot;heroPleinEcran&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;Accueil&quot;},&quot;afficherAnnee&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;Accueil&quot;},&quot;anneeFondation&quot;:{&quot;editor&quot;:&quot;int&quot;,&quot;default&quot;:2026,&quot;min&quot;:1600,&quot;max&quot;:2026,&quot;tsType&quot;:&quot;number&quot;,&quot;section&quot;:&quot;Accueil&quot;},&quot;afficherPrix&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;Restaurant&quot;},&quot;nbPhotosCarrousel&quot;:{&quot;editor&quot;:&quot;int&quot;,&quot;default&quot;:5,&quot;min&quot;:3,&quot;max&quot;:8,&quot;tsType&quot;:&quot;number&quot;,&quot;section&quot;:&quot;Restaurant&quot;},&quot;carrouselAuto&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;Restaurant&quot;},&quot;carrouselIntervalle&quot;:{&quot;editor&quot;:&quot;range&quot;,&quot;default&quot;:4,&quot;min&quot;:2,&quot;max&quot;:10,&quot;step&quot;:1,&quot;unit&quot;:&quot;s&quot;,&quot;tsType&quot;:&quot;number&quot;,&quot;section&quot;:&quot;Restaurant&quot;},&quot;animations&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;Ambiance&quot;},&quot;vignette&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:false,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;Ambiance&quot;},&quot;telephone&quot;:{&quot;editor&quot;:&quot;text&quot;,&quot;default&quot;:&quot;+33 3 21 45 78 90&quot;,&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;Coordonnées&quot;},&quot;email&quot;:{&quot;editor&quot;:&quot;text&quot;,&quot;default&quot;:&quot;contact@lemeandre.fr&quot;,&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;Coordonnées&quot;},&quot;adresse&quot;:{&quot;editor&quot;:&quot;text&quot;,&quot;default&quot;:&quot;15 Rue De La Course - 62170 Estrée&quot;,&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;Coordonnées&quot;}}">
+// Le comportement du site (navigation entre pages, carrousel, langue, écran
+// de chargement, révélation au scroll). Le contenu/textes vivent dans
+// site-data.js (window.MEANDRE_*) ; ce fichier ne fait que les mettre en
+// forme selon la page et la langue courantes.
+class Component extends DCLogic {
+  state = { page: 'accueil', car: 0, lang: 'fr', loading: true };
+
+  // ── Cycle de vie ──
+  componentDidMount() {
+    this._startCarouselAutoplay();
+    this._setupReveal();
+    this._startLoader();
+  }
+  componentDidUpdate() { this._setupReveal(); }
+  componentWillUnmount() {
+    clearInterval(this._carouselTimer);
+    cancelAnimationFrame(this._loaderRaf);
+    if (this._revealObserver) this._revealObserver.disconnect();
+  }
+
+  // ── Navigation entre pages ──
+  go(page) { this.setState({ page }); window.scrollTo(0, 0); }
+  toggleLang() { this.setState(s => ({ lang: (s.lang ?? 'fr') === 'fr' ? 'en' : 'fr' })); }
+
+  // ── Carrousel photo (page Restaurant) ──
+  _startCarouselAutoplay() {
+    this._carouselTimer = setInterval(() => {
+      const interval = Math.max(2, this.props.carrouselIntervalle ?? 4);
+      if (!(this.props.carrouselAuto ?? false) || this.state.page !== 'restaurant') return;
+      this._carouselElapsed = (this._carouselElapsed || 0) + 1;
+      if (this._carouselElapsed < interval) return;
+      this._carouselElapsed = 0;
+      const n = this._carouselSlideCount();
+      this.setState(s => ({ car: (s.car + 1) % n }));
+    }, 1000);
+  }
+  _carouselSlideCount() {
+    return Math.max(3, Math.min(8, Math.round(this.props.nbPhotosCarrousel ?? 5)));
+  }
+  _carouselVals(pool) {
+    const n = this._carouselSlideCount();
+    const car = this.state.car % n;
+    return {
+      carSlides: pool.slice(0, n),
+      carX: (-car * 100) + '%',
+      carPrev: () => this.setState(s => ({ car: (s.car - 1 + n) % n })),
+      carNext: () => this.setState(s => ({ car: (s.car + 1) % n })),
+      carDots: Array.from({ length: n }, (_, i) => ({
+        bg: i === car ? 'var(--or,#c9a24b)' : 'color-mix(in srgb,var(--or,#c9a24b) 30%,transparent)',
+        go: () => this.setState({ car: i }),
+      })),
+    };
+  }
+
+  // ── Révélation au scroll : bascule .is-visible sur chaque bloc .reveal
+  //    quand il entre/sort du viewport (dans les deux sens de scroll). ──
+  _setupReveal() {
+    if (typeof IntersectionObserver === 'undefined') return;
+    if (!this._revealObserver) {
+      this._revealObserver = new IntersectionObserver((entries) => {
+        entries.forEach((entry) => { entry.target.classList.toggle('is-visible', entry.isIntersecting); });
+      }, { threshold: 0.15, rootMargin: '0px 0px -8% 0px' });
+    }
+    document.querySelectorAll('.reveal:not([data-reveal-bound])').forEach((el) => {
+      el.setAttribute('data-reveal-bound', '1');
+      this._revealObserver.observe(el);
+    });
+  }
+
+  // ── Écran de chargement : "Tourbillon" (le logo se dessine, 1.6s) puis
+  //    "Apparition" (il s'envole vers le header, 1.4s). Se joue une seule
+  //    fois au montage ; sauté si prefers-reduced-motion. ──
+  _startLoader() {
+    const reduceMotion = typeof window.matchMedia === 'function' && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if (reduceMotion) { this.setState({ loading: false }); return; }
+    const tick = (ts) => {
+      if (this._loaderStart == null) this._loaderStart = ts;
+      const elapsed = (ts - this._loaderStart) / 1000;
+      if (elapsed >= 3.0) { this.setState({ loading: false }); return; }
+      const scene = elapsed < 1.6 ? 'tourbillon' : 'apparition';
+      if (scene === 'apparition' && !this._targetMeasured) { this._measureLoaderTarget(); this._targetMeasured = true; }
+      this.setState({ loaderScene: scene, loaderProgress: scene === 'tourbillon' ? elapsed / 1.6 : (elapsed - 1.6) / 1.4 });
+      this._loaderRaf = requestAnimationFrame(tick);
+    };
+    this._loaderRaf = requestAnimationFrame(tick);
+  }
+  // Mesure une seule fois (à l'entrée de la scène "Apparition") la position
+  // réelle du logo dans le header, pour que l'envol atterrisse pixel-parfait
+  // quelle que soit la taille d'écran.
+  _measureLoaderTarget() {
+    const target = document.querySelector('.site-logo-img');
+    const wrap = document.querySelector('.loader-logo-wrap');
+    if (!target || !wrap) return;
+    const r = target.getBoundingClientRect();
+    const cx = window.innerWidth / 2, cy = window.innerHeight / 2;
+    this._targetTx = r.left + r.width / 2 - cx;
+    this._targetTy = r.top + r.height / 2 - cy;
+    this._targetScale = r.width / wrap.offsetWidth;
+  }
+  _loaderVals() {
+    const ease = MeandreEasing;
+    const lp = ease.clamp(this.state.loaderProgress ?? 0, 0, 1);
+    const spinTurns = 2, glowIntensity = 1;
+    let overlayOpacity = 1, glowOpacity = 0, svgOpacity = 1, imgOpacity = 0, transform = 'translate(-50%,-50%)', filter = 'none';
+    let strokes = [], leaves = [];
+    if (this.state.loaderScene === 'apparition') {
+      const fly = ease.inOutCubic(ease.clamp(lp / 0.78, 0, 1));
+      const tx = this._targetTx ?? 0, ty = this._targetTy ?? 0, ts = this._targetScale ?? 0.19;
+      const glow = Math.sin(Math.PI * fly) * 0.5 * glowIntensity;
+      imgOpacity = 1;
+      overlayOpacity = 1 - ease.outCubic(ease.clamp((lp - 0.22) / 0.62, 0, 1));
+      glowOpacity = Math.max(0, glow);
+      filter = glow > 0.01 ? 'drop-shadow(0 0 ' + (24 * glow) + 'px rgba(200,162,78,' + (0.45 * glow) + '))' : 'none';
+      transform = 'translate(-50%,-50%) translate(' + (tx * fly) + 'px,' + (ty * fly) + 'px) scale(' + (1 - fly * (1 - ts)) + ') rotate(' + (-360 * fly) + 'deg)';
+    } else {
+      const grow = ease.outCubic(ease.clamp(lp / 0.7, 0, 1));
+      const sway = Math.sin(lp * Math.PI * (spinTurns + 1)) * 3.5 * Math.pow(1 - lp, 1.5);
+      const glow = Math.sin(Math.PI * lp) * glowIntensity;
+      const toReal = ease.inOutSine(ease.clamp((lp - 0.9) / 0.1, 0, 1));
+      svgOpacity = 1 - toReal;
+      imgOpacity = toReal;
+      glowOpacity = Math.max(0, glow);
+      filter = glow > 0.01 ? 'drop-shadow(0 0 ' + (24 * glow) + 'px rgba(200,162,78,' + (0.45 * glow) + '))' : 'none';
+      transform = 'translate(-50%,-50%) translateY(' + ((1 - grow) * 26) + 'px) rotate(' + sway + 'deg) scale(' + (0.6 + 0.4 * grow) + ')';
+      const seg = (start, span) => ease.inOutSine(ease.clamp((lp - start) / span, 0, 1));
+      strokes = MEANDRE_LOADER_STROKES.map(([d, w, at, span]) => { const k = seg(at, span); return { d, w, off: 1 - k, show: k > 0 }; }).filter((s) => s.show);
+      leaves = MEANDRE_LOADER_LEAVES.map(([x, y, r, sc, at]) => {
+        const draw = seg(at, 0.14);
+        const fill = ease.outCubic(ease.clamp((lp - at - 0.1) / 0.14, 0, 1));
+        return { x, y, r, sc, draw: 1 - draw, fill, show: draw > 0, veinShow: fill > 0.5, veinOpacity: (fill - 0.5) * 1.6 };
+      }).filter((l) => l.show);
+    }
+    return {
+      loading: this.state.loading,
+      loaderOverlayOpacity: overlayOpacity, loaderGlowOpacity: glowOpacity, loaderSvgOpacity: svgOpacity, loaderImgOpacity: imgOpacity,
+      loaderTransform: transform, loaderFilter: filter, loaderStrokes: strokes, loaderLeaves: leaves,
+    };
+  }
+
+  // ── Thème visuel : couleurs/polices/rayon de bordure pilotés par les
+  //    props éditables (voir data-props plus bas). ──
+  _themeVals() {
+    const serifMap = { 'Cormorant Garamond': "'Cormorant Garamond',serif", 'Playfair Display': "'Playfair Display',serif", 'Marcellus': "'Marcellus',serif", 'EB Garamond': "'EB Garamond',serif" };
+    const sansMap = { 'Jost': "'Jost',sans-serif", 'Montserrat': "'Montserrat',sans-serif", 'Lato': "'Lato',sans-serif", 'Raleway': "'Raleway',sans-serif" };
+    const or = this.props.couleurOr ?? '#c9a24b';
+    return {
+      or, orClair: 'color-mix(in srgb, ' + or + ' 75%, white)',
+      bg: this.props.couleurFond ?? '#0a0a08', bg2: this.props.couleurFondCartes ?? '#0f0e0b',
+      txt: this.props.couleurTexte ?? '#f2ede3',
+      serif: serifMap[this.props.policeTitres] ?? serifMap['Cormorant Garamond'],
+      sans: sansMap[this.props.policeTexte] ?? sansMap['Jost'],
+      rad: (this.props.coinsArrondis ?? 0) + 'px',
+      anim: (this.props.animations ?? true) ? 'fadeUp' : 'none',
+      heroH: (this.props.heroPleinEcran ?? true) ? 'calc(100vh - 76px)' : '560px',
+      voilePct: Math.round((this.props.voileHero ?? 0.6) * 100) + '%',
+      logoMono: this.props.logoMonogramme ?? false, logoFull: !(this.props.logoMonogramme ?? false),
+      vignette: this.props.vignette ?? false,
+    };
+  }
+
+  // ── Identité du domaine : nom, initiales du logo, bandeau du hero.
+  //    Dépend de `t` (langue courante) pour le mot "depuis/since". ──
+  _identityVals(t) {
+    const nom = this.props.nomDomaine ?? 'Le Méandre';
+    const parts = nom.trim().split(' ');
+    const nomNavB = (parts.length > 1 ? parts.slice(-1)[0] : '').toUpperCase();
+    const nomNavA = (parts.length > 1 ? parts.slice(0, -1).join(' ') : nom).toUpperCase();
+    const monogramme = parts.map(w => (w.replace(/^[dl]'/i, '')[0] || '').toUpperCase()).filter(Boolean).join('·');
+    const heroSur = (this.props.afficherAnnee ?? true)
+      ? ('— ' + nom.toUpperCase() + ' · ' + t.sinceWord + ' ' + (this.props.anneeFondation ?? 1874) + ' —')
+      : ('— ' + nom.toUpperCase() + ' —');
+    return { nomDomaine: nom, nomNavA, nomNavB, monogramme, heroSur };
+  }
+
+  // ── Textes et données localisés (site-data.js) pour la langue courante. ──
+  _localizedContent(lang) {
+    const t = MEANDRE_UI[lang];
+    const menu = MEANDRE_MENU.map(cat => ({ nom: cat.nom[lang], plats: cat.plats.map(pl => ({ nom: pl.nom[lang], desc: pl.desc[lang], prix: pl.prix })) }));
+    const gites = MEANDRE_GITES.map(g => ({ num: g.num, nom: g.nom[lang], capacite: g.capacite[lang], desc: g.desc[lang], equip: g.equip[lang], slotA: g.slotA, slotB: g.slotB, slotC: g.slotC, slotD: g.slotD, phA: g.phA[lang] }));
+    const spas = MEANDRE_SPAS.map(s => ({ nom: s.nom[lang], sur: s.sur[lang], desc: s.desc[lang], info: s.info[lang], slot: s.slot, ph: s.ph[lang], dir: s.dir }));
+    const pool = MEANDRE_POOL.map(x => ({ slot: x.slot, ph: x.ph[lang] }));
+    return { t, menu, gites, spas, pool };
+  }
+
+  // ── Page courante : surbrillance du lien de nav actif + booléens sc-if. ──
+  _navVals(page) {
+    const highlight = (key) => ({
+      c: page === key ? 'var(--or,#c9a24b)' : 'var(--txt,#f2ede3)',
+      b: page === key ? 'var(--or,#c9a24b)' : 'transparent',
+    });
+    return {
+      pageAccueil: page === 'accueil', pageRestaurant: page === 'restaurant', pageGites: page === 'gites', pageSpa: page === 'spa', pageContact: page === 'contact',
+      goAccueil: () => this.go('accueil'), goRestaurant: () => this.go('restaurant'), goGites: () => this.go('gites'), goSpa: () => this.go('spa'), goContact: () => this.go('contact'),
+      cRestaurant: highlight('restaurant').c, bRestaurant: highlight('restaurant').b,
+      cGites: highlight('gites').c, bGites: highlight('gites').b,
+      cSpa: highlight('spa').c, bSpa: highlight('spa').b,
+    };
+  }
+
+  // ── Composition finale : assemble toutes les valeurs pour le gabarit. ──
+  renderVals() {
+    const lang = this.state.lang === 'en' ? 'en' : 'fr';
+    const content = this._localizedContent(lang);
+    const contactStyle = this.props.boutonContact ?? 'contour';
+    return {
+      ...this._themeVals(),
+      ...this._identityVals(content.t),
+      ...content,
+      ...this._navVals(this.state.page),
+      ...this._loaderVals(),
+      ...this._carouselVals(content.pool),
+      afficherPrix: this.props.afficherPrix ?? true,
+      telephone: this.props.telephone ?? '+33 3 21 45 78 90',
+      email: this.props.email ?? 'contact@lemeandre.fr',
+      adresse: this.props.adresse ?? '12 route des Étangs, 62170 Estrée',
+      contactPlein: contactStyle === 'plein', contactContour: contactStyle !== 'plein',
+      toggleLang: () => this.toggleLang(),
+    };
+  }
+}
+</script>
+</body>
+</html>
