@@ -62,6 +62,7 @@
   <div class="site-nav-panel{{ menuOpenSuffix }}" style="display:flex;align-items:center;gap:20px;flex-wrap:wrap">
     <div class="site-nav-links" style="display:flex;gap:34px;font-size:12px;letter-spacing:2.5px;flex-wrap:wrap">
       <div onClick="{{ goRestaurant }}" style="cursor:pointer;padding:4px 0;color:{{ cRestaurant }};border-bottom:1px solid {{ bRestaurant }}" style-hover="color:var(--or,#c9a24b)">{{ t.navRestaurant }}</div>
+      <div onClick="{{ goAEmporter }}" style="cursor:pointer;padding:4px 0;color:{{ cAEmporter }};border-bottom:1px solid {{ bAEmporter }}" style-hover="color:var(--or,#c9a24b)">{{ t.navAEmporter }}</div>
       <div onClick="{{ goGites }}" style="cursor:pointer;padding:4px 0;color:{{ cGites }};border-bottom:1px solid {{ bGites }}" style-hover="color:var(--or,#c9a24b)">{{ t.navGites }}</div>
       <div onClick="{{ goSpa }}" style="cursor:pointer;padding:4px 0;color:{{ cSpa }};border-bottom:1px solid {{ bSpa }}" style-hover="color:var(--or,#c9a24b)">{{ t.navSpa }}</div>
     </div>
@@ -72,7 +73,16 @@
       <sc-if value="{{ contactContour }}" hint-placeholder-val="{{ true }}">
         <div class="site-nav-cta" onClick="{{ goContact }}" style="cursor:pointer;padding:10px 26px;border-radius:var(--rad,0px);border:1px solid var(--or,#c9a24b);color:var(--or,#c9a24b);font-size:12px;letter-spacing:2.5px" style-hover="background:var(--or,#c9a24b);color:var(--bg,#0a0a08)">{{ t.navContact }}</div>
       </sc-if>
-      <div class="site-nav-cta" onClick="{{ toggleLang }}" title="Switch language / Changer de langue" style="cursor:pointer;padding:10px 16px;border-radius:var(--rad,0px);border:1px solid color-mix(in srgb,var(--or,#c9a24b) 60%,transparent);color:var(--or,#c9a24b);font-size:11px;letter-spacing:2px" style-hover="background:var(--or,#c9a24b);color:var(--bg,#0a0a08)">{{ t.langBtn }}</div>
+      <div style="position:relative">
+        <div class="site-nav-cta" onClick="{{ toggleLangMenu }}" title="Switch language / Changer de langue" style="cursor:pointer;padding:10px 16px;border-radius:var(--rad,0px);border:1px solid color-mix(in srgb,var(--or,#c9a24b) 60%,transparent);color:var(--or,#c9a24b);font-size:11px;letter-spacing:2px;display:flex;align-items:center;gap:6px" style-hover="background:var(--or,#c9a24b);color:var(--bg,#0a0a08)">{{ langCurrent }}</div>
+        <sc-if value="{{ langOpen }}" hint-placeholder-val="{{ false }}">
+          <div style="position:absolute;top:calc(100% + 8px);right:0;display:flex;flex-direction:column;min-width:70px;background:var(--bg2,#0f0e0b);border:1px solid color-mix(in srgb,var(--or,#c9a24b) 45%,transparent);border-radius:var(--rad,0px);overflow:hidden;z-index:60;box-shadow:0 12px 30px rgba(0,0,0,.4)">
+            <sc-for list="{{ langOptions }}" as="lo" hint-placeholder-count="4">
+              <div onClick="{{ lo.set }}" style="cursor:pointer;padding:10px 16px;font-size:11px;letter-spacing:2px;color:var(--txt,#f2ede3)" style-hover="background:var(--or,#c9a24b);color:var(--bg,#0a0a08)">{{ lo.label }}</div>
+            </sc-for>
+          </div>
+        </sc-if>
+      </div>
     </div>
   </div>
 </nav>
@@ -88,6 +98,14 @@
       <div style="font-family:var(--serif,'Cormorant Garamond',serif);font-size:clamp(44px,8vw,84px);font-weight:500;line-height:1.05">{{ nomDomaine }}</div>
       <div style="font-weight:300;font-size:17px;color:color-mix(in srgb,var(--txt,#f2ede3) 85%,transparent);max-width:540px;line-height:1.7">{{ t.heroTagline }}</div>
       <div style="width:60px;height:1px;background:var(--or,#c9a24b);margin-top:6px"></div>
+    </div>
+    <!-- Bandeau photo défilant — au milieu de la partie basse du hero, visible dès l'arrivée sans scroller -->
+    <div class="photo-marquee" style="position:absolute;left:0;right:0;bottom:14%;border-top:1px solid color-mix(in srgb,var(--or,#c9a24b) 40%,transparent);border-bottom:1px solid color-mix(in srgb,var(--or,#c9a24b) 40%,transparent);background:color-mix(in srgb,var(--bg,#0a0a08) 25%,transparent)">
+      <div class="photo-marquee-track">
+        <sc-for list="{{ marqueeImages }}" as="m" hint-placeholder-count="10">
+          <div class="photo-marquee-item"><img src="{{ m.src }}" alt="" loading="lazy"></div>
+        </sc-for>
+      </div>
     </div>
   </div>
   <div class="reveal" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(300px,100%),1fr));gap:1px;background:color-mix(in srgb,var(--or,#c9a24b) 28%,transparent);border-top:1px solid color-mix(in srgb,var(--or,#c9a24b) 28%,transparent);border-bottom:1px solid color-mix(in srgb,var(--or,#c9a24b) 28%,transparent)">
@@ -121,6 +139,15 @@
     <div style="font-family:var(--serif,'Cormorant Garamond',serif);font-size:clamp(28px,4vw,40px);font-weight:500;max-width:640px;line-height:1.3">{{ t.artTitle1 }}<br><span style="font-style:italic;color:var(--or,#c9a24b)">{{ t.artTitle2 }}</span></div>
     <div style="font-weight:300;font-size:15px;color:color-mix(in srgb,var(--txt,#f2ede3) 65%,transparent);max-width:520px;line-height:1.8">{{ t.artParagraph }}</div>
     <div onClick="{{ goContact }}" style="cursor:pointer;margin-top:8px;padding:13px 40px;border-radius:var(--rad,0px);border:1px solid var(--or,#c9a24b);color:var(--or,#c9a24b);font-size:12px;letter-spacing:3px" style-hover="background:var(--or,#c9a24b);color:var(--bg,#0a0a08)">{{ t.ctaContact }}</div>
+  </div>
+  <div class="reveal" style="border-top:1px solid color-mix(in srgb,var(--or,#c9a24b) 28%,transparent);border-bottom:1px solid color-mix(in srgb,var(--or,#c9a24b) 28%,transparent);background:var(--bg2,#0f0e0b)">
+    <div style="max-width:760px;margin:0 auto;padding:80px 24px;display:flex;flex-direction:column;align-items:center;gap:18px;text-align:center">
+      <div style="font-size:11px;letter-spacing:5px;color:var(--or,#c9a24b)">{{ t.eventEyebrow }}</div>
+      <div style="font-family:var(--serif,'Cormorant Garamond',serif);font-size:clamp(30px,4.5vw,42px);font-weight:500">{{ t.eventTitle }}</div>
+      <div style="font-weight:300;font-size:15.5px;color:color-mix(in srgb,var(--txt,#f2ede3) 75%,transparent);line-height:1.8">{{ t.eventTagline }}</div>
+      <div style="font-weight:300;font-size:14.5px;color:color-mix(in srgb,var(--txt,#f2ede3) 60%,transparent);line-height:1.9;max-width:640px">{{ t.eventParagraph }}</div>
+      <div onClick="{{ goContact }}" style="cursor:pointer;margin-top:8px;padding:13px 40px;border-radius:var(--rad,0px);background:var(--or,#c9a24b);color:var(--bg,#0a0a08);font-size:12px;letter-spacing:3px" style-hover="background:var(--orClair,#e0be6d)">{{ t.eventCta }}</div>
+    </div>
   </div>
 </main>
 </sc-if>
@@ -180,7 +207,7 @@
     </div>
     <div style="overflow:hidden;border:1px solid color-mix(in srgb,var(--or,#c9a24b) 30%,transparent)">
       <div style="display:flex;transition:transform .6s cubic-bezier(.4,0,.2,1);transform:translateX({{ carX }})">
-        <sc-for list="{{ carSlides }}" as="cs" hint-placeholder-count="5"><div style="flex:none;width:100%;height:clamp(220px,55vw,480px)"><image-slot id="{{ cs.slot }}" class="cms-editable" data-cms-name="{{ cs.ph }}" shape="rect" placeholder="{{ cs.ph }}"></image-slot></div></sc-for>
+        <sc-for list="{{ carSlides }}" as="cs" hint-placeholder-count="5"><div style="flex:none;width:100%;height:clamp(220px,55vw,480px)"><image-slot id="{{ cs.slot }}" src="{{ cs.src }}" class="cms-editable" data-cms-name="{{ cs.ph }}" shape="rect" placeholder="{{ cs.ph }}"></image-slot></div></sc-for>
 
 
 
@@ -210,6 +237,32 @@
 </main>
 </sc-if>
 
+<!-- ============ PAGE : À EMPORTER ============ -->
+<sc-if value="{{ pageAEmporter }}" hint-placeholder-val="{{ false }}">
+<main style="animation:var(--anim,fadeUp) .5s ease both">
+  <div class="reveal" style="max-width:1100px;margin:0 auto;padding:80px 24px 60px;display:grid;grid-template-columns:repeat(auto-fit,minmax(min(320px,100%),1fr));gap:50px;align-items:center">
+    <div style="display:flex;flex-direction:column;gap:16px">
+      <div style="font-size:11px;letter-spacing:6px;color:var(--or,#c9a24b)">{{ t.aemporterEyebrow }}</div>
+      <div style="font-family:var(--serif,'Cormorant Garamond',serif);font-size:clamp(36px,5.5vw,54px);font-weight:500">{{ t.aemporterTitle }}</div>
+      <div style="font-weight:300;font-size:16px;color:var(--or,#c9a24b)">{{ t.aemporterTagline }}</div>
+      <div style="font-weight:300;font-size:14.5px;color:color-mix(in srgb,var(--txt,#f2ede3) 70%,transparent);line-height:1.9">{{ t.aemporterParagraph }}</div>
+      <div onClick="{{ goContact }}" style="cursor:pointer;margin-top:6px;padding:13px 40px;border-radius:var(--rad,0px);background:var(--or,#c9a24b);color:var(--bg,#0a0a08);font-size:12px;letter-spacing:3px;width:fit-content" style-hover="background:var(--orClair,#e0be6d)">{{ t.aemporterCta }}</div>
+    </div>
+    <div style="height:clamp(260px,42vw,420px)"><image-slot id="site-aemporter-hero" src="./images/a_emporter.PNG" class="cms-editable" data-cms-name="À emporter — Photo" shape="rect" placeholder="{{ t.phAEmporter }}"></image-slot></div>
+  </div>
+  <div class="reveal" style="max-width:1100px;margin:0 auto;padding:40px 24px 100px;display:grid;grid-template-columns:repeat(auto-fit,minmax(min(280px,100%),1fr));gap:1px;background:color-mix(in srgb,var(--or,#c9a24b) 30%,transparent);border:1px solid color-mix(in srgb,var(--or,#c9a24b) 30%,transparent)">
+    <div style="background:var(--bg2,#0f0e0b);padding:36px;display:flex;flex-direction:column;gap:14px">
+      <div style="font-size:11px;letter-spacing:4px;color:var(--or,#c9a24b)">{{ t.hoursEyebrow }}</div>
+      <div style="font-weight:300;font-size:14.5px;line-height:2;color:color-mix(in srgb,var(--txt,#f2ede3) 80%,transparent)">{{ t.aemporterHoursText }}<br>{{ t.aemporterHoursLunch }}<br>{{ t.aemporterHoursDinner }}</div>
+    </div>
+    <div style="background:var(--bg2,#0f0e0b);padding:36px;display:flex;flex-direction:column;gap:14px">
+      <div style="font-size:11px;letter-spacing:4px;color:var(--or,#c9a24b)">{{ t.aemporterOrderEyebrow }}</div>
+      <div style="font-weight:300;font-size:14.5px;line-height:2;color:color-mix(in srgb,var(--txt,#f2ede3) 80%,transparent)">{{ t.aemporterOrderText }}<br><span style="color:var(--or,#c9a24b)">{{ telephone }}</span></div>
+    </div>
+  </div>
+</main>
+</sc-if>
+
 <!-- ============ PAGE : GÎTES ============ -->
 <sc-if value="{{ pageGites }}" hint-placeholder-val="{{ false }}">
 <main style="animation:var(--anim,fadeUp) .5s ease both">
@@ -223,10 +276,10 @@
     <sc-for list="{{ gites }}" as="g" hint-placeholder-count="4">
       <div class="reveal" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(320px,100%),1fr));gap:0;border:1px solid color-mix(in srgb,var(--or,#c9a24b) 30%,transparent)">
         <div style="min-height:clamp(260px,45vw,400px);display:grid;grid-template-rows:minmax(0,1fr) 110px;grid-template-columns:repeat(3,minmax(0,1fr))">
-          <div style="grid-column:1/-1;min-height:0"><image-slot id="{{ g.slotA }}" class="cms-editable" data-cms-name="{{ g.phA }}" shape="rect" placeholder="{{ g.phA }}"></image-slot></div>
-          <div style="border-top:1px solid color-mix(in srgb,var(--or,#c9a24b) 30%,transparent)"><image-slot id="{{ g.slotB }}" class="cms-editable" data-cms-name="{{ g.nom }} — Détail 1" shape="rect" placeholder="{{ t.gitesDetail1 }}"></image-slot></div>
-          <div style="border-top:1px solid color-mix(in srgb,var(--or,#c9a24b) 30%,transparent);border-left:1px solid color-mix(in srgb,var(--or,#c9a24b) 30%,transparent)"><image-slot id="{{ g.slotC }}" class="cms-editable" data-cms-name="{{ g.nom }} — Détail 2" shape="rect" placeholder="{{ t.gitesDetail2 }}"></image-slot></div>
-          <div style="border-top:1px solid color-mix(in srgb,var(--or,#c9a24b) 30%,transparent);border-left:1px solid color-mix(in srgb,var(--or,#c9a24b) 30%,transparent)"><image-slot id="{{ g.slotD }}" class="cms-editable" data-cms-name="{{ g.nom }} — Détail 3" shape="rect" placeholder="{{ t.gitesDetail3 }}"></image-slot></div>
+          <div style="grid-column:1/-1;min-height:0"><image-slot id="{{ g.slotA }}" src="{{ g.srcA }}" class="cms-editable" data-cms-name="{{ g.phA }}" shape="rect" placeholder="{{ g.phA }}"></image-slot></div>
+          <div style="border-top:1px solid color-mix(in srgb,var(--or,#c9a24b) 30%,transparent)"><image-slot id="{{ g.slotB }}" src="{{ g.srcB }}" class="cms-editable" data-cms-name="{{ g.nom }} — Détail 1" shape="rect" placeholder="{{ t.gitesDetail1 }}"></image-slot></div>
+          <div style="border-top:1px solid color-mix(in srgb,var(--or,#c9a24b) 30%,transparent);border-left:1px solid color-mix(in srgb,var(--or,#c9a24b) 30%,transparent)"><image-slot id="{{ g.slotC }}" src="{{ g.srcC }}" class="cms-editable" data-cms-name="{{ g.nom }} — Détail 2" shape="rect" placeholder="{{ t.gitesDetail2 }}"></image-slot></div>
+          <div style="border-top:1px solid color-mix(in srgb,var(--or,#c9a24b) 30%,transparent);border-left:1px solid color-mix(in srgb,var(--or,#c9a24b) 30%,transparent)"><image-slot id="{{ g.slotD }}" src="{{ g.srcD }}" class="cms-editable" data-cms-name="{{ g.nom }} — Détail 3" shape="rect" placeholder="{{ t.gitesDetail3 }}"></image-slot></div>
         </div>
         <div style="padding:44px 46px;display:flex;flex-direction:column;gap:18px;justify-content:center;background:var(--bg2,#0f0e0b)">
           <div style="display:flex;align-items:baseline;gap:14px"><span style="font-family:var(--serif,'Cormorant Garamond',serif);font-size:15px;color:var(--or,#c9a24b)">{{ g.num }}</span><span style="font-family:var(--serif,'Cormorant Garamond',serif);font-size:32px">{{ g.nom }}</span></div>
@@ -304,6 +357,49 @@
     </div>
     <div style="height:clamp(280px,50vw,520px)"><image-slot id="site-contact" class="cms-editable" data-cms-name="Contact — Photo" shape="rect" placeholder="{{ t.phContact }}"></image-slot></div>
   </div>
+  <div class="reveal" style="max-width:700px;margin:0 auto;padding:0 24px 110px;display:flex;flex-direction:column;gap:26px">
+    <div style="display:flex;align-items:center;gap:18px"><div style="flex:1;height:1px;background:color-mix(in srgb,var(--or,#c9a24b) 30%,transparent)"></div><div style="font-family:var(--serif,'Cormorant Garamond',serif);font-size:24px;font-style:italic;color:var(--or,#c9a24b)">{{ t.formSendBtn }}</div><div style="flex:1;height:1px;background:color-mix(in srgb,var(--or,#c9a24b) 30%,transparent)"></div></div>
+    <form onSubmit="{{ submitContactForm }}" class="contact-form" style="display:flex;flex-direction:column;gap:22px">
+      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(220px,100%),1fr));gap:22px">
+        <div style="display:flex;flex-direction:column;gap:8px">
+          <label style="font-size:11px;letter-spacing:3px;color:var(--or,#c9a24b)">{{ t.formNameLabel }}</label>
+          <input type="text" required value="{{ formNom }}" onInput="{{ onFormNom }}" placeholder="{{ t.formNamePh }}">
+        </div>
+        <div style="display:flex;flex-direction:column;gap:8px">
+          <label style="font-size:11px;letter-spacing:3px;color:var(--or,#c9a24b)">{{ t.formFirstNameLabel }}</label>
+          <input type="text" required value="{{ formPrenom }}" onInput="{{ onFormPrenom }}" placeholder="{{ t.formFirstNamePh }}">
+        </div>
+      </div>
+      <div style="display:flex;flex-direction:column;gap:8px">
+        <label style="font-size:11px;letter-spacing:3px;color:var(--or,#c9a24b)">{{ t.formEmailLabel }}</label>
+        <input type="email" required value="{{ formEmail }}" onInput="{{ onFormEmail }}" placeholder="{{ t.formEmailPh }}">
+      </div>
+      <div style="display:flex;flex-direction:column;gap:8px">
+        <label style="font-size:11px;letter-spacing:3px;color:var(--or,#c9a24b)">{{ t.formMessageLabel }}</label>
+        <textarea required rows="5" value="{{ formMessage }}" onInput="{{ onFormMessage }}" placeholder="{{ t.formMessagePh }}"></textarea>
+      </div>
+      <button type="submit" style="cursor:pointer;align-self:flex-start;padding:13px 40px;border-radius:var(--rad,0px);background:var(--or,#c9a24b);border:none;color:var(--bg,#0a0a08);font-family:inherit;font-size:12px;letter-spacing:3px" style-hover="background:var(--orClair,#e0be6d)">{{ t.formSendBtn }}</button>
+      <div style="font-weight:300;font-size:12.5px;color:color-mix(in srgb,var(--txt,#f2ede3) 50%,transparent);line-height:1.7">{{ t.formNote }}</div>
+    </form>
+  </div>
+</main>
+</sc-if>
+
+<!-- ============ PAGE : RECRUTEMENT (accessible depuis le pied de page) ============ -->
+<sc-if value="{{ pageRecrutement }}" hint-placeholder-val="{{ false }}">
+<main style="animation:var(--anim,fadeUp) .5s ease both">
+  <div class="reveal" style="max-width:760px;margin:0 auto;padding:90px 24px 100px;display:flex;flex-direction:column;align-items:center;gap:20px;text-align:center">
+    <div style="font-size:11px;letter-spacing:6px;color:var(--or,#c9a24b)">{{ t.recruitEyebrow }}</div>
+    <div style="font-family:var(--serif,'Cormorant Garamond',serif);font-size:clamp(36px,5vw,52px);font-weight:500">{{ t.recruitTitle }}</div>
+    <div style="font-weight:300;font-size:16px;color:var(--or,#c9a24b)">{{ t.recruitTagline }}</div>
+    <div style="width:50px;height:1px;background:var(--or,#c9a24b);margin-top:2px"></div>
+    <div style="font-weight:300;font-size:15px;color:color-mix(in srgb,var(--txt,#f2ede3) 70%,transparent);line-height:1.9;max-width:600px">{{ t.recruitParagraph }}</div>
+    <div style="display:flex;flex-direction:column;gap:4px;margin-top:12px">
+      <div style="font-size:11px;letter-spacing:3px;color:var(--or,#c9a24b)">{{ t.recruitEmailNote }}</div>
+      <div style="font-weight:300;font-size:17px">{{ email }}</div>
+    </div>
+    <div onClick="{{ goContact }}" style="cursor:pointer;margin-top:10px;padding:13px 40px;border-radius:var(--rad,0px);background:var(--or,#c9a24b);color:var(--bg,#0a0a08);font-size:12px;letter-spacing:3px" style-hover="background:var(--orClair,#e0be6d)">{{ t.recruitCta }}</div>
+  </div>
 </main>
 </sc-if>
 
@@ -313,22 +409,27 @@
   <div style="font-family:var(--serif,'Cormorant Garamond',serif);font-size:18px;letter-spacing:3px;color:var(--txt,#f2ede3);display:flex;gap:8px"><span>{{ nomNavA }}</span><span style="color:var(--or,#c9a24b)">{{ nomNavB }}</span></div>
   <div style="display:flex;gap:28px;font-size:11px;letter-spacing:2.5px;color:color-mix(in srgb,var(--txt,#f2ede3) 60%,transparent);flex-wrap:wrap">
     <div onClick="{{ goRestaurant }}" style="cursor:pointer" style-hover="color:var(--or,#c9a24b)">{{ t.navRestaurant }}</div>
+    <div onClick="{{ goAEmporter }}" style="cursor:pointer" style-hover="color:var(--or,#c9a24b)">{{ t.navAEmporter }}</div>
     <div onClick="{{ goGites }}" style="cursor:pointer" style-hover="color:var(--or,#c9a24b)">{{ t.navGites }}</div>
     <div onClick="{{ goSpa }}" style="cursor:pointer" style-hover="color:var(--or,#c9a24b)">{{ t.navSpa }}</div>
     <div onClick="{{ goContact }}" style="cursor:pointer" style-hover="color:var(--or,#c9a24b)">{{ t.navContact }}</div>
+    <div onClick="{{ goRecrutement }}" style="cursor:pointer" style-hover="color:var(--or,#c9a24b)">{{ t.footerRecrutement }}</div>
   </div>
   <div style="font-weight:300;font-size:12px;color:color-mix(in srgb,var(--txt,#f2ede3) 40%,transparent)">{{ adresse }} · {{ telephone }}</div>
 </footer>
 </div>
 <div style="width:0;height:0;overflow:hidden;position:absolute"><x-import component-from-global-scope="image-slot" from="./image-slot.js" style="width:0;height:0" hint-size="0,0"></x-import></div>
 </x-dc>
-<script type="text/x-dc" data-dc-script data-props="{&quot;couleurOr&quot;:{&quot;editor&quot;:&quot;color&quot;,&quot;default&quot;:&quot;#c9a24b&quot;,&quot;options&quot;:[&quot;#c9a24b&quot;,&quot;#d4c07a&quot;,&quot;#b08d3e&quot;,&quot;#8f6b2a&quot;],&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;Couleurs&quot;},&quot;couleurFond&quot;:{&quot;editor&quot;:&quot;color&quot;,&quot;default&quot;:&quot;#0a0a08&quot;,&quot;options&quot;:[&quot;#0a0a08&quot;,&quot;#050505&quot;,&quot;#12100e&quot;,&quot;#101014&quot;],&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;Couleurs&quot;},&quot;couleurFondCartes&quot;:{&quot;editor&quot;:&quot;color&quot;,&quot;default&quot;:&quot;#171410&quot;,&quot;options&quot;:[&quot;#0f0e0b&quot;,&quot;#171410&quot;,&quot;#0b0b0b&quot;,&quot;#181820&quot;],&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;Couleurs&quot;},&quot;couleurTexte&quot;:{&quot;editor&quot;:&quot;color&quot;,&quot;default&quot;:&quot;#f2ede3&quot;,&quot;options&quot;:[&quot;#f2ede3&quot;,&quot;#ffffff&quot;,&quot;#e9e2d0&quot;,&quot;#efe8db&quot;],&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;Couleurs&quot;},&quot;policeTitres&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;default&quot;:&quot;Cormorant Garamond&quot;,&quot;options&quot;:[&quot;Cormorant Garamond&quot;,&quot;Playfair Display&quot;,&quot;Marcellus&quot;,&quot;EB Garamond&quot;],&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;Typographie&quot;},&quot;policeTexte&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;default&quot;:&quot;Montserrat&quot;,&quot;options&quot;:[&quot;Jost&quot;,&quot;Montserrat&quot;,&quot;Lato&quot;,&quot;Raleway&quot;],&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;Typographie&quot;},&quot;coinsArrondis&quot;:{&quot;editor&quot;:&quot;range&quot;,&quot;default&quot;:4,&quot;min&quot;:0,&quot;max&quot;:24,&quot;step&quot;:1,&quot;unit&quot;:&quot;px&quot;,&quot;tsType&quot;:&quot;number&quot;,&quot;section&quot;:&quot;Typographie&quot;},&quot;nomDomaine&quot;:{&quot;editor&quot;:&quot;text&quot;,&quot;default&quot;:&quot;Le Méandre&quot;,&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;Navigation&quot;},&quot;boutonContact&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;default&quot;:&quot;contour&quot;,&quot;options&quot;:[&quot;contour&quot;,&quot;plein&quot;],&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;Navigation&quot;},&quot;logoMonogramme&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:false,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;Navigation&quot;},&quot;voileHero&quot;:{&quot;editor&quot;:&quot;range&quot;,&quot;default&quot;:0.5,&quot;min&quot;:0.2,&quot;max&quot;:0.85,&quot;step&quot;:0.05,&quot;tsType&quot;:&quot;number&quot;,&quot;section&quot;:&quot;Accueil&quot;},&quot;heroPleinEcran&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;Accueil&quot;},&quot;afficherAnnee&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;Accueil&quot;},&quot;anneeFondation&quot;:{&quot;editor&quot;:&quot;int&quot;,&quot;default&quot;:2026,&quot;min&quot;:1600,&quot;max&quot;:2026,&quot;tsType&quot;:&quot;number&quot;,&quot;section&quot;:&quot;Accueil&quot;},&quot;afficherPrix&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;Restaurant&quot;},&quot;nbPhotosCarrousel&quot;:{&quot;editor&quot;:&quot;int&quot;,&quot;default&quot;:5,&quot;min&quot;:3,&quot;max&quot;:8,&quot;tsType&quot;:&quot;number&quot;,&quot;section&quot;:&quot;Restaurant&quot;},&quot;carrouselAuto&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;Restaurant&quot;},&quot;carrouselIntervalle&quot;:{&quot;editor&quot;:&quot;range&quot;,&quot;default&quot;:4,&quot;min&quot;:2,&quot;max&quot;:10,&quot;step&quot;:1,&quot;unit&quot;:&quot;s&quot;,&quot;tsType&quot;:&quot;number&quot;,&quot;section&quot;:&quot;Restaurant&quot;},&quot;animations&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;Ambiance&quot;},&quot;vignette&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:false,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;Ambiance&quot;},&quot;telephone&quot;:{&quot;editor&quot;:&quot;text&quot;,&quot;default&quot;:&quot;+33 3 21 45 78 90&quot;,&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;Coordonnées&quot;},&quot;email&quot;:{&quot;editor&quot;:&quot;text&quot;,&quot;default&quot;:&quot;contact@lemeandre.fr&quot;,&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;Coordonnées&quot;},&quot;adresse&quot;:{&quot;editor&quot;:&quot;text&quot;,&quot;default&quot;:&quot;15 Rue De La Course - 62170 Estrée&quot;,&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;Coordonnées&quot;}}">
+<script type="text/x-dc" data-dc-script data-props="{&quot;couleurOr&quot;:{&quot;editor&quot;:&quot;color&quot;,&quot;default&quot;:&quot;#c9a24b&quot;,&quot;options&quot;:[&quot;#c9a24b&quot;,&quot;#d4c07a&quot;,&quot;#b08d3e&quot;,&quot;#8f6b2a&quot;],&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;Couleurs&quot;},&quot;couleurFond&quot;:{&quot;editor&quot;:&quot;color&quot;,&quot;default&quot;:&quot;#0a0a08&quot;,&quot;options&quot;:[&quot;#0a0a08&quot;,&quot;#050505&quot;,&quot;#12100e&quot;,&quot;#101014&quot;],&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;Couleurs&quot;},&quot;couleurFondCartes&quot;:{&quot;editor&quot;:&quot;color&quot;,&quot;default&quot;:&quot;#171410&quot;,&quot;options&quot;:[&quot;#0f0e0b&quot;,&quot;#171410&quot;,&quot;#0b0b0b&quot;,&quot;#181820&quot;],&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;Couleurs&quot;},&quot;couleurTexte&quot;:{&quot;editor&quot;:&quot;color&quot;,&quot;default&quot;:&quot;#f2ede3&quot;,&quot;options&quot;:[&quot;#f2ede3&quot;,&quot;#ffffff&quot;,&quot;#e9e2d0&quot;,&quot;#efe8db&quot;],&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;Couleurs&quot;},&quot;policeTitres&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;default&quot;:&quot;Cormorant Garamond&quot;,&quot;options&quot;:[&quot;Cormorant Garamond&quot;,&quot;Playfair Display&quot;,&quot;Marcellus&quot;,&quot;EB Garamond&quot;],&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;Typographie&quot;},&quot;policeTexte&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;default&quot;:&quot;Montserrat&quot;,&quot;options&quot;:[&quot;Jost&quot;,&quot;Montserrat&quot;,&quot;Lato&quot;,&quot;Raleway&quot;],&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;Typographie&quot;},&quot;coinsArrondis&quot;:{&quot;editor&quot;:&quot;range&quot;,&quot;default&quot;:4,&quot;min&quot;:0,&quot;max&quot;:24,&quot;step&quot;:1,&quot;unit&quot;:&quot;px&quot;,&quot;tsType&quot;:&quot;number&quot;,&quot;section&quot;:&quot;Typographie&quot;},&quot;nomDomaine&quot;:{&quot;editor&quot;:&quot;text&quot;,&quot;default&quot;:&quot;Le Méandre&quot;,&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;Navigation&quot;},&quot;boutonContact&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;default&quot;:&quot;contour&quot;,&quot;options&quot;:[&quot;contour&quot;,&quot;plein&quot;],&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;Navigation&quot;},&quot;logoMonogramme&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:false,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;Navigation&quot;},&quot;voileHero&quot;:{&quot;editor&quot;:&quot;range&quot;,&quot;default&quot;:0.5,&quot;min&quot;:0.2,&quot;max&quot;:0.85,&quot;step&quot;:0.05,&quot;tsType&quot;:&quot;number&quot;,&quot;section&quot;:&quot;Accueil&quot;},&quot;heroPleinEcran&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;Accueil&quot;},&quot;afficherAnnee&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;Accueil&quot;},&quot;anneeFondation&quot;:{&quot;editor&quot;:&quot;int&quot;,&quot;default&quot;:2026,&quot;min&quot;:1600,&quot;max&quot;:2026,&quot;tsType&quot;:&quot;number&quot;,&quot;section&quot;:&quot;Accueil&quot;},&quot;afficherPrix&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;Restaurant&quot;},&quot;nbPhotosCarrousel&quot;:{&quot;editor&quot;:&quot;int&quot;,&quot;default&quot;:5,&quot;min&quot;:3,&quot;max&quot;:8,&quot;tsType&quot;:&quot;number&quot;,&quot;section&quot;:&quot;Restaurant&quot;},&quot;carrouselAuto&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;Restaurant&quot;},&quot;carrouselIntervalle&quot;:{&quot;editor&quot;:&quot;range&quot;,&quot;default&quot;:4,&quot;min&quot;:2,&quot;max&quot;:10,&quot;step&quot;:1,&quot;unit&quot;:&quot;s&quot;,&quot;tsType&quot;:&quot;number&quot;,&quot;section&quot;:&quot;Restaurant&quot;},&quot;animations&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;Ambiance&quot;},&quot;vignette&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:false,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;Ambiance&quot;},&quot;telephone&quot;:{&quot;editor&quot;:&quot;text&quot;,&quot;default&quot;:&quot;+33 3 21 45 78 90&quot;,&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;Coordonnées&quot;},&quot;email&quot;:{&quot;editor&quot;:&quot;text&quot;,&quot;default&quot;:&quot;contact@lemeandre.com&quot;,&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;Coordonnées&quot;},&quot;adresse&quot;:{&quot;editor&quot;:&quot;text&quot;,&quot;default&quot;:&quot;15 Rue De La Course - 62170 Estrée&quot;,&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;Coordonnées&quot;}}">
 // Le comportement du site (navigation entre pages, carrousel, langue, écran
 // de chargement, révélation au scroll). Le contenu/textes vivent dans
 // site-data.js (window.MEANDRE_*) ; ce fichier ne fait que les mettre en
 // forme selon la page et la langue courantes.
 class Component extends DCLogic {
-  state = { page: 'accueil', car: 0, lang: 'fr', loading: true, menuOpen: false };
+  static LANGS = ['fr', 'en', 'de', 'es', 'nl'];
+
+  state = { page: 'accueil', car: 0, lang: 'fr', loading: true, menuOpen: false, langOpen: false,
+    formNom: '', formPrenom: '', formEmail: '', formMessage: '' };
 
   // ── Cycle de vie ──
   componentDidMount() {
@@ -345,8 +446,27 @@ class Component extends DCLogic {
 
   // ── Navigation entre pages ──
   go(page) { this.setState({ page, menuOpen: false }); window.scrollTo(0, 0); }
-  toggleLang() { this.setState(s => ({ lang: (s.lang ?? 'fr') === 'fr' ? 'en' : 'fr' })); }
+  setLang(lang) { this.setState({ lang, langOpen: false }); }
+  toggleLangMenu() { this.setState(s => ({ langOpen: !(s.langOpen ?? false) })); }
   toggleMenu() { this.setState(s => ({ menuOpen: !(s.menuOpen ?? false) })); }
+
+  // ── Formulaire de contact : pas de backend (site statique) → on ouvre le
+  //    client mail de l'utilisateur avec un message pré-rempli (mailto:). ──
+  _submitContactForm() {
+    const nom = (this.state.formNom || '').trim();
+    const prenom = (this.state.formPrenom || '').trim();
+    const email = (this.state.formEmail || '').trim();
+    const message = (this.state.formMessage || '').trim();
+    const to = this.props.email ?? 'contact@lemeandre.com';
+    const subject = 'Message depuis le site — ' + (prenom || nom || 'Contact');
+    const bodyLines = [
+      'Nom : ' + nom, 'Prénom : ' + prenom, 'Email : ' + email, '', message
+    ];
+    const url = 'mailto:' + encodeURIComponent(to) +
+      '?subject=' + encodeURIComponent(subject) +
+      '&body=' + encodeURIComponent(bodyLines.join('\n'));
+    window.location.href = url;
+  }
 
   // ── Carrousel photo (page Restaurant) ──
   _startCarouselAutoplay() {
@@ -502,10 +622,23 @@ class Component extends DCLogic {
   _localizedContent(lang) {
     const t = MEANDRE_UI[lang];
     const menu = MEANDRE_MENU.map(cat => ({ nom: cat.nom[lang], plats: cat.plats.map(pl => ({ nom: pl.nom[lang], desc: pl.desc[lang], prix: pl.prix })) }));
-    const gites = MEANDRE_GITES.map(g => ({ num: g.num, nom: g.nom[lang], capacite: g.capacite[lang], desc: g.desc[lang], equip: g.equip[lang], slotA: g.slotA, slotB: g.slotB, slotC: g.slotC, slotD: g.slotD, phA: g.phA[lang] }));
-    const spas = MEANDRE_SPAS.map(s => ({ nom: s.nom[lang], sur: s.sur[lang], desc: s.desc[lang], info: s.info[lang], slot: s.slot, ph: s.ph[lang], dir: s.dir }));
-    const pool = MEANDRE_POOL.map(x => ({ slot: x.slot, ph: x.ph[lang] }));
+    const gites = MEANDRE_GITES.map(g => ({ num: g.num, nom: g.nom[lang], capacite: g.capacite[lang], desc: g.desc[lang], equip: g.equip[lang], slotA: g.slotA, slotB: g.slotB, slotC: g.slotC, slotD: g.slotD, srcA: g.srcA || '', srcB: g.srcB || '', srcC: g.srcC || '', srcD: g.srcD || '', phA: g.phA[lang] }));
+    const spas = MEANDRE_SPAS.map(s => ({ nom: s.nom[lang], sur: s.sur[lang], desc: s.desc[lang], info: s.info[lang], slot: s.slot, src: s.src || '', ph: s.ph[lang], dir: s.dir }));
+    const pool = MEANDRE_POOL.map(x => ({ slot: x.slot, src: x.src || '', ph: x.ph[lang] }));
     return { t, menu, gites, spas, pool };
+  }
+
+  // ── Bandeau photo défilant : toutes les photos déposées sur le site,
+  //    dans l'ordre restaurant → gîtes → spa, recalculé depuis les mêmes
+  //    données sources (donc toujours à jour si une photo est ajoutée). ──
+  _marqueeVals() {
+    const restaurantImgs = MEANDRE_POOL.map(x => x.src).filter(Boolean);
+    const gitesImgs = MEANDRE_GITES.flatMap(g => [g.srcA, g.srcB, g.srcC, g.srcD]).filter(Boolean);
+    const spaImgs = MEANDRE_SPAS.map(s => s.src).filter(Boolean);
+    const images = [...restaurantImgs, ...gitesImgs, ...spaImgs];
+    // Doublé pour boucler sans coupure (l'animation CSS défile de 0% à -50%).
+    const marqueeImages = [...images, ...images].map((src, i) => ({ src, key: i }));
+    return { marqueeImages };
   }
 
   // ── Page courante : surbrillance du lien de nav actif + booléens sc-if. ──
@@ -515,9 +648,10 @@ class Component extends DCLogic {
       b: page === key ? 'var(--or,#c9a24b)' : 'transparent',
     });
     return {
-      pageAccueil: page === 'accueil', pageRestaurant: page === 'restaurant', pageGites: page === 'gites', pageSpa: page === 'spa', pageContact: page === 'contact',
-      goAccueil: () => this.go('accueil'), goRestaurant: () => this.go('restaurant'), goGites: () => this.go('gites'), goSpa: () => this.go('spa'), goContact: () => this.go('contact'),
+      pageAccueil: page === 'accueil', pageRestaurant: page === 'restaurant', pageAEmporter: page === 'aemporter', pageGites: page === 'gites', pageSpa: page === 'spa', pageContact: page === 'contact', pageRecrutement: page === 'recrutement',
+      goAccueil: () => this.go('accueil'), goRestaurant: () => this.go('restaurant'), goAEmporter: () => this.go('aemporter'), goGites: () => this.go('gites'), goSpa: () => this.go('spa'), goContact: () => this.go('contact'), goRecrutement: () => this.go('recrutement'),
       cRestaurant: highlight('restaurant').c, bRestaurant: highlight('restaurant').b,
+      cAEmporter: highlight('aemporter').c, bAEmporter: highlight('aemporter').b,
       cGites: highlight('gites').c, bGites: highlight('gites').b,
       cSpa: highlight('spa').c, bSpa: highlight('spa').b,
     };
@@ -525,9 +659,11 @@ class Component extends DCLogic {
 
   // ── Composition finale : assemble toutes les valeurs pour le gabarit. ──
   renderVals() {
-    const lang = this.state.lang === 'en' ? 'en' : 'fr';
+    const lang = Component.LANGS.includes(this.state.lang) ? this.state.lang : 'fr';
     const content = this._localizedContent(lang);
     const contactStyle = this.props.boutonContact ?? 'contour';
+    const LANG_LABELS = { fr: 'FR', en: 'EN', de: 'DE', es: 'ES', nl: 'NL' };
+    const langOpen = this.state.langOpen ?? false;
     return {
       ...this._themeVals(),
       ...this._identityVals(content.t),
@@ -535,15 +671,26 @@ class Component extends DCLogic {
       ...this._navVals(this.state.page),
       ...this._loaderVals(),
       ...this._carouselVals(content.pool),
+      ...this._marqueeVals(),
       afficherPrix: this.props.afficherPrix ?? true,
       telephone: this.props.telephone ?? '+33 3 21 45 78 90',
-      email: this.props.email ?? 'contact@lemeandre.fr',
+      email: this.props.email ?? 'contact@lemeandre.com',
       adresse: this.props.adresse ?? '12 route des Étangs, 62170 Estrée',
       contactPlein: contactStyle === 'plein', contactContour: contactStyle !== 'plein',
-      toggleLang: () => this.toggleLang(),
+      langCurrent: LANG_LABELS[lang],
+      langOpen, langClosed: !langOpen,
+      langOptions: Component.LANGS.filter(l => l !== lang).map(l => ({ code: l, label: LANG_LABELS[l], set: () => this.setLang(l) })),
+      toggleLangMenu: () => this.toggleLangMenu(),
       menuOpen: this.state.menuOpen ?? false, menuClosed: !(this.state.menuOpen ?? false),
       menuOpenSuffix: (this.state.menuOpen ?? false) ? ' is-open' : '',
       toggleMenu: () => this.toggleMenu(),
+      formNom: this.state.formNom ?? '', formPrenom: this.state.formPrenom ?? '',
+      formEmail: this.state.formEmail ?? '', formMessage: this.state.formMessage ?? '',
+      onFormNom: (e) => this.setState({ formNom: e.target.value }),
+      onFormPrenom: (e) => this.setState({ formPrenom: e.target.value }),
+      onFormEmail: (e) => this.setState({ formEmail: e.target.value }),
+      onFormMessage: (e) => this.setState({ formMessage: e.target.value }),
+      submitContactForm: (e) => { e.preventDefault(); this._submitContactForm(); },
     };
   }
 }
