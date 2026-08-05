@@ -37,7 +37,7 @@ window.MEANDRE_UI = {
     heroTagline: "Restaurant, gîte et spa dans un ancien relais chargé d'histoire, au cœur de la Vallée de la Course.",
     cardRestTitle: 'Le Restaurant', cardRestDesc: 'Une cuisine raffinée entre terre et mer, au fil des saisons.',
     cardGitesTitle: 'Le Gîte', cardGitesDesc: "Quatre chambres indépendantes, à réserver séparément, au sein d'une même maison.",
-    cardSpaTitle: 'Le Spa', cardSpaDesc: 'Une piscine intérieure, dans une quiétude absolue.',
+    cardSpaTitle: 'Le Spa', cardSpaDesc: 'Un spa, dans une quiétude absolue.',
     discover: 'DÉCOUVRIR →',
     artEyebrow: 'ESTRÉE · VALLÉE DE LA COURSE', artTitle1: 'Bienvenue', artTitle2: 'au Méandre',
     artPara1: "Au cœur de la Vallée de la Course, à Estrée, Le Méandre vous accueille dans un lieu chargé d'histoire, où l'art de recevoir se transmet depuis plusieurs années.",
@@ -91,8 +91,8 @@ window.MEANDRE_UI = {
     sceneProjectLabel: 'VOTRE PROJET', sceneProjectPh: 'Décrivez votre univers, votre projet, vos disponibilités…',
     sceneFormNote: "En cliquant sur envoyer, votre messagerie s'ouvrira avec ce message pré-rempli.",
     sinceWord: 'DEPUIS',
-    phHero: 'Photo du relais — vue extérieure, grand format', phAccRest: 'Plat signature', phAccGites: "Intérieur du gîte", phAccSpa: 'Piscine intérieure / spa',
-    phRestHero: 'Salle du restaurant ou plat — bandeau large', phSpaHero: 'Piscine intérieure — grand format immersif', phContact: "Photo — allée, portail ou plan d'accès",
+    phHero: 'Photo du relais — vue extérieure, grand format', phAccRest: 'Plat signature', phAccGites: "Intérieur du gîte", phAccSpa: 'Spa',
+    phRestHero: 'Salle du restaurant ou plat — bandeau large', phSpaHero: 'Spa — grand format immersif', phContact: "Photo — allée, portail ou plan d'accès",
     phAEmporter: "Affiche de l'offre à emporter du moment — format portrait"
   },
   en: {
@@ -101,7 +101,7 @@ window.MEANDRE_UI = {
     heroTagline: 'Restaurant, cottage and spa in a former coaching inn steeped in history, at the heart of the Course Valley.',
     cardRestTitle: 'The Restaurant', cardRestDesc: 'Refined, seasonal dining between land and sea.',
     cardGitesTitle: 'The Cottage', cardGitesDesc: 'Four independent rooms, bookable separately, within the same house.',
-    cardSpaTitle: 'The Spa', cardSpaDesc: 'An indoor pool, in absolute quiet.',
+    cardSpaTitle: 'The Spa', cardSpaDesc: 'A spa, in absolute quiet.',
     discover: 'DISCOVER →',
     artEyebrow: 'ESTRÉE · COURSE VALLEY', artTitle1: 'Welcome', artTitle2: 'to Le Méandre',
     artPara1: "At the heart of the Course Valley, in Estrée, Le Méandre welcomes you to a place steeped in history, where the art of hospitality has been passed down for several years.",
@@ -155,8 +155,8 @@ window.MEANDRE_UI = {
     sceneProjectLabel: 'YOUR PROJECT', sceneProjectPh: 'Describe your world, your project, your availability…',
     sceneFormNote: 'Clicking send will open your mail app with this message pre-filled.',
     sinceWord: 'SINCE',
-    phHero: 'Inn photo — exterior view, large format', phAccRest: 'Signature dish', phAccGites: 'Cottage interior', phAccSpa: 'Indoor pool / spa',
-    phRestHero: 'Dining room or dish — wide banner', phSpaHero: 'Indoor pool — large immersive format', phContact: 'Photo — driveway, gate or access map',
+    phHero: 'Inn photo — exterior view, large format', phAccRest: 'Signature dish', phAccGites: 'Cottage interior', phAccSpa: 'Spa',
+    phRestHero: 'Dining room or dish — wide banner', phSpaHero: 'Spa — large immersive format', phContact: 'Photo — driveway, gate or access map',
     phAEmporter: "Current takeaway offer poster — portrait format"
   },
   de: {
@@ -165,7 +165,7 @@ window.MEANDRE_UI = {
     heroTagline: 'Restaurant, Gîte und Spa in einer alten, geschichtsträchtigen Poststation im Herzen des Course-Tals.',
     cardRestTitle: 'Das Restaurant', cardRestDesc: 'Eine raffinierte, saisonale Küche zwischen Land und Meer.',
     cardGitesTitle: 'Das Gîte', cardGitesDesc: 'Vier unabhängige Zimmer, einzeln buchbar, im selben Haus.',
-    cardSpaTitle: 'Der Spa', cardSpaDesc: 'Ein Innenpool, in vollkommener Ruhe.',
+    cardSpaTitle: 'Der Spa', cardSpaDesc: 'Ein Spa, in vollkommener Ruhe.',
     discover: 'ENTDECKEN →',
     artEyebrow: 'ESTRÉE · COURSE-TAL', artTitle1: 'Willkommen', artTitle2: 'im Méandre',
     artPara1: 'Im Herzen des Course-Tals, in Estrée, empfängt Sie Le Méandre an einem geschichtsträchtigen Ort, an dem die Kunst der Gastfreundschaft seit mehreren Jahren weitergegeben wird.',
@@ -219,8 +219,8 @@ window.MEANDRE_UI = {
     sceneProjectLabel: 'IHR PROJEKT', sceneProjectPh: 'Beschreiben Sie Ihre Welt, Ihr Projekt, Ihre Verfügbarkeit…',
     sceneFormNote: 'Beim Klicken auf Senden öffnet sich Ihr E-Mail-Programm mit dieser vorausgefüllten Nachricht.',
     sinceWord: 'SEIT',
-    phHero: 'Foto des Gasthofs — Außenansicht, Großformat', phAccRest: 'Signature-Gericht', phAccGites: 'Inneres des Gîte', phAccSpa: 'Innenpool / Spa',
-    phRestHero: 'Speisesaal oder Gericht — breites Banner', phSpaHero: 'Innenpool — großformatig, immersiv', phContact: 'Foto — Zufahrt, Tor oder Lageplan',
+    phHero: 'Foto des Gasthofs — Außenansicht, Großformat', phAccRest: 'Signature-Gericht', phAccGites: 'Inneres des Gîte', phAccSpa: 'Spa',
+    phRestHero: 'Speisesaal oder Gericht — breites Banner', phSpaHero: 'Spa — großformatig, immersiv', phContact: 'Foto — Zufahrt, Tor oder Lageplan',
     phAEmporter: 'Plakat des aktuellen Angebots zum Mitnehmen — Hochformat'
   },
   es: {
@@ -229,7 +229,7 @@ window.MEANDRE_UI = {
     heroTagline: 'Restaurante, casa rural y spa en una antigua posada cargada de historia, en el corazón del Valle del Course.',
     cardRestTitle: 'El Restaurante', cardRestDesc: 'Una cocina refinada de temporada, entre tierra y mar.',
     cardGitesTitle: 'La Casa Rural', cardGitesDesc: 'Cuatro habitaciones independientes, reservables por separado, en la misma casa.',
-    cardSpaTitle: 'El Spa', cardSpaDesc: 'Una piscina cubierta, en una calma absoluta.',
+    cardSpaTitle: 'El Spa', cardSpaDesc: 'Un spa, en una calma absoluta.',
     discover: 'DESCUBRIR →',
     artEyebrow: 'ESTRÉE · VALLE DEL COURSE', artTitle1: 'Bienvenidos', artTitle2: 'al Méandre',
     artPara1: 'En el corazón del Valle del Course, en Estrée, Le Méandre le recibe en un lugar cargado de historia, donde el arte de recibir se transmite desde hace varios años.',
@@ -283,8 +283,8 @@ window.MEANDRE_UI = {
     sceneProjectLabel: 'SU PROYECTO', sceneProjectPh: 'Describa su universo, su proyecto, su disponibilidad…',
     sceneFormNote: 'Al hacer clic en enviar, se abrirá su aplicación de correo con este mensaje ya redactado.',
     sinceWord: 'DESDE',
-    phHero: 'Foto de la posada — vista exterior, gran formato', phAccRest: 'Plato signature', phAccGites: 'Interior de la casa rural', phAccSpa: 'Piscina cubierta / spa',
-    phRestHero: 'Sala del restaurante o plato — banner ancho', phSpaHero: 'Piscina cubierta — gran formato inmersivo', phContact: 'Foto — camino de acceso, portón o plano de acceso',
+    phHero: 'Foto de la posada — vista exterior, gran formato', phAccRest: 'Plato signature', phAccGites: 'Interior de la casa rural', phAccSpa: 'Spa',
+    phRestHero: 'Sala del restaurante o plato — banner ancho', phSpaHero: 'Spa — gran formato inmersivo', phContact: 'Foto — camino de acceso, portón o plano de acceso',
     phAEmporter: 'Cartel de la oferta actual para llevar — formato vertical'
   },
   nl: {
@@ -293,7 +293,7 @@ window.MEANDRE_UI = {
     heroTagline: 'Restaurant, gîte en spa in een voormalige pleisterplaats vol geschiedenis, in het hart van de Course-vallei.',
     cardRestTitle: 'Het Restaurant', cardRestDesc: 'Een verfijnde, seizoensgebonden keuken tussen land en zee.',
     cardGitesTitle: 'De Gîte', cardGitesDesc: 'Vier onafhankelijke kamers, apart te boeken, in hetzelfde huis.',
-    cardSpaTitle: 'De Spa', cardSpaDesc: 'Een binnenzwembad, in volstrekte rust.',
+    cardSpaTitle: 'De Spa', cardSpaDesc: 'Een spa, in volstrekte rust.',
     discover: 'ONTDEKKEN →',
     artEyebrow: 'ESTRÉE · COURSE-VALLEI', artTitle1: 'Welkom', artTitle2: 'bij Le Méandre',
     artPara1: 'In het hart van de Course-vallei, in Estrée, verwelkomt Le Méandre u op een plek vol geschiedenis, waar de kunst van gastvrijheid al enkele jaren wordt doorgegeven.',
@@ -347,8 +347,8 @@ window.MEANDRE_UI = {
     sceneProjectLabel: 'UW PROJECT', sceneProjectPh: 'Beschrijf uw wereld, uw project, uw beschikbaarheid…',
     sceneFormNote: 'Als u op verzenden klikt, wordt uw e-mailprogramma geopend met dit vooraf ingevulde bericht.',
     sinceWord: 'SINDS',
-    phHero: 'Foto van de herberg — buitenaanzicht, groot formaat', phAccRest: 'Signature gerecht', phAccGites: 'Interieur van de gîte', phAccSpa: 'Binnenzwembad / spa',
-    phRestHero: 'Eetzaal of gerecht — brede banner', phSpaHero: 'Binnenzwembad — groot immersief formaat', phContact: 'Foto — oprijlaan, poort of toegangsplan',
+    phHero: 'Foto van de herberg — buitenaanzicht, groot formaat', phAccRest: 'Signature gerecht', phAccGites: 'Interieur van de gîte', phAccSpa: 'Spa',
+    phRestHero: 'Eetzaal of gerecht — brede banner', phSpaHero: 'Spa — groot immersief formaat', phContact: 'Foto — oprijlaan, poort of toegangsplan',
     phAEmporter: 'Poster van het huidige afhaalaanbod — staand formaat'
   }
 };
@@ -403,13 +403,13 @@ window.MEANDRE_GITES = [
     phA: { fr: 'Chambre 4 — vue', en: 'Room 4 — view', de: 'Zimmer 4 — Ansicht', es: 'Habitación 4 — vista', nl: 'Kamer 4 — aanzicht' } }
 ];
 
-// ── Le spa (une piscine intérieure) ── (slot = clé de persistance de la photo déposée)
+// ── Le spa ── (slot = clé de persistance de la photo déposée)
 window.MEANDRE_SPAS = [
-  { nom: { fr: 'La Piscine intérieure', en: 'The Indoor Pool', de: 'Der Innenpool', es: 'La Piscina Interior', nl: 'Het Binnenzwembad' },
-    sur: { fr: 'BASSIN · 28°C', en: 'POOL · 82°F', de: 'BECKEN · 28°C', es: 'PISCINA · 28°C', nl: 'BAD · 28°C' },
-    desc: { fr: "Un bassin de nage de quinze mètres sous verrière, chauffé toute l'année. La lumière du jardin entre à travers les arbres ; on n'entend que l'eau.", en: 'A fifteen-metre lap pool beneath a glass roof, heated year-round. Light from the garden filters through the trees; all you hear is the water.', de: 'Ein fünfzehn Meter langes Schwimmbecken unter einem Glasdach, ganzjährig beheizt. Das Licht des Gartens fällt durch die Bäume; man hört nur das Wasser.', es: 'Una piscina de natación de quince metros bajo una cristalera, climatizada todo el año. La luz del jardín se filtra entre los árboles; solo se oye el agua.', nl: 'Een vijftien meter lang zwembad onder een glazen overkapping, het hele jaar verwarmd. Het licht van de tuin valt door de bomen; je hoort alleen het water.' },
-    info: { fr: 'Longueur 15 m · Profondeur 1,40 m', en: 'Length 15 m · Depth 1.4 m', de: 'Länge 15 m · Tiefe 1,40 m', es: 'Longitud 15 m · Profundidad 1,40 m', nl: 'Lengte 15 m · Diepte 1,40 m' },
-    slot: 'site-spa-piscine', src: '', ph: { fr: 'Piscine intérieure', en: 'Indoor pool', de: 'Innenpool', es: 'Piscina interior', nl: 'Binnenzwembad' }, dir: 'ltr' }
+  { nom: { fr: 'Le Spa', en: 'The Spa', de: 'Der Spa', es: 'El Spa', nl: 'De Spa' },
+    sur: { fr: 'DÉTENTE · EAU CHAUDE', en: 'RELAXATION · WARM WATER', de: 'ENTSPANNUNG · WARMES WASSER', es: 'RELAJACIÓN · AGUA CALIENTE', nl: 'ONTSPANNING · WARM WATER' },
+    desc: { fr: "Un spa privatif, pour se détendre en toute intimité. La lumière du jardin entre à travers les arbres ; on n'entend que l'eau.", en: 'A private spa, to unwind in complete privacy. Light from the garden filters through the trees; all you hear is the water.', de: 'Ein privater Spa, um sich in aller Ruhe zu entspannen. Das Licht des Gartens fällt durch die Bäume; man hört nur das Wasser.', es: 'Un spa privado, para relajarse con total intimidad. La luz del jardín se filtra entre los árboles; solo se oye el agua.', nl: 'Een privéspa, om in alle rust te ontspannen. Het licht van de tuin valt door de bomen; je hoort alleen het water.' },
+    info: { fr: 'Eau chauffée', en: 'Heated water', de: 'Beheiztes Wasser', es: 'Agua climatizada', nl: 'Verwarmd water' },
+    slot: 'site-spa-piscine', src: '', ph: { fr: 'Le Spa', en: 'The Spa', de: 'Der Spa', es: 'El Spa', nl: 'De Spa' }, dir: 'ltr' }
 ];
 
 // ── Réservoir de légendes pour le carrousel photo du restaurant ──
