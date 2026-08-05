@@ -25,6 +25,12 @@ a{color:var(--or,#c9a24b);text-decoration:none}a:hover{color:var(--orClair,#e0be
 .site-nav-burger{display:none}
 .site-nav-panel{display:contents !important}
 
+/* Contact + sélecteur de langue : couleurs de survol forcées ici (au lieu
+   de compter sur l'attribut style-hover du gabarit) pour garantir un texte
+   toujours lisible — sans ça le bouton peut rester jaune sur jaune. */
+.site-nav-cta:hover{background:var(--or,#c9a24b) !important;border-color:var(--or,#c9a24b) !important;color:var(--bg,#0a0a08) !important}
+.site-lang-option:hover{background:var(--or,#c9a24b) !important;color:var(--bg,#0a0a08) !important}
+
 @media (max-width:860px){
   .site-nav{padding:14px 18px;gap:12px}
   .site-nav .site-logo{font-size:17px;letter-spacing:2.5px}
@@ -75,15 +81,19 @@ a{color:var(--or,#c9a24b);text-decoration:none}a:hover{color:var(--orClair,#e0be
    Piste doublée dans le gabarit (marqueeImages = images + images) ; la
    piste défile de 0 à -50% pour boucler sans coupure visible. Pause au
    survol pour laisser le temps de regarder une photo. */
-.photo-marquee{overflow:hidden;height:104px}
-.photo-marquee-track{display:flex;width:max-content;height:100%;animation:marquee-scroll 42s linear infinite}
+/* padding vertical = marge de respiration pour que l'agrandissement au survol
+   (transform:scale, ci-dessous) ne soit pas rogné par l'overflow:hidden —
+   ce dernier reste nécessaire horizontalement pour boucler le défilement */
+.photo-marquee{overflow:hidden;padding:20px 0}
+.photo-marquee-track{display:flex;width:max-content;animation:marquee-scroll 42s linear infinite}
 .photo-marquee:hover .photo-marquee-track{animation-play-state:paused}
-.photo-marquee-item{flex:none;width:150px;height:104px;border-right:1px solid color-mix(in srgb,var(--or,#c9a24b) 20%,transparent)}
-.photo-marquee-item img{width:100%;height:100%;object-fit:cover;display:block}
+.photo-marquee-item{flex:none;width:260px;height:180px;position:relative;background:var(--bg2,#0f0e0b);border-right:1px solid color-mix(in srgb,var(--or,#c9a24b) 20%,transparent)}
+.photo-marquee-item img{width:100%;height:100%;object-fit:contain;display:block;position:relative;transition:transform .5s cubic-bezier(.22,.61,.36,1)}
+.photo-marquee-item:hover img{transform:scale(1.18);z-index:5}
 @keyframes marquee-scroll{from{transform:translateX(0)}to{transform:translateX(-50%)}}
 @media (max-width:640px){
-  .photo-marquee{height:76px}
-  .photo-marquee-item{width:110px;height:76px}
+  .photo-marquee{padding:14px 0}
+  .photo-marquee-item{width:172px;height:120px}
 }
 @media (prefers-reduced-motion:reduce){
   .photo-marquee-track{animation:none}
