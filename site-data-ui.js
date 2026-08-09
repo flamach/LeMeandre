@@ -1,35 +1,8 @@
-// Le Méandre — contenu et données du site (français + anglais).
-// Chargé en <script> classique avant que index.html n'évalue son
-// Component : tout ici est posé sur `window` pour être lu depuis
-// Component.renderVals(). C'est le fichier à modifier pour changer un texte,
-// un plat de la carte, un gîte ou une traduction — pas besoin de toucher au
-// gabarit HTML dans index.html pour ça.
-
-// ── Easing (fonctions de courbe d'animation), utilisées par l'écran de
-//    chargement dans Component._loaderVals(). ──
-window.MeandreEasing = {
-  outCubic: (t) => 1 - Math.pow(1 - t, 3),
-  inOutSine: (t) => -(Math.cos(Math.PI * t) - 1) / 2,
-  inOutCubic: (t) => (t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2),
-  clamp: (v, a, b) => Math.min(b, Math.max(a, v)),
-};
-
-// ── Tracé vectoriel du logo pour l'écran de chargement ──
-// 3 volutes qui se dessinent comme une branche qui pousse.
-// Chaque entrée : [d, largeur, début, durée] sur la progression de la scène "Tourbillon".
-window.MEANDRE_LOADER_STROKES = [
-  ['M 418 452 C 255 494, 76 432, 54 286 C 33 152, 138 42, 260 47 C 332 51, 346 112, 299 135 C 268 150, 243 128, 252 104', 9, 0.00, 0.42],
-  ['M 100 248 C 118 358, 232 414, 342 363 C 400 336, 418 292, 398 268', 8, 0.22, 0.30],
-  ['M 366 260 C 462 296, 492 396, 434 456 C 419 470, 400 466, 404 450', 8, 0.40, 0.28],
-];
-// feuilles : [x, y, rotation, échelle, début] — chacune se dessine puis se remplit
-window.MEANDRE_LOADER_LEAVES = [
-  [42, 82, -32, 1.15, 0.50], [102, 58, -4, 0.8, 0.56],
-  [398, 88, 24, 1.0, 0.60], [448, 162, 62, 0.9, 0.66],
-  [268, 332, 168, 1.0, 0.63], [150, 322, 198, 0.8, 0.70],
-];
-
-// ── Textes de l'interface (nav, en-têtes, appels à l'action, légendes) ──
+// Le Méandre — textes de l'interface (nav, en-têtes, appels à l'action,
+// légendes), FR/EN/DE/ES/NL. Chargé avant index.html ; lu par
+// Component._localizedContent() (index.html) via window.MEANDRE_UI[lang].
+// Fichier à modifier pour changer un texte ou ajouter une traduction —
+// pour un plat, un gîte, le spa ou l'agenda, voir site-data-content.js.
 window.MEANDRE_UI = {
   fr: {
     navRestaurant: 'RESTAURANT', navAEmporter: 'À EMPORTER', navGites: 'LE GÎTE', navSpa: 'SPA', navContact: 'CONTACT',
@@ -50,7 +23,7 @@ window.MEANDRE_UI = {
     artTagline: "Restaurant · Gîte · Spa",
     ctaContact: 'NOUS CONTACTER',
     eventEyebrow: 'SÉMINAIRES · MARIAGES · RÉCEPTIONS', eventTitle: "L'Événementiel",
-    eventTagline: "Le relais se prête aussi à vos temps forts : mariages champêtres, séminaires d'entreprise, réceptions privées ou repas de famille.",
+    eventTagline: "Le relais se prête aussi à vos temps forts : mariages, séminaires d'entreprise, réceptions privées ou repas de famille.",
     eventParagraph: "Salle de réception, terrasse, jardin et salon privé, cuisine du restaurant et gîte pour l'hébergement des invités : nous composons chaque événement sur mesure, du cocktail au jardin au dîner dans notre salon privé.",
     eventCta: 'DEMANDER UN DEVIS',
     restTitle: 'Le Restaurant',
@@ -61,12 +34,14 @@ window.MEANDRE_UI = {
     hoursEyebrow: 'HORAIRES', hoursText: 'Du mercredi au dimanche', hoursLunch: 'Déjeuner · 12h00 – 13h30', hoursDinner: 'Dîner · 19h30 – 21h30', hoursClosed: 'Fermé lundi et mardi',
     cuisineEyebrow: 'LA CUISINE', cuisineText: 'Raffinée · Terre et Mer', cuisineText2: 'Produits de la mer et producteurs locaux', cuisineText3: 'Carte renouvelée à chaque saison',
     resaEyebrow: 'RÉSERVATION', resaText: 'Par téléphone uniquement',
+    accessEyebrow: 'ACCÈS', accessMapCta: 'Voir l’itinéraire sur Google Maps →',
     aemporterEyebrow: 'À EMPORTER', aemporterTitle: 'La Table à Emporter', aemporterTagline: 'La cuisine du restaurant, à savourer chez vous.',
     aemporterParagraph: 'Plats mijotés, entrées et desserts préparés par notre cuisine, à récupérer sur place. La carte change selon la saison et les arrivages — appelez-nous pour connaître les plats du jour.',
     aemporterHoursText: 'Retrait du mercredi au dimanche', aemporterHoursLunch: '12h00 – 13h30', aemporterHoursDinner: '19h00 – 20h30',
     aemporterOrderEyebrow: 'COMMANDE', aemporterOrderText: 'Par téléphone, la veille de préférence', aemporterCta: 'APPELER POUR COMMANDER',
     gitesEyebrow: 'SÉJOURNER AU RELAIS', gitesTitle: 'Le Gîte',
     gitesTagline: 'Une maison restaurée avec soin, à deux pas du restaurant. Quatre chambres indépendantes, à réserver séparément, chacune avec son caractère.',
+    gitesEvCharger: 'Borne de recharge pour véhicules électriques sur place',
     gitesDetail1: 'Détail 1', gitesDetail2: 'Détail 2', gitesDetail3: 'Détail 3',
     gitesCtaTitle: 'Envie de séjourner au relais ?', gitesCtaText: 'Chaque chambre se réserve indépendamment, par téléphone ou par écrit. Nous composerons votre séjour avec vous.',
     spaEyebrow: 'SILENCE · CALME · EAU', spaTitle: 'Le Spa', spaTagline: 'Un lieu clos, feutré, réservé aux hôtes du relais.',
@@ -90,6 +65,10 @@ window.MEANDRE_UI = {
     sceneDisciplineLabel: 'DISCIPLINE', sceneDisciplinePh: 'Musique, peinture, photographie, spectacle vivant…',
     sceneProjectLabel: 'VOTRE PROJET', sceneProjectPh: 'Décrivez votre univers, votre projet, vos disponibilités…',
     sceneFormNote: "En cliquant sur envoyer, votre messagerie s'ouvrira avec ce message pré-rempli.",
+    navAgenda: 'AGENDA',
+    agendaEyebrow: 'CONCERTS · MARCHÉS · SOIRÉES', agendaTitle: "L'Agenda",
+    agendaTagline: 'Les prochains rendez-vous organisés au Méandre : soirées à thème, concerts, marchés de producteurs et moments à partager.',
+    agendaEmptyTitle: 'Aucune date pour le moment', agendaEmptyText: "Notre agenda est en préparation — revenez bientôt, ou contactez-nous pour être informé des prochains événements.",
     sinceWord: 'DEPUIS',
     phHero: 'Photo du relais — vue extérieure, grand format', phAccRest: 'Plat signature', phAccGites: "Intérieur du gîte", phAccSpa: 'Spa',
     phRestHero: 'Salle du restaurant ou plat — bandeau large', phSpaHero: 'Spa — grand format immersif', phContact: "Photo — allée, portail ou plan d'accès",
@@ -114,7 +93,7 @@ window.MEANDRE_UI = {
     artTagline: "Restaurant · Cottage · Spa",
     ctaContact: 'CONTACT US',
     eventEyebrow: 'SEMINARS · WEDDINGS · RECEPTIONS', eventTitle: 'Events',
-    eventTagline: 'The inn also lends itself to your milestone moments: countryside weddings, corporate seminars, private receptions or family gatherings.',
+    eventTagline: 'The inn also lends itself to your milestone moments: weddings, corporate seminars, private receptions or family gatherings.',
     eventParagraph: "Reception room, terrace, garden and private lounge, our restaurant's kitchen and cottage for guest accommodation: we tailor every event, from a cocktail in the garden to dinner in our private lounge.",
     eventCta: 'REQUEST A QUOTE',
     restTitle: 'The Restaurant',
@@ -125,12 +104,14 @@ window.MEANDRE_UI = {
     hoursEyebrow: 'HOURS', hoursText: 'Wednesday to Sunday', hoursLunch: 'Lunch · 12:00 – 1:30 PM', hoursDinner: 'Dinner · 7:30 – 9:30 PM', hoursClosed: 'Closed Monday and Tuesday',
     cuisineEyebrow: 'THE KITCHEN', cuisineText: 'Refined · Land and Sea', cuisineText2: 'Seafood and local producers', cuisineText3: 'Menu refreshed every season',
     resaEyebrow: 'RESERVATIONS', resaText: 'By phone only',
+    accessEyebrow: 'GETTING HERE', accessMapCta: 'View directions on Google Maps →',
     aemporterEyebrow: 'TAKEAWAY', aemporterTitle: 'Takeaway', aemporterTagline: "The restaurant's cooking, to enjoy at home.",
     aemporterParagraph: 'Slow-cooked dishes, starters and desserts prepared by our kitchen, ready for pickup. The menu changes with the season and the market — call us to hear the dishes of the day.',
     aemporterHoursText: 'Pickup Wednesday to Sunday', aemporterHoursLunch: '12:00 – 1:30 PM', aemporterHoursDinner: '7:00 – 8:30 PM',
     aemporterOrderEyebrow: 'ORDERING', aemporterOrderText: 'By phone, ideally the day before', aemporterCta: 'CALL TO ORDER',
     gitesEyebrow: 'STAY AT THE INN', gitesTitle: 'The Cottage',
     gitesTagline: "A carefully restored house, just steps from the restaurant. Four independent rooms, each bookable separately, each with its own character.",
+    gitesEvCharger: 'On-site electric vehicle charging station',
     gitesDetail1: 'Detail 1', gitesDetail2: 'Detail 2', gitesDetail3: 'Detail 3',
     gitesCtaTitle: 'Fancy a stay at the inn?', gitesCtaText: "Each room is booked independently, by phone or in writing. We'll put together your stay with you.",
     spaEyebrow: 'SILENCE · CALM · WATER', spaTitle: 'The Spa', spaTagline: 'A hushed, enclosed retreat reserved for the inn\'s guests.',
@@ -154,6 +135,10 @@ window.MEANDRE_UI = {
     sceneDisciplineLabel: 'DISCIPLINE', sceneDisciplinePh: 'Music, painting, photography, live performance…',
     sceneProjectLabel: 'YOUR PROJECT', sceneProjectPh: 'Describe your world, your project, your availability…',
     sceneFormNote: 'Clicking send will open your mail app with this message pre-filled.',
+    navAgenda: 'AGENDA',
+    agendaEyebrow: 'CONCERTS · MARKETS · EVENINGS', agendaTitle: 'The Agenda',
+    agendaTagline: "Upcoming get-togethers at Le Méandre: themed evenings, concerts, producers' markets and moments to share.",
+    agendaEmptyTitle: 'No dates just yet', agendaEmptyText: "Our agenda is being put together — check back soon, or contact us to hear about upcoming events.",
     sinceWord: 'SINCE',
     phHero: 'Inn photo — exterior view, large format', phAccRest: 'Signature dish', phAccGites: 'Cottage interior', phAccSpa: 'Spa',
     phRestHero: 'Dining room or dish — wide banner', phSpaHero: 'Spa — large immersive format', phContact: 'Photo — driveway, gate or access map',
@@ -178,7 +163,7 @@ window.MEANDRE_UI = {
     artTagline: 'Restaurant · Gîte · Spa',
     ctaContact: 'KONTAKTIEREN SIE UNS',
     eventEyebrow: 'SEMINARE · HOCHZEITEN · EMPFÄNGE', eventTitle: 'Veranstaltungen',
-    eventTagline: 'Der Gasthof eignet sich auch für Ihre besonderen Momente: Landhochzeiten, Firmenseminare, private Empfänge oder Familienfeiern.',
+    eventTagline: 'Der Gasthof eignet sich auch für Ihre besonderen Momente: Hochzeiten, Firmenseminare, private Empfänge oder Familienfeiern.',
     eventParagraph: 'Empfangssaal, Terrasse, Garten und privater Salon, die Küche unseres Restaurants und das Gîte für die Unterbringung der Gäste: Wir gestalten jede Veranstaltung individuell, vom Cocktailempfang im Garten bis zum Dinner in unserem privaten Salon.',
     eventCta: 'ANGEBOT ANFORDERN',
     restTitle: 'Das Restaurant',
@@ -189,12 +174,14 @@ window.MEANDRE_UI = {
     hoursEyebrow: 'ÖFFNUNGSZEITEN', hoursText: 'Mittwoch bis Sonntag', hoursLunch: 'Mittagessen · 12:00 – 13:30 Uhr', hoursDinner: 'Abendessen · 19:30 – 21:30 Uhr', hoursClosed: 'Montag und Dienstag geschlossen',
     cuisineEyebrow: 'DIE KÜCHE', cuisineText: 'Raffiniert · Land und Meer', cuisineText2: 'Meeresfrüchte und lokale Erzeuger', cuisineText3: 'Karte wechselt jede Saison',
     resaEyebrow: 'RESERVIERUNG', resaText: 'Nur telefonisch',
+    accessEyebrow: 'ANFAHRT', accessMapCta: 'Route auf Google Maps anzeigen →',
     aemporterEyebrow: 'ZUM MITNEHMEN', aemporterTitle: 'Gerichte zum Mitnehmen', aemporterTagline: 'Die Küche des Restaurants, zu Hause genießen.',
     aemporterParagraph: 'Geschmorte Gerichte, Vorspeisen und Desserts, zubereitet von unserer Küche und zur Abholung bereit. Die Karte ändert sich je nach Saison und Angebot — rufen Sie uns an, um die Tagesgerichte zu erfahren.',
     aemporterHoursText: 'Abholung Mittwoch bis Sonntag', aemporterHoursLunch: '12:00 – 13:30 Uhr', aemporterHoursDinner: '19:00 – 20:30 Uhr',
     aemporterOrderEyebrow: 'BESTELLUNG', aemporterOrderText: 'Telefonisch, idealerweise am Vortag', aemporterCta: 'TELEFONISCH BESTELLEN',
     gitesEyebrow: 'AUFENTHALT IM GASTHOF', gitesTitle: 'Das Gîte',
     gitesTagline: 'Ein sorgfältig restauriertes Haus, nur wenige Schritte vom Restaurant entfernt. Vier unabhängige Zimmer, jedes einzeln buchbar und mit eigenem Charakter.',
+    gitesEvCharger: 'Ladestation für Elektrofahrzeuge vor Ort',
     gitesDetail1: 'Detail 1', gitesDetail2: 'Detail 2', gitesDetail3: 'Detail 3',
     gitesCtaTitle: 'Lust auf einen Aufenthalt im Gasthof?', gitesCtaText: 'Jedes Zimmer wird unabhängig gebucht, telefonisch oder schriftlich. Wir stellen Ihren Aufenthalt gemeinsam mit Ihnen zusammen.',
     spaEyebrow: 'STILLE · RUHE · WASSER', spaTitle: 'Der Spa', spaTagline: 'Ein abgeschiedener, gedämpfter Ort, den Gästen des Gasthofs vorbehalten.',
@@ -218,6 +205,10 @@ window.MEANDRE_UI = {
     sceneDisciplineLabel: 'DISZIPLIN', sceneDisciplinePh: 'Musik, Malerei, Fotografie, darstellende Kunst…',
     sceneProjectLabel: 'IHR PROJEKT', sceneProjectPh: 'Beschreiben Sie Ihre Welt, Ihr Projekt, Ihre Verfügbarkeit…',
     sceneFormNote: 'Beim Klicken auf Senden öffnet sich Ihr E-Mail-Programm mit dieser vorausgefüllten Nachricht.',
+    navAgenda: 'AGENDA',
+    agendaEyebrow: 'KONZERTE · MÄRKTE · ABENDE', agendaTitle: 'Die Agenda',
+    agendaTagline: 'Die nächsten Termine im Méandre: Themenabende, Konzerte, Erzeugermärkte und Momente zum Teilen.',
+    agendaEmptyTitle: 'Noch keine Termine', agendaEmptyText: 'Unser Terminkalender wird gerade zusammengestellt — schauen Sie bald wieder vorbei oder kontaktieren Sie uns, um über kommende Veranstaltungen informiert zu werden.',
     sinceWord: 'SEIT',
     phHero: 'Foto des Gasthofs — Außenansicht, Großformat', phAccRest: 'Signature-Gericht', phAccGites: 'Inneres des Gîte', phAccSpa: 'Spa',
     phRestHero: 'Speisesaal oder Gericht — breites Banner', phSpaHero: 'Spa — großformatig, immersiv', phContact: 'Foto — Zufahrt, Tor oder Lageplan',
@@ -242,7 +233,7 @@ window.MEANDRE_UI = {
     artTagline: 'Restaurante · Casa Rural · Spa',
     ctaContact: 'CONTÁCTENOS',
     eventEyebrow: 'SEMINARIOS · BODAS · RECEPCIONES', eventTitle: 'Eventos',
-    eventTagline: 'La posada también se presta a sus grandes momentos: bodas campestres, seminarios de empresa, recepciones privadas o comidas familiares.',
+    eventTagline: 'La posada también se presta a sus grandes momentos: bodas, seminarios de empresa, recepciones privadas o comidas familiares.',
     eventParagraph: 'Sala de recepciones, terraza, jardín y salón privado, la cocina de nuestro restaurante y la casa rural para alojar a los invitados: diseñamos cada evento a medida, desde un cóctel en el jardín hasta la cena en nuestro salón privado.',
     eventCta: 'SOLICITAR PRESUPUESTO',
     restTitle: 'El Restaurante',
@@ -253,12 +244,14 @@ window.MEANDRE_UI = {
     hoursEyebrow: 'HORARIOS', hoursText: 'De miércoles a domingo', hoursLunch: 'Comida · 12:00 – 13:30 h', hoursDinner: 'Cena · 19:30 – 21:30 h', hoursClosed: 'Cerrado lunes y martes',
     cuisineEyebrow: 'LA COCINA', cuisineText: 'Refinada · Tierra y Mar', cuisineText2: 'Productos del mar y productores locales', cuisineText3: 'Carta renovada cada temporada',
     resaEyebrow: 'RESERVAS', resaText: 'Solo por teléfono',
+    accessEyebrow: 'CÓMO LLEGAR', accessMapCta: 'Ver ruta en Google Maps →',
     aemporterEyebrow: 'PARA LLEVAR', aemporterTitle: 'Para Llevar', aemporterTagline: 'La cocina del restaurante, para disfrutar en casa.',
     aemporterParagraph: 'Platos cocinados a fuego lento, entrantes y postres preparados por nuestra cocina, listos para recoger. La carta cambia según la temporada y el mercado — llámenos para conocer los platos del día.',
     aemporterHoursText: 'Recogida de miércoles a domingo', aemporterHoursLunch: '12:00 – 13:30 h', aemporterHoursDinner: '19:00 – 20:30 h',
     aemporterOrderEyebrow: 'PEDIDOS', aemporterOrderText: 'Por teléfono, preferiblemente el día anterior', aemporterCta: 'LLAMAR PARA PEDIR',
     gitesEyebrow: 'ALOJARSE EN LA POSADA', gitesTitle: 'La Casa Rural',
     gitesTagline: 'Una casa restaurada con esmero, a pocos pasos del restaurante. Cuatro habitaciones independientes, cada una reservable por separado y con su propio carácter.',
+    gitesEvCharger: 'Punto de recarga para vehículos eléctricos en el lugar',
     gitesDetail1: 'Detalle 1', gitesDetail2: 'Detalle 2', gitesDetail3: 'Detalle 3',
     gitesCtaTitle: '¿Le apetece alojarse en la posada?', gitesCtaText: 'Cada habitación se reserva de forma independiente, por teléfono o por escrito. Diseñaremos su estancia junto a usted.',
     spaEyebrow: 'SILENCIO · CALMA · AGUA', spaTitle: 'El Spa', spaTagline: 'Un espacio cerrado y aterciopelado, reservado a los huéspedes de la posada.',
@@ -282,6 +275,10 @@ window.MEANDRE_UI = {
     sceneDisciplineLabel: 'DISCIPLINA', sceneDisciplinePh: 'Música, pintura, fotografía, artes escénicas…',
     sceneProjectLabel: 'SU PROYECTO', sceneProjectPh: 'Describa su universo, su proyecto, su disponibilidad…',
     sceneFormNote: 'Al hacer clic en enviar, se abrirá su aplicación de correo con este mensaje ya redactado.',
+    navAgenda: 'AGENDA',
+    agendaEyebrow: 'CONCIERTOS · MERCADOS · VELADAS', agendaTitle: 'La Agenda',
+    agendaTagline: 'Las próximas citas en Le Méandre: veladas temáticas, conciertos, mercados de productores y momentos para compartir.',
+    agendaEmptyTitle: 'Sin fechas por el momento', agendaEmptyText: 'Nuestra agenda está en preparación — vuelva pronto, o contáctenos para conocer los próximos eventos.',
     sinceWord: 'DESDE',
     phHero: 'Foto de la posada — vista exterior, gran formato', phAccRest: 'Plato signature', phAccGites: 'Interior de la casa rural', phAccSpa: 'Spa',
     phRestHero: 'Sala del restaurante o plato — banner ancho', phSpaHero: 'Spa — gran formato inmersivo', phContact: 'Foto — camino de acceso, portón o plano de acceso',
@@ -306,7 +303,7 @@ window.MEANDRE_UI = {
     artTagline: 'Restaurant · Gîte · Spa',
     ctaContact: 'NEEM CONTACT OP',
     eventEyebrow: 'SEMINARS · BRUILOFTEN · RECEPTIES', eventTitle: 'Evenementen',
-    eventTagline: 'De herberg leent zich ook voor uw bijzondere momenten: landelijke bruiloften, bedrijfsseminars, privérecepties of familiediners.',
+    eventTagline: 'De herberg leent zich ook voor uw bijzondere momenten: bruiloften, bedrijfsseminars, privérecepties of familiediners.',
     eventParagraph: 'Ontvangstzaal, terras, tuin en privésalon, de keuken van ons restaurant en de gîte voor de overnachting van gasten: wij stellen elk evenement op maat samen, van een cocktail in de tuin tot een diner in onze privésalon.',
     eventCta: 'OFFERTE AANVRAGEN',
     restTitle: 'Het Restaurant',
@@ -317,12 +314,14 @@ window.MEANDRE_UI = {
     hoursEyebrow: 'OPENINGSTIJDEN', hoursText: 'Woensdag tot en met zondag', hoursLunch: 'Lunch · 12:00 – 13:30 uur', hoursDinner: 'Diner · 19:30 – 21:30 uur', hoursClosed: 'Gesloten op maandag en dinsdag',
     cuisineEyebrow: 'DE KEUKEN', cuisineText: 'Verfijnd · Land en Zee', cuisineText2: 'Zeeproducten en lokale producenten', cuisineText3: 'Kaart elk seizoen vernieuwd',
     resaEyebrow: 'RESERVERING', resaText: 'Uitsluitend telefonisch',
+    accessEyebrow: 'BEREIKBAARHEID', accessMapCta: 'Bekijk route op Google Maps →',
     aemporterEyebrow: 'AFHALEN', aemporterTitle: 'Afhaalgerechten', aemporterTagline: 'De keuken van het restaurant, thuis te genieten.',
     aemporterParagraph: 'Stoofgerechten, voorgerechten en desserts bereid door onze keuken, klaar om af te halen. De kaart verandert met het seizoen en het aanbod — bel ons voor de gerechten van de dag.',
     aemporterHoursText: 'Afhalen van woensdag tot zondag', aemporterHoursLunch: '12:00 – 13:30 uur', aemporterHoursDinner: '19:00 – 20:30 uur',
     aemporterOrderEyebrow: 'BESTELLEN', aemporterOrderText: 'Telefonisch, bij voorkeur de dag ervoor', aemporterCta: 'BEL OM TE BESTELLEN',
     gitesEyebrow: 'VERBLIJVEN IN DE HERBERG', gitesTitle: 'De Gîte',
     gitesTagline: 'Een zorgvuldig gerestaureerd huis, op enkele stappen van het restaurant. Vier onafhankelijke kamers, elk apart te boeken en met hun eigen karakter.',
+    gitesEvCharger: 'Oplaadpunt voor elektrische voertuigen ter plaatse',
     gitesDetail1: 'Detail 1', gitesDetail2: 'Detail 2', gitesDetail3: 'Detail 3',
     gitesCtaTitle: 'Zin om in de herberg te verblijven?', gitesCtaText: 'Elke kamer wordt onafhankelijk geboekt, telefonisch of schriftelijk. Wij stellen uw verblijf samen met u samen.',
     spaEyebrow: 'STILTE · RUST · WATER', spaTitle: 'De Spa', spaTagline: 'Een besloten, gedempte plek, voorbehouden aan de gasten van de herberg.',
@@ -346,84 +345,13 @@ window.MEANDRE_UI = {
     sceneDisciplineLabel: 'DISCIPLINE', sceneDisciplinePh: 'Muziek, schilderkunst, fotografie, podiumkunst…',
     sceneProjectLabel: 'UW PROJECT', sceneProjectPh: 'Beschrijf uw wereld, uw project, uw beschikbaarheid…',
     sceneFormNote: 'Als u op verzenden klikt, wordt uw e-mailprogramma geopend met dit vooraf ingevulde bericht.',
+    navAgenda: 'AGENDA',
+    agendaEyebrow: 'CONCERTEN · MARKTEN · AVONDEN', agendaTitle: 'De Agenda',
+    agendaTagline: 'De eerstvolgende afspraken bij Le Méandre: themaavonden, concerten, boerenmarkten en momenten om te delen.',
+    agendaEmptyTitle: 'Nog geen data', agendaEmptyText: 'Onze agenda wordt momenteel samengesteld — kom binnenkort terug, of neem contact met ons op om op de hoogte te blijven van komende evenementen.',
     sinceWord: 'SINDS',
     phHero: 'Foto van de herberg — buitenaanzicht, groot formaat', phAccRest: 'Signature gerecht', phAccGites: 'Interieur van de gîte', phAccSpa: 'Spa',
     phRestHero: 'Eetzaal of gerecht — brede banner', phSpaHero: 'Spa — groot immersief formaat', phContact: 'Foto — oprijlaan, poort of toegangsplan',
     phAEmporter: 'Poster van het huidige afhaalaanbod — staand formaat'
   }
 };
-
-// ── Carte du restaurant (3 catégories × 3 plats) ──
-window.MEANDRE_MENU = [
-  { nom: { fr: 'Entrées', en: 'Starters', de: 'Vorspeisen', es: 'Entrantes', nl: 'Voorgerechten' }, plats: [
-    { nom: { fr: 'Velouté de topinambour', en: 'Jerusalem artichoke velouté', de: 'Topinambur-Velouté', es: 'Velouté de topinambo', nl: 'Topinamboer-veloutésoep' }, desc: { fr: 'Noisettes torréfiées, huile de livèche', en: 'Toasted hazelnuts, lovage oil', de: 'Geröstete Haselnüsse, Liebstocköl', es: 'Avellanas tostadas, aceite de levístico', nl: 'Gebrande hazelnoten, lavasolie' }, prix: '18 €' },
-    { nom: { fr: 'Foie gras de canard mi-cuit', en: 'Duck foie gras, mi-cuit', de: 'Entenfoie gras, mi-cuit', es: 'Foie gras de pato, mi-cuit', nl: 'Eendenfoie gras, mi-cuit' }, desc: { fr: 'Chutney de figues du verger, brioche toastée', en: 'Orchard fig chutney, toasted brioche', de: 'Feigenchutney aus dem Obstgarten, geröstete Brioche', es: 'Chutney de higos del huerto, brioche tostada', nl: 'Vijgenchutney uit de boomgaard, geroosterde brioche' }, prix: '24 €' },
-    { nom: { fr: 'Tartare de truite', en: 'Trout tartare', de: 'Forellentatar', es: 'Tartar de trucha', nl: 'Forellentartaar' }, desc: { fr: "Crème d'aneth, pickles d'oignon rouge", en: 'Dill cream, pickled red onion', de: 'Dillcreme, eingelegte rote Zwiebeln', es: 'Crema de eneldo, encurtido de cebolla roja', nl: 'Dilroom, ingelegde rode ui' }, prix: '21 €' }] },
-  { nom: { fr: 'Plats', en: 'Mains', de: 'Hauptgerichte', es: 'Platos principales', nl: 'Hoofdgerechten' }, plats: [
-    { nom: { fr: 'Filet de bœuf des pâtures', en: 'Pasture-raised beef fillet', de: 'Rinderfilet von der Weide', es: 'Solomillo de ternera de pasto', nl: 'Runderfilet van de weide' }, desc: { fr: 'Jus corsé au vin rouge, légumes racines confits', en: 'Red wine jus, confit root vegetables', de: 'Kräftiger Rotweinjus, confierte Wurzelgemüse', es: 'Jugo intenso al vino tinto, verduras de raíz confitadas', nl: 'Krachtige rodewijnjus, geconfijte wortelgroenten' }, prix: '42 €' },
-    { nom: { fr: 'Sandre rôti sur peau', en: 'Pan-roasted zander, crispy skin', de: 'Gebratener Zander mit knuspriger Haut', es: 'Lucioperca asada con piel crujiente', nl: 'Gebakken snoekbaars, krokante huid' }, desc: { fr: 'Beurre blanc au safran, poireaux brûlés', en: 'Saffron beurre blanc, charred leeks', de: 'Safran-Beurre-blanc, geröstete Lauch', es: 'Beurre blanc al azafrán, puerros tostados', nl: 'Saffraan-beurre-blanc, geschroeide prei' }, prix: '38 €' },
-    { nom: { fr: 'Pigeon fermier en deux cuissons', en: 'Farmhouse pigeon, two ways', de: 'Bauernhof-Taube, zweifach gegart', es: 'Pichón de granja en dos cocciones', nl: 'Boerderijduif op twee bereidingswijzen' }, desc: { fr: 'Cerises acidulées, polenta crémeuse', en: 'Tart cherries, creamy polenta', de: 'Säuerliche Kirschen, cremige Polenta', es: 'Cerezas ácidas, polenta cremosa', nl: 'Zurige kersen, romige polenta' }, prix: '44 €' }] },
-  { nom: { fr: 'Desserts', en: 'Desserts', de: 'Desserts', es: 'Postres', nl: 'Desserts' }, plats: [
-    { nom: { fr: 'Soufflé chaud au Grand Marnier', en: 'Warm Grand Marnier soufflé', de: 'Warmes Grand-Marnier-Soufflé', es: 'Suflé caliente de Grand Marnier', nl: 'Warme Grand Marnier-soufflé' }, desc: { fr: 'Minute, pour deux personnes', en: 'Made to order, for two', de: 'Frisch zubereitet, für zwei Personen', es: 'Al momento, para dos personas', nl: 'Op het moment bereid, voor twee personen' }, prix: '16 €' },
-    { nom: { fr: 'Tarte fine aux poires', en: 'Thin pear tart', de: 'Feine Birnentarte', es: 'Tarta fina de peras', nl: 'Fijne perentaart' }, desc: { fr: 'Glace miel-lavande maison', en: 'House-made honey-lavender ice cream', de: 'Hausgemachtes Honig-Lavendel-Eis', es: 'Helado de miel y lavanda de la casa', nl: 'Huisgemaakt honing-lavendelijs' }, prix: '14 €' },
-    { nom: { fr: 'Sphère chocolat grand cru', en: 'Grand cru chocolate sphere', de: 'Grand-Cru-Schokoladenkugel', es: 'Esfera de chocolate grand cru', nl: 'Grand cru chocoladebol' }, desc: { fr: "Cœur caramel, feuille d'or", en: 'Caramel heart, gold leaf', de: 'Karamellkern, Blattgold', es: 'Corazón de caramelo, pan de oro', nl: 'Karamelhart, bladgoud' }, prix: '17 €' }] }
-];
-
-// ── Le gîte (4 chambres louables indépendamment, au sein d'une même maison) ──
-// (slotA-D sont les clés de persistance des photos déposées dans chaque
-// image-slot — ne pas les modifier sans mettre à jour le gabarit)
-window.MEANDRE_GITES = [
-  { num: '01',
-    nom: { fr: 'Chambre 1', en: 'Room 1', de: 'Zimmer 1', es: 'Habitación 1', nl: 'Kamer 1' },
-    capacite: { fr: 'CHAMBRE INDÉPENDANTE', en: 'INDEPENDENT ROOM', de: 'UNABHÄNGIGES ZIMMER', es: 'HABITACIÓN INDEPENDIENTE', nl: 'ONAFHANKELIJKE KAMER' },
-    desc: { fr: "L'une des quatre chambres du gîte, aménagée avec soin et réservable indépendamment des trois autres.", en: "One of the cottage's four rooms, carefully appointed and bookable independently of the other three.", de: 'Eines der vier Zimmer des Gîte, sorgfältig eingerichtet und unabhängig von den anderen drei buchbar.', es: 'Una de las cuatro habitaciones de la casa rural, cuidada con esmero y reservable de forma independiente de las otras tres.', nl: 'Een van de vier kamers van de gîte, zorgvuldig ingericht en onafhankelijk van de andere drie te boeken.' },
-    equip: { fr: [], en: [], de: [], es: [], nl: [] },
-    slotA: 'site-g1a', slotB: 'site-g1b', slotC: 'site-g1c', slotD: 'site-g1d', srcA: './images/gite1_1.JPG',
-    phA: { fr: 'Chambre 1 — vue', en: 'Room 1 — view', de: 'Zimmer 1 — Ansicht', es: 'Habitación 1 — vista', nl: 'Kamer 1 — aanzicht' } },
-  { num: '02',
-    nom: { fr: 'Chambre 2', en: 'Room 2', de: 'Zimmer 2', es: 'Habitación 2', nl: 'Kamer 2' },
-    capacite: { fr: 'CHAMBRE INDÉPENDANTE', en: 'INDEPENDENT ROOM', de: 'UNABHÄNGIGES ZIMMER', es: 'HABITACIÓN INDEPENDIENTE', nl: 'ONAFHANKELIJKE KAMER' },
-    desc: { fr: "L'une des quatre chambres du gîte, aménagée avec soin et réservable indépendamment des trois autres.", en: "One of the cottage's four rooms, carefully appointed and bookable independently of the other three.", de: 'Eines der vier Zimmer des Gîte, sorgfältig eingerichtet und unabhängig von den anderen drei buchbar.', es: 'Una de las cuatro habitaciones de la casa rural, cuidada con esmero y reservable de forma independiente de las otras tres.', nl: 'Een van de vier kamers van de gîte, zorgvuldig ingericht en onafhankelijk van de andere drie te boeken.' },
-    equip: { fr: [], en: [], de: [], es: [], nl: [] },
-    slotA: 'site-g2a', slotB: 'site-g2b', slotC: 'site-g2c', slotD: 'site-g2d', srcA: './images/gite2_1.JPG', srcB: './images/gite2_2.JPG',
-    phA: { fr: 'Chambre 2 — vue', en: 'Room 2 — view', de: 'Zimmer 2 — Ansicht', es: 'Habitación 2 — vista', nl: 'Kamer 2 — aanzicht' } },
-  { num: '03',
-    nom: { fr: 'Chambre 3', en: 'Room 3', de: 'Zimmer 3', es: 'Habitación 3', nl: 'Kamer 3' },
-    capacite: { fr: 'CHAMBRE INDÉPENDANTE', en: 'INDEPENDENT ROOM', de: 'UNABHÄNGIGES ZIMMER', es: 'HABITACIÓN INDEPENDIENTE', nl: 'ONAFHANKELIJKE KAMER' },
-    desc: { fr: "L'une des quatre chambres du gîte, aménagée avec soin et réservable indépendamment des trois autres.", en: "One of the cottage's four rooms, carefully appointed and bookable independently of the other three.", de: 'Eines der vier Zimmer des Gîte, sorgfältig eingerichtet und unabhängig von den anderen drei buchbar.', es: 'Una de las cuatro habitaciones de la casa rural, cuidada con esmero y reservable de forma independiente de las otras tres.', nl: 'Een van de vier kamers van de gîte, zorgvuldig ingericht en onafhankelijk van de andere drie te boeken.' },
-    equip: { fr: [], en: [], de: [], es: [], nl: [] },
-    slotA: 'site-g3a', slotB: 'site-g3b', slotC: 'site-g3c', slotD: 'site-g3d', srcA: './images/gite3_1.JPG', srcB: './images/gite3_2.JPG',
-    phA: { fr: 'Chambre 3 — vue', en: 'Room 3 — view', de: 'Zimmer 3 — Ansicht', es: 'Habitación 3 — vista', nl: 'Kamer 3 — aanzicht' } },
-  { num: '04',
-    nom: { fr: 'Chambre 4', en: 'Room 4', de: 'Zimmer 4', es: 'Habitación 4', nl: 'Kamer 4' },
-    capacite: { fr: 'CHAMBRE INDÉPENDANTE', en: 'INDEPENDENT ROOM', de: 'UNABHÄNGIGES ZIMMER', es: 'HABITACIÓN INDEPENDIENTE', nl: 'ONAFHANKELIJKE KAMER' },
-    desc: { fr: "L'une des quatre chambres du gîte, aménagée avec soin et réservable indépendamment des trois autres.", en: "One of the cottage's four rooms, carefully appointed and bookable independently of the other three.", de: 'Eines der vier Zimmer des Gîte, sorgfältig eingerichtet und unabhängig von den anderen drei buchbar.', es: 'Una de las cuatro habitaciones de la casa rural, cuidada con esmero y reservable de forma independiente de las otras tres.', nl: 'Een van de vier kamers van de gîte, zorgvuldig ingericht en onafhankelijk van de andere drie te boeken.' },
-    equip: { fr: [], en: [], de: [], es: [], nl: [] },
-    slotA: 'site-g4a', slotB: 'site-g4b', slotC: 'site-g4c', slotD: 'site-g4d', srcA: './images/gite4_1.JPG', srcB: './images/gite4_2.JPG',
-    phA: { fr: 'Chambre 4 — vue', en: 'Room 4 — view', de: 'Zimmer 4 — Ansicht', es: 'Habitación 4 — vista', nl: 'Kamer 4 — aanzicht' } }
-];
-
-// ── Le spa ── (slot = clé de persistance de la photo déposée)
-window.MEANDRE_SPAS = [
-  { nom: { fr: 'Le Spa', en: 'The Spa', de: 'Der Spa', es: 'El Spa', nl: 'De Spa' },
-    sur: { fr: 'DÉTENTE · EAU CHAUDE', en: 'RELAXATION · WARM WATER', de: 'ENTSPANNUNG · WARMES WASSER', es: 'RELAJACIÓN · AGUA CALIENTE', nl: 'ONTSPANNING · WARM WATER' },
-    desc: { fr: "Un spa privatif, pour se détendre en toute intimité. La lumière du jardin entre à travers les arbres ; on n'entend que l'eau.", en: 'A private spa, to unwind in complete privacy. Light from the garden filters through the trees; all you hear is the water.', de: 'Ein privater Spa, um sich in aller Ruhe zu entspannen. Das Licht des Gartens fällt durch die Bäume; man hört nur das Wasser.', es: 'Un spa privado, para relajarse con total intimidad. La luz del jardín se filtra entre los árboles; solo se oye el agua.', nl: 'Een privéspa, om in alle rust te ontspannen. Het licht van de tuin valt door de bomen; je hoort alleen het water.' },
-    info: { fr: 'Eau chauffée', en: 'Heated water', de: 'Beheiztes Wasser', es: 'Agua climatizada', nl: 'Verwarmd water' },
-    slot: 'site-spa-piscine', src: '', ph: { fr: 'Le Spa', en: 'The Spa', de: 'Der Spa', es: 'El Spa', nl: 'De Spa' }, dir: 'ltr' }
-];
-
-// ── Réservoir de légendes pour le carrousel photo du restaurant ──
-// (nbPhotosCarrousel, une prop éditable, détermine combien d'entre elles sont utilisées)
-window.MEANDRE_POOL = [
-  { slot: 'site-car-1', src: './images/restaurant1.JPEG', ph: { fr: 'Photo 1 — plat', en: 'Photo 1 — dish', de: 'Foto 1 — Gericht', es: 'Foto 1 — plato', nl: 'Foto 1 — gerecht' } },
-  { slot: 'site-car-2', src: './images/restaurant2.JPEG', ph: { fr: 'Photo 2 — salle', en: 'Photo 2 — dining room', de: 'Foto 2 — Speisesaal', es: 'Foto 2 — sala', nl: 'Foto 2 — eetzaal' } },
-  { slot: 'site-car-3', ph: { fr: 'Photo 3 — ambiance', en: 'Photo 3 — atmosphere', de: 'Foto 3 — Atmosphäre', es: 'Foto 3 — ambiente', nl: 'Foto 3 — sfeer' } },
-  { slot: 'site-car-4', ph: { fr: 'Photo 4 — dessert', en: 'Photo 4 — dessert', de: 'Foto 4 — Dessert', es: 'Foto 4 — postre', nl: 'Foto 4 — dessert' } },
-  { slot: 'site-car-5', ph: { fr: 'Photo 5 — terrasse', en: 'Photo 5 — terrace', de: 'Foto 5 — Terrasse', es: 'Foto 5 — terraza', nl: 'Foto 5 — terras' } },
-  { slot: 'site-car-6', ph: { fr: 'Photo 6 — cave', en: 'Photo 6 — cellar', de: 'Foto 6 — Weinkeller', es: 'Foto 6 — bodega', nl: 'Foto 6 — kelder' } },
-  { slot: 'site-car-7', ph: { fr: 'Photo 7 — cuisine', en: 'Photo 7 — kitchen', de: 'Foto 7 — Küche', es: 'Foto 7 — cocina', nl: 'Foto 7 — keuken' } },
-  { slot: 'site-car-8', ph: { fr: 'Photo 8 — détail', en: 'Photo 8 — detail', de: 'Foto 8 — Detail', es: 'Foto 8 — detalle', nl: 'Foto 8 — detail' } }
-];
-
-// ── Recrutement : postes ouverts (liste vide = candidatures spontanées uniquement) ──
-window.MEANDRE_JOBS = [];

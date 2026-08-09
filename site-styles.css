@@ -18,10 +18,10 @@ a{color:var(--or,#c9a24b);text-decoration:none}a:hover{color:var(--orClair,#e0be
    ligne compacte au lieu de wrapper sur 3 lignes. display:contents sur
    .site-nav-panel au-dessus de 860px la rend invisible en layout : les
    liens/CTA restent des enfants flex directs de .site-nav, donc la
-   mise en page desktop est inchangée. Les !important sont nécessaires
-   car les styles de base sont posés en inline par le moteur de gabarit
-   (voir Component.renderVals) — une règle externe sans !important ne
-   peut jamais l'emporter sur un style inline. */
+   mise en page desktop est inchangée. Les !important ici gagnent sur
+   les règles de base (.site-nav-burger/.site-nav-panel plus bas dans ce
+   fichier) plutôt que sur un style inline — gardés par précaution pour
+   ne jamais dépendre de l'ordre des règles. */
 .site-nav-burger{display:none}
 .site-nav-panel{display:contents !important}
 
@@ -67,6 +67,7 @@ a{color:var(--or,#c9a24b);text-decoration:none}a:hover{color:var(--orClair,#e0be
 /* ── Formulaire de contact (page Contact) ──
    Pas de backend (site statique) : la soumission ouvre un mailto: avec
    le message pré-rempli — voir Component._submitContactForm. */
+.contact-form{display:flex;flex-direction:column;gap:22px}
 .contact-form input,.contact-form textarea{
   width:100%;box-sizing:border-box;background:transparent;
   border:none;border-bottom:1px solid color-mix(in srgb,var(--or,#c9a24b) 35%,transparent);
@@ -84,7 +85,7 @@ a{color:var(--or,#c9a24b);text-decoration:none}a:hover{color:var(--orClair,#e0be
 /* padding vertical = marge de respiration pour que l'agrandissement au survol
    (transform:scale, ci-dessous) ne soit pas rogné par l'overflow:hidden —
    ce dernier reste nécessaire horizontalement pour boucler le défilement */
-.photo-marquee{overflow:hidden;padding:20px 0}
+.photo-marquee{overflow:hidden;padding:20px 0;pointer-events:auto;align-self:stretch;width:calc(100% + 48px);margin:14px -24px 0;border-top:1px solid color-mix(in srgb,var(--or,#c9a24b) 40%,transparent);border-bottom:1px solid color-mix(in srgb,var(--or,#c9a24b) 40%,transparent);background:color-mix(in srgb,var(--bg,#0a0a08) 25%,transparent)}
 .photo-marquee-track{display:flex;width:max-content;animation:marquee-scroll 42s linear infinite}
 .photo-marquee:hover .photo-marquee-track{animation-play-state:paused}
 .photo-marquee-item{flex:none;width:260px;height:180px;position:relative;background:var(--bg2,#0f0e0b);border-right:1px solid color-mix(in srgb,var(--or,#c9a24b) 20%,transparent)}
@@ -116,6 +117,214 @@ a{color:var(--or,#c9a24b);text-decoration:none}a:hover{color:var(--orClair,#e0be
 .loader-screen{position:fixed;inset:0;z-index:1000;display:flex;align-items:center;justify-content:center;background:#0e0c0a}
 .loader-glow{position:absolute;left:50%;top:50%;width:min(340px,60vw);height:min(340px,60vw);transform:translate(-50%,-50%);border-radius:50%;background:radial-gradient(circle,rgba(200,162,78,.55),transparent 70%);filter:blur(6px)}
 .loader-logo-wrap{position:absolute;left:50%;top:50%;width:210px;height:195px}
+.loader-fill{position:absolute;inset:0;width:100%;height:100%}
 @media (prefers-reduced-motion:reduce){
   .loader-screen{display:none}
 }
+
+/* ══════════════════════════════════════════════════════════════════════
+   CLASSES DE GABARIT — tout ce qui, dans index.html, était posé en style
+   inline mais ne dépend d'aucune valeur calculée par Component vit ici.
+   Reste en inline dans le gabarit : les couleurs de nav actives, le
+   carrousel, l'écran de chargement, la bannière défilante — tout ce qui
+   change avec l'état (page courante, langue, animation en cours). Reste
+   aussi en inline (avec son attribut style-hover) tout élément dont le
+   survol est géré par l'éditeur visuel d'origine du fichier .dc.html
+   plutôt que par une règle :hover ici.
+   ══════════════════════════════════════════════════════════════════════ */
+
+/* ── Racine ── (les custom properties du thème --or/--bg/... restent
+   posées en inline par Component, pilotées par les props éditables) */
+.site-root{min-height:100vh;display:flex;flex-direction:column;background:var(--bg,#0a0a08);color:var(--txt,#f2ede3);font-family:var(--sans,'Jost',sans-serif)}
+
+/* ── Navigation : structure (voir plus haut pour le responsive/hover) ── */
+.site-nav{position:fixed;top:0;left:0;right:0;z-index:50;display:flex;align-items:center;justify-content:space-between;gap:20px;flex-wrap:wrap;padding:18px 44px;background:color-mix(in srgb,var(--bg,#0a0a08) 88%,transparent);backdrop-filter:blur(10px);border-bottom:1px solid color-mix(in srgb,var(--or,#c9a24b) 28%,transparent)}
+.site-logo{font-family:var(--serif,'Cormorant Garamond',serif);font-size:21px;letter-spacing:4px;cursor:pointer;color:var(--txt,#f2ede3);display:flex;align-items:center;gap:10px}
+.site-logo-img{height:40px;width:auto;display:block}
+.site-nav-burger{cursor:pointer;width:38px;height:38px;align-items:center;justify-content:center;border:1px solid color-mix(in srgb,var(--or,#c9a24b) 45%,transparent);border-radius:var(--rad,0px);color:var(--or,#c9a24b);font-size:17px;flex-shrink:0}
+.site-nav-panel{display:flex;align-items:center;gap:20px;flex-wrap:wrap}
+.site-nav-links{display:flex;gap:34px;font-size:12px;letter-spacing:2.5px;flex-wrap:wrap}
+.lang-menu-wrap{position:relative}
+.lang-menu{position:absolute;top:calc(100% + 8px);right:0;display:flex;flex-direction:column;min-width:70px;background:var(--bg2,#0f0e0b);border:1px solid color-mix(in srgb,var(--or,#c9a24b) 45%,transparent);border-radius:var(--rad,0px);overflow:hidden;z-index:60;box-shadow:0 12px 30px rgba(0,0,0,.4)}
+.site-lang-option{cursor:pointer;padding:10px 16px;font-size:11px;letter-spacing:2px;color:var(--txt,#f2ede3)}
+.nav-spacer{height:76px}
+
+/* ── Typographie ── */
+.gold{color:var(--or,#c9a24b)}
+.hero-kicker{font-size:12px;letter-spacing:7px;color:var(--or,#c9a24b)}
+.eyebrow-xs{font-size:11px;letter-spacing:4px;color:var(--or,#c9a24b)}
+.eyebrow{font-size:11px;letter-spacing:5px;color:var(--or,#c9a24b)}
+.eyebrow-lg{font-size:11px;letter-spacing:6px;color:var(--or,#c9a24b)}
+.field-label{font-size:11px;letter-spacing:3px;color:var(--or,#c9a24b)}
+.discover-label{font-size:12px;letter-spacing:2.5px;color:var(--or,#c9a24b)}
+.accent-italic{font-style:italic;color:var(--or,#c9a24b)}
+.hero-title{font-family:var(--serif,'Cormorant Garamond',serif);font-size:clamp(44px,8vw,84px);font-weight:500;line-height:1.05}
+.section-title-lg{font-family:var(--serif,'Cormorant Garamond',serif);font-size:clamp(28px,4vw,40px);font-weight:500;max-width:640px;line-height:1.3}
+.section-title-md{font-family:var(--serif,'Cormorant Garamond',serif);font-size:clamp(30px,4.5vw,42px);font-weight:500}
+.page-title{font-family:var(--serif,'Cormorant Garamond',serif);font-size:clamp(38px,6vw,62px);font-weight:500}
+.page-title-md{font-family:var(--serif,'Cormorant Garamond',serif);font-size:clamp(36px,5.5vw,54px);font-weight:500}
+.page-title-lg{font-family:var(--serif,'Cormorant Garamond',serif);font-size:clamp(38px,6vw,58px);font-weight:500}
+.page-title-sm{font-family:var(--serif,'Cormorant Garamond',serif);font-size:clamp(36px,5vw,52px);font-weight:500;line-height:1.1}
+.title-italic-gold{font-family:var(--serif,'Cormorant Garamond',serif);font-size:28px;font-style:italic;color:var(--or,#c9a24b)}
+.title-38{font-family:var(--serif,'Cormorant Garamond',serif);font-size:38px;font-weight:500}
+.title-32{font-family:var(--serif,'Cormorant Garamond',serif);font-size:32px;font-weight:500}
+.title-30{font-family:var(--serif,'Cormorant Garamond',serif);font-size:30px;font-weight:500}
+.title-24-italic{font-family:var(--serif,'Cormorant Garamond',serif);font-size:24px;font-style:italic;color:var(--or,#c9a24b)}
+.title-20{font-family:var(--serif,'Cormorant Garamond',serif);font-size:20px}
+.title-22{font-family:var(--serif,'Cormorant Garamond',serif);font-size:22px}
+.title-24{font-family:var(--serif,'Cormorant Garamond',serif);font-size:24px}
+.agenda-date{font-size:12px;letter-spacing:2.5px;color:var(--or,#c9a24b)}
+.agenda-empty-text{font-weight:300;font-size:14.5px;color:color-mix(in srgb,var(--txt,#f2ede3) 60%,transparent);line-height:1.8;max-width:460px}
+.agenda-desc{font-weight:300;font-size:14.5px;color:color-mix(in srgb,var(--txt,#f2ede3) 65%,transparent);line-height:1.8}
+.card-title{font-family:var(--serif,'Cormorant Garamond',serif);font-size:28px}
+.menu-cat-title{font-family:var(--serif,'Cormorant Garamond',serif);font-size:26px;font-style:italic;color:var(--or,#c9a24b)}
+.menu-item-title{font-family:var(--serif,'Cormorant Garamond',serif);font-size:21px}
+.menu-tier-title{font-family:var(--serif,'Cormorant Garamond',serif);font-size:23px}
+.hero-tagline{font-weight:300;font-size:17px;color:color-mix(in srgb,var(--txt,#f2ede3) 85%,transparent);max-width:540px;line-height:1.7}
+.card-desc{font-weight:300;font-size:14px;color:color-mix(in srgb,var(--txt,#f2ede3) 65%,transparent);line-height:1.7}
+.prose{font-weight:300;font-size:15px;color:color-mix(in srgb,var(--txt,#f2ede3) 65%,transparent);line-height:1.8}
+.prose-70{font-weight:300;font-size:15px;color:color-mix(in srgb,var(--txt,#f2ede3) 70%,transparent);line-height:1.8}
+.page-lede{font-weight:300;font-size:15.5px;color:color-mix(in srgb,var(--txt,#f2ede3) 70%,transparent);max-width:560px;line-height:1.8}
+.prose-lg{font-weight:300;font-size:15.5px;color:color-mix(in srgb,var(--txt,#f2ede3) 75%,transparent);line-height:1.8}
+.prose-muted-wide{font-weight:300;font-size:14.5px;color:color-mix(in srgb,var(--txt,#f2ede3) 60%,transparent);line-height:1.9;max-width:640px}
+.prose-70-tight{font-weight:300;font-size:14.5px;color:color-mix(in srgb,var(--txt,#f2ede3) 70%,transparent);line-height:1.9}
+.page-paragraph{font-weight:300;font-size:15px;color:color-mix(in srgb,var(--txt,#f2ede3) 70%,transparent);line-height:1.9;max-width:600px}
+.page-tagline-gold{font-weight:300;font-size:16px;color:var(--or,#c9a24b)}
+.menu-item-desc{font-weight:300;font-size:13.5px;color:color-mix(in srgb,var(--txt,#f2ede3) 55%,transparent);line-height:1.6}
+.menu-tier-sub{font-weight:300;font-size:13px;color:color-mix(in srgb,var(--txt,#f2ede3) 55%,transparent)}
+.info-card-text{font-weight:300;font-size:14.5px;line-height:2;color:color-mix(in srgb,var(--txt,#f2ede3) 80%,transparent)}
+.info-muted{color:color-mix(in srgb,var(--txt,#f2ede3) 50%,transparent)}
+.practice-text{font-weight:300;font-size:13.5px;color:color-mix(in srgb,var(--txt,#f2ede3) 60%,transparent)}
+.spa-info{font-weight:300;font-size:13px;letter-spacing:1px;color:var(--or,#c9a24b)}
+.spa-tagline{font-weight:300;font-size:15px;color:color-mix(in srgb,var(--txt,#f2ede3) 80%,transparent);max-width:480px;line-height:1.7}
+.form-note{font-weight:300;font-size:12.5px;color:color-mix(in srgb,var(--txt,#f2ede3) 50%,transparent);line-height:1.7}
+.contact-hours-text{font-weight:300;font-size:13.5px;color:color-mix(in srgb,var(--txt,#f2ede3) 55%,transparent);line-height:1.8}
+.contact-field-value{font-weight:300;font-size:16px;line-height:1.7}
+.contact-field-value.is-compact{line-height:normal}
+.footer-meta{font-weight:300;font-size:12px;color:color-mix(in srgb,var(--txt,#f2ede3) 40%,transparent)}
+.footer-brand{font-family:var(--serif,'Cormorant Garamond',serif);font-size:18px;letter-spacing:3px;color:var(--txt,#f2ede3);display:flex;gap:8px}
+
+/* ── Boutons ── */
+.btn-solid{cursor:pointer;padding:13px 40px;border-radius:var(--rad,0px);background:var(--or,#c9a24b);color:var(--bg,#0a0a08);font-size:12px;letter-spacing:3px}
+.btn-outline{cursor:pointer;padding:13px 40px;border-radius:var(--rad,0px);border:1px solid var(--or,#c9a24b);color:var(--or,#c9a24b);font-size:12px;letter-spacing:3px}
+.btn-solid.is-compact,.btn-outline.is-compact{width:fit-content}
+
+/* ── Séparateurs ── */
+.divider-line{width:50px;height:1px;background:var(--or,#c9a24b)}
+.divider-line.is-short{width:36px}
+.divider-line.is-hero{width:60px;margin-top:6px}
+.divider-line.is-tight{margin-top:2px}
+.divider-line.is-gap{margin-top:6px}
+.divider-flex{flex:1;height:1px;background:color-mix(in srgb,var(--or,#c9a24b) 30%,transparent)}
+.divider-row{display:flex;align-items:center;gap:18px}
+
+/* ── Page header (bloc titre centré, réutilisé par Agenda/Contact/
+   Recrutement/Scène & Art/Gîtes/Spa/À emporter) ── */
+.page-header{max-width:760px;margin:0 auto;padding:90px 24px 60px;display:flex;flex-direction:column;align-items:center;gap:18px;text-align:center}
+.page-header.is-wide{max-width:1100px}
+
+/* ── Accueil ── */
+.hero-block{position:relative;height:var(--heroH,calc(100vh - 76px));min-height:540px}
+.hero-overlay{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:22px;text-align:center;padding:0 24px;pointer-events:none}
+.home-cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(300px,100%),1fr));gap:1px;background:color-mix(in srgb,var(--or,#c9a24b) 28%,transparent);border-top:1px solid color-mix(in srgb,var(--or,#c9a24b) 28%,transparent);border-bottom:1px solid color-mix(in srgb,var(--or,#c9a24b) 28%,transparent)}
+.home-card{cursor:pointer;background:var(--bg,#0a0a08);padding:0 0 34px;display:flex;flex-direction:column;gap:20px}
+.home-card-photo{height:clamp(180px,34vw,260px)}
+.home-card-body{padding:0 32px;display:flex;flex-direction:column;gap:10px}
+.home-story{display:flex;flex-direction:column;align-items:center;gap:20px;text-align:center;padding:90px 24px}
+.home-story-paras{display:flex;flex-direction:column;gap:16px;max-width:620px}
+.home-event{border-top:1px solid color-mix(in srgb,var(--or,#c9a24b) 28%,transparent);border-bottom:1px solid color-mix(in srgb,var(--or,#c9a24b) 28%,transparent);background:var(--bg2,#0f0e0b)}
+.home-event-inner{max-width:760px;margin:0 auto;padding:80px 24px;display:flex;flex-direction:column;align-items:center;gap:18px;text-align:center}
+
+/* ── Restaurant ── */
+.rest-hero-block{min-height:calc(100vh - 76px);display:flex;flex-direction:column;justify-content:center;gap:32px;padding:60px 0}
+.rest-hero-photo{position:relative;height:clamp(160px,26vw,240px)}
+.rest-hero-overlay{position:absolute;inset:0;background:color-mix(in srgb,var(--bg,#0a0a08) 60%,transparent);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:16px;text-align:center;padding:0 24px;pointer-events:none}
+.rest-intro{max-width:700px;margin:0 auto;padding:0 24px;display:flex;flex-direction:column;align-items:center;gap:16px;text-align:center}
+.menu-block{max-width:860px;margin:0 auto;padding:70px 24px 40px;display:flex;flex-direction:column;gap:60px}
+.menu-header{text-align:center;display:flex;flex-direction:column;gap:12px;align-items:center}
+.menu-category{display:flex;flex-direction:column;gap:26px}
+.menu-item{display:flex;align-items:baseline;gap:14px}
+.menu-item-text{display:flex;flex-direction:column;gap:4px;min-width:0}
+.menu-item-rule{flex:1;border-bottom:1px dotted color-mix(in srgb,var(--or,#c9a24b) 35%,transparent);transform:translateY(-6px)}
+.menu-item-price{color:var(--or,#c9a24b);font-size:15px;letter-spacing:1px;white-space:nowrap}
+.menu-tiers{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(260px,100%),1fr));gap:1px;background:color-mix(in srgb,var(--or,#c9a24b) 30%,transparent);border:1px solid color-mix(in srgb,var(--or,#c9a24b) 30%,transparent)}
+.menu-tier{background:var(--bg2,#0f0e0b);padding:30px 34px;display:flex;flex-direction:column;gap:8px;text-align:center}
+.menu-tier-price{color:var(--or,#c9a24b);font-size:17px}
+.gallery-block{max-width:1100px;margin:0 auto;padding:50px 24px;display:flex;flex-direction:column;gap:26px}
+.gallery-header{display:flex;align-items:baseline;justify-content:space-between;gap:16px;flex-wrap:wrap}
+.gallery-header-text{display:flex;flex-direction:column;gap:8px}
+.gallery-arrows{display:flex;gap:10px}
+.gallery-arrow{cursor:pointer;width:44px;height:44px;border-radius:var(--rad,0px);border:1px solid var(--or,#c9a24b);color:var(--or,#c9a24b);display:flex;align-items:center;justify-content:center;font-size:18px}
+.carousel-viewport{overflow:hidden;border:1px solid color-mix(in srgb,var(--or,#c9a24b) 30%,transparent)}
+.carousel-track{display:flex;transition:transform .6s cubic-bezier(.4,0,.2,1)}
+.carousel-slide{flex:none;width:100%;height:clamp(220px,55vw,480px);cursor:pointer}
+.carousel-dots{display:flex;gap:8px;justify-content:center}
+.carousel-dot{cursor:pointer;width:26px;height:2px}
+.info-cards{max-width:1100px;margin:0 auto;padding:40px 24px 100px;display:grid;grid-template-columns:repeat(auto-fit,minmax(min(280px,100%),1fr));gap:1px;background:color-mix(in srgb,var(--or,#c9a24b) 30%,transparent);border:1px solid color-mix(in srgb,var(--or,#c9a24b) 30%,transparent)}
+.info-card{background:var(--bg2,#0f0e0b);padding:36px;display:flex;flex-direction:column;gap:14px}
+
+/* ── À emporter ── */
+.takeaway-hero{max-width:1100px;margin:0 auto;padding:80px 24px 60px;display:grid;grid-template-columns:repeat(auto-fit,minmax(min(320px,100%),1fr));gap:50px;align-items:center}
+.takeaway-hero-text{display:flex;flex-direction:column;gap:16px}
+.takeaway-hero-photo{width:clamp(240px,32vw,380px);height:clamp(360px,48vw,570px);margin:0 auto;cursor:pointer}
+
+/* ── Gîtes ── */
+.gites-list{max-width:1100px;margin:0 auto;padding:0 24px 60px;display:flex;flex-direction:column;gap:70px}
+.gite-card{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(320px,100%),1fr));gap:0;border:1px solid color-mix(in srgb,var(--or,#c9a24b) 30%,transparent)}
+.gite-photos{min-height:clamp(260px,45vw,400px);display:grid;grid-template-rows:minmax(0,1fr) 110px;grid-template-columns:repeat(3,minmax(0,1fr))}
+.gite-photo-main{grid-column:1/-1;min-height:0;cursor:pointer}
+.gite-photo-detail{border-top:1px solid color-mix(in srgb,var(--or,#c9a24b) 30%,transparent);cursor:pointer}
+.gite-photo-detail.is-inner{border-left:1px solid color-mix(in srgb,var(--or,#c9a24b) 30%,transparent)}
+.gite-body{padding:44px 46px;display:flex;flex-direction:column;gap:18px;justify-content:center;background:var(--bg2,#0f0e0b)}
+.gite-heading{display:flex;align-items:baseline;gap:14px}
+.gite-num{font-family:var(--serif,'Cormorant Garamond',serif);font-size:15px;color:var(--or,#c9a24b)}
+.gite-name{font-family:var(--serif,'Cormorant Garamond',serif);font-size:32px}
+.gite-capacity{font-size:12px;letter-spacing:3px;color:var(--or,#c9a24b)}
+.chip-row{display:flex;flex-wrap:wrap;gap:8px;margin-top:4px}
+.chip{padding:6px 14px;border-radius:var(--rad,0px);border:1px solid color-mix(in srgb,var(--or,#c9a24b) 40%,transparent);font-weight:300;font-size:12px;letter-spacing:1px;color:color-mix(in srgb,var(--txt,#f2ede3) 75%,transparent)}
+.page-cta-block{border-top:1px solid color-mix(in srgb,var(--or,#c9a24b) 28%,transparent);padding:80px 24px;display:flex;flex-direction:column;align-items:center;gap:18px;text-align:center}
+
+/* ── Spa ── */
+.spa-hero{position:relative;height:clamp(280px,50vw,520px)}
+.spa-hero-overlay{position:absolute;inset:0;background:color-mix(in srgb,var(--bg,#0a0a08) 55%,transparent);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:16px;text-align:center;padding:0 24px;pointer-events:none}
+.spa-list{max-width:1100px;margin:0 auto;padding:90px 24px;display:flex;flex-direction:column;gap:80px}
+.spa-row{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(320px,100%),1fr));gap:50px;align-items:center}
+.spa-photo{height:clamp(260px,45vw,420px);direction:ltr;cursor:pointer}
+.spa-text{display:flex;flex-direction:column;gap:16px;direction:ltr}
+.practice-block{border-top:1px solid color-mix(in srgb,var(--or,#c9a24b) 28%,transparent);border-bottom:1px solid color-mix(in srgb,var(--or,#c9a24b) 28%,transparent);background:var(--bg2,#0f0e0b)}
+.practice-inner{max-width:860px;margin:0 auto;padding:70px 24px;display:flex;flex-direction:column;gap:28px;text-align:center;align-items:center}
+.practice-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(220px,100%),1fr));gap:34px;width:100%;text-align:center}
+.practice-item{display:flex;flex-direction:column;gap:6px}
+
+/* ── Agenda ── */
+.agenda-list{max-width:760px;margin:0 auto;padding:0 24px 110px;display:flex;flex-direction:column;gap:0}
+.agenda-empty{display:flex;flex-direction:column;align-items:center;gap:10px;text-align:center;padding:50px 24px;border-top:1px solid color-mix(in srgb,var(--or,#c9a24b) 30%,transparent)}
+.agenda-item{display:flex;flex-direction:column;gap:8px;padding:28px 0;border-top:1px solid color-mix(in srgb,var(--or,#c9a24b) 30%,transparent)}
+
+/* ── Contact ── */
+.contact-block{max-width:1100px;margin:0 auto;padding:80px 24px 100px;display:grid;grid-template-columns:repeat(auto-fit,minmax(min(320px,100%),1fr));gap:60px;align-items:center}
+.contact-info{display:flex;flex-direction:column;gap:24px}
+.contact-fields{display:flex;flex-direction:column}
+.contact-field{display:flex;flex-direction:column;gap:4px;padding:20px 0;border-top:1px solid color-mix(in srgb,var(--or,#c9a24b) 30%,transparent)}
+.contact-field.is-last{border-bottom:1px solid color-mix(in srgb,var(--or,#c9a24b) 30%,transparent)}
+.contact-photo{height:clamp(280px,50vw,520px);cursor:pointer}
+.form-block{max-width:700px;margin:0 auto;padding:0 24px 110px;display:flex;flex-direction:column;gap:26px}
+.form-block.is-scene{padding-top:10px}
+.form-row{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(220px,100%),1fr));gap:22px}
+.form-field{display:flex;flex-direction:column;gap:8px}
+
+/* ── Carte d'accès (Accueil, Contact) ── */
+.map-block{max-width:1100px;margin:0 auto;padding:20px 24px 100px;display:flex;flex-direction:column;align-items:center;gap:28px;text-align:center}
+.map-block-header{display:flex;flex-direction:column;align-items:center;gap:10px}
+.map-embed{width:100%;height:clamp(260px,42vw,440px);cursor:pointer;border:1px solid color-mix(in srgb,var(--or,#c9a24b) 30%,transparent);filter:grayscale(55%) contrast(1.05) brightness(.92);transition:filter .3s ease}
+.map-embed:hover{filter:grayscale(15%) contrast(1.02) brightness(1)}
+
+/* ── Lightbox / voile ── */
+.vignette-overlay{position:fixed;inset:0;pointer-events:none;z-index:40;background:radial-gradient(ellipse at center,transparent 55%,rgba(0,0,0,.55) 100%)}
+.lightbox{position:fixed;inset:0;z-index:300;background:rgba(5,5,4,.95);display:flex;align-items:center;justify-content:center;padding:min(60px,6vw);cursor:zoom-out;animation:fadeUp .25s ease both}
+.lightbox-close{position:absolute;top:20px;right:24px;width:44px;height:44px;border-radius:var(--rad,0px);border:1px solid color-mix(in srgb,var(--or,#c9a24b) 50%,transparent);color:var(--or,#c9a24b);display:flex;align-items:center;justify-content:center;font-size:18px;cursor:pointer}
+.lightbox-img{max-width:88vw;max-height:88vh;object-fit:contain;box-shadow:0 30px 80px -20px rgba(0,0,0,.7);cursor:default}
+
+/* ── Pied de page ── */
+.site-footer{margin-top:auto;border-top:1px solid color-mix(in srgb,var(--or,#c9a24b) 28%,transparent);padding:44px;display:flex;align-items:center;justify-content:space-between;gap:24px;flex-wrap:wrap}
+.footer-links{display:flex;gap:28px;font-size:11px;letter-spacing:2.5px;color:color-mix(in srgb,var(--txt,#f2ede3) 60%,transparent);flex-wrap:wrap}
