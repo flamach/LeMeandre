@@ -24,6 +24,7 @@ a{color:var(--or,#c9a24b);text-decoration:none}a:hover{color:var(--orClair,#e0be
    ne jamais dépendre de l'ordre des règles. */
 .site-nav-burger{display:none}
 .site-nav-panel{display:contents !important}
+.site-nav-langs-mobile{display:none}
 
 /* Contact + sélecteur de langue : couleurs de survol forcées ici (au lieu
    de compter sur l'attribut style-hover du gabarit) pour garantir un texte
@@ -51,12 +52,26 @@ a{color:var(--or,#c9a24b);text-decoration:none}a:hover{color:var(--orClair,#e0be
     border-bottom:1px solid color-mix(in srgb,var(--or,#c9a24b) 28%,transparent);
     box-shadow:0 18px 30px -12px rgba(0,0,0,.5);
   }
-  .site-nav-panel.is-open .site-nav-links{flex-direction:column;gap:0 !important;width:100%}
-  .site-nav-panel.is-open .site-nav-links>div{width:100%;padding:15px 2px !important;font-size:13px;border-bottom:1px solid color-mix(in srgb,var(--or,#c9a24b) 14%,transparent)}
+  .site-nav-panel.is-open .site-nav-links{flex-direction:column;align-items:center;gap:0 !important;width:100%}
+  .site-nav-panel.is-open .site-nav-links>div{width:100%;padding:15px 2px !important;font-size:13px;text-align:center;border-bottom:1px solid color-mix(in srgb,var(--or,#c9a24b) 14%,transparent)}
   .site-nav-panel.is-open .site-nav-actions{flex-direction:column;align-items:stretch;gap:10px !important;width:100%;margin-top:16px}
   .site-nav-panel.is-open .site-nav-cta{width:100%;box-sizing:border-box;text-align:center;padding:14px 20px !important}
+  .site-nav-panel.is-open .lang-menu-wrap{display:none}
+  .site-nav-panel.is-open .site-nav-langs-mobile{display:flex;justify-content:center;align-items:center;gap:14px;margin-top:18px;padding-top:16px;border-top:1px solid color-mix(in srgb,var(--or,#c9a24b) 20%,transparent)}
   .nav-spacer{height:66px}
 }
+/* Drapeaux en mini-SVG intégrés (pas d'emoji : Windows/Chrome affiche les
+   emoji drapeau comme du texte "FR"/"DE"/… au lieu d'une image, voir
+   https://learn.microsoft.com/typography/emoji — Microsoft ne fournit pas
+   de glyphes drapeau dans Segoe UI Emoji). */
+.lang-flag{cursor:pointer;width:24px;height:16px;flex-shrink:0;border-radius:2px;background-size:cover;background-position:center;opacity:.5;filter:grayscale(55%);transition:opacity .2s ease,filter .2s ease,transform .2s ease}
+.lang-flag.is-active{opacity:1;filter:none;transform:scale(1.15)}
+.lang-flag:active{transform:scale(.9)}
+.lang-flag[data-lang="fr"]{background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 3 2'%3E%3Crect width='1' height='2' fill='%230055A4'/%3E%3Crect width='1' height='2' x='1' fill='%23FFFFFF'/%3E%3Crect width='1' height='2' x='2' fill='%23EF4135'/%3E%3C/svg%3E")}
+.lang-flag[data-lang="en"]{background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 60 30'%3E%3Crect width='60' height='30' fill='%23012169'/%3E%3Cpath d='M0,0 L60,30 M60,0 L0,30' stroke='%23FFFFFF' stroke-width='6'/%3E%3Cpath d='M0,0 L60,30 M60,0 L0,30' stroke='%23C8102E' stroke-width='2'/%3E%3Cpath d='M30,0 V30 M0,15 H60' stroke='%23FFFFFF' stroke-width='10'/%3E%3Cpath d='M30,0 V30 M0,15 H60' stroke='%23C8102E' stroke-width='6'/%3E%3C/svg%3E")}
+.lang-flag[data-lang="de"]{background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 3 2'%3E%3Crect width='3' height='0.667' fill='%23000000'/%3E%3Crect width='3' height='0.667' y='0.667' fill='%23DD0000'/%3E%3Crect width='3' height='0.667' y='1.333' fill='%23FFCE00'/%3E%3C/svg%3E")}
+.lang-flag[data-lang="es"]{background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 3 2'%3E%3Crect width='3' height='0.5' fill='%23AA151B'/%3E%3Crect width='3' height='1' y='0.5' fill='%23F1BF00'/%3E%3Crect width='3' height='0.5' y='1.5' fill='%23AA151B'/%3E%3C/svg%3E")}
+.lang-flag[data-lang="nl"]{background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 3 2'%3E%3Crect width='3' height='0.667' fill='%23AE1C28'/%3E%3Crect width='3' height='0.667' y='0.667' fill='%23FFFFFF'/%3E%3Crect width='3' height='0.667' y='1.333' fill='%2321468B'/%3E%3C/svg%3E")}
 @media (max-width:420px){
   .site-nav{padding:12px 14px}
   .site-nav .site-logo{font-size:15px;letter-spacing:2px}

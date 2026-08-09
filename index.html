@@ -92,6 +92,11 @@
         </sc-if>
       </div>
     </div>
+    <div class="site-nav-langs-mobile">
+      <sc-for list="{{ langFlags }}" as="lo" hint-placeholder-count="5">
+        <div class="lang-flag{{ lo.activeSuffix }}" data-lang="{{ lo.code }}" onClick="{{ lo.set }}" title="{{ lo.label }}"></div>
+      </sc-for>
+    </div>
   </div>
 </nav>
 <div class="nav-spacer"></div>
@@ -861,6 +866,7 @@ class Component extends DCLogic {
       langCurrent: LANG_LABELS[lang],
       langOpen, langClosed: !langOpen,
       langOptions: Component.LANGS.filter(l => l !== lang).map(l => ({ code: l, label: LANG_LABELS[l], set: () => this.setLang(l) })),
+      langFlags: Component.LANGS.map(l => ({ code: l, label: LANG_LABELS[l], activeSuffix: l === lang ? ' is-active' : '', set: () => this.setLang(l) })),
       toggleLangMenu: () => this.toggleLangMenu(),
       menuOpen: this.state.menuOpen ?? false, menuClosed: !(this.state.menuOpen ?? false),
       menuOpenSuffix: (this.state.menuOpen ?? false) ? ' is-open' : '',
