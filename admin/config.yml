@@ -4,7 +4,7 @@ backend:
   branch: main
   # Proxy OAuth indépendant de l'hébergeur (voir README section CMS) —
   # à remplacer par l'URL du Worker une fois déployé.
-  base_url: https://lemeandre-admin.workers.dev
+  base_url: https://decap-cms-github-oauth-api.lemeandre-admin.workers.dev
   auth_endpoint: auth
 
 # Permet de tester le CMS en local avec `npx decap-server` avant d'avoir
