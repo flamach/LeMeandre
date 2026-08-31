@@ -1,0 +1,16 @@
+{
+  "photos": [
+    {
+      "photo": "/images/restaurant/restaurant_1.JPG",
+      "legende": { "fr": "Photo 1 — plat", "en": "Photo 1 — dish", "de": "Foto 1 — Gericht", "es": "Foto 1 — plato", "nl": "Foto 1 — gerecht" }
+    },
+    {
+      "photo": "/images/restaurant/restaurant_2.JPG",
+      "legende": { "fr": "Photo 2 — salle", "en": "Photo 2 — dining room", "de": "Foto 2 — Speisesaal", "es": "Foto 2 — sala", "nl": "Foto 2 — eetzaal" }
+    },
+    {
+      "photo": "/images/restaurant/restaurant_4.JPG",
+      "legende": { "fr": "Photo 3 — ambiance", "en": "Photo 3 — atmosphere", "de": "Foto 3 — Atmosphäre", "es": "Foto 3 — ambiente", "nl": "Foto 3 — sfeer" }
+    }
+  ]
+}

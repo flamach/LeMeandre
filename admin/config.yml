@@ -1,0 +1,95 @@
+backend:
+  name: github
+  repo: flamach/LeMeandre
+  branch: main
+  # Proxy OAuth indépendant de l'hébergeur (voir README section CMS) —
+  # à remplacer par l'URL du Worker une fois déployé.
+  base_url: https://lemeandre-admin.workers.dev
+  auth_endpoint: auth
+
+# Permet de tester le CMS en local avec `npx decap-server` avant d'avoir
+# déployé le proxy OAuth (voir README).
+local_backend: true
+
+media_folder: "images/uploads"
+public_folder: "/images/uploads"
+
+collections:
+  - name: "menu"
+    label: "Menu du restaurant"
+    files:
+      - name: "menu"
+        label: "Carte"
+        file: "data/menu.json"
+        fields:
+          - label: "Catégories"
+            name: "categories"
+            widget: "list"
+            summary: "{{fields.nom.fr}}"
+            fields:
+              - label: "Nom de la catégorie"
+                name: "nom"
+                widget: "object"
+                fields:
+                  - { label: "Français", name: "fr", widget: "string" }
+                  - { label: "Anglais", name: "en", widget: "string" }
+                  - { label: "Allemand", name: "de", widget: "string" }
+                  - { label: "Espagnol", name: "es", widget: "string" }
+                  - { label: "Néerlandais", name: "nl", widget: "string" }
+              - label: "Plats"
+                name: "plats"
+                widget: "list"
+                summary: "{{fields.nom.fr}} — {{fields.prix}}"
+                fields:
+                  - label: "Nom du plat"
+                    name: "nom"
+                    widget: "object"
+                    fields:
+                      - { label: "Français", name: "fr", widget: "string" }
+                      - { label: "Anglais", name: "en", widget: "string" }
+                      - { label: "Allemand", name: "de", widget: "string" }
+                      - { label: "Espagnol", name: "es", widget: "string" }
+                      - { label: "Néerlandais", name: "nl", widget: "string" }
+                  - label: "Description"
+                    name: "desc"
+                    widget: "object"
+                    fields:
+                      - { label: "Français", name: "fr", widget: "string" }
+                      - { label: "Anglais", name: "en", widget: "string" }
+                      - { label: "Allemand", name: "de", widget: "string" }
+                      - { label: "Espagnol", name: "es", widget: "string" }
+                      - { label: "Néerlandais", name: "nl", widget: "string" }
+                  - label: "Prix"
+                    name: "prix"
+                    widget: "string"
+                    hint: "Ex : 24 €"
+                  - label: "Photo du plat"
+                    name: "photo"
+                    widget: "image"
+                    required: false
+                    hint: "Pas encore affichée sur le site (voir README)."
+
+  - name: "galerie"
+    label: "Galerie photos"
+    files:
+      - name: "galerie"
+        label: "Galerie du restaurant"
+        file: "data/galerie.json"
+        fields:
+          - label: "Photos"
+            name: "photos"
+            widget: "list"
+            summary: "{{fields.legende.fr}}"
+            fields:
+              - label: "Photo"
+                name: "photo"
+                widget: "image"
+              - label: "Légende"
+                name: "legende"
+                widget: "object"
+                fields:
+                  - { label: "Français", name: "fr", widget: "string" }
+                  - { label: "Anglais", name: "en", widget: "string" }
+                  - { label: "Allemand", name: "de", widget: "string" }
+                  - { label: "Espagnol", name: "es", widget: "string" }
+                  - { label: "Néerlandais", name: "nl", widget: "string" }

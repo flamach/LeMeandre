@@ -1,0 +1,73 @@
+{
+  "categories": [
+    {
+      "nom": { "fr": "Entrées", "en": "Starters", "de": "Vorspeisen", "es": "Entrantes", "nl": "Voorgerechten" },
+      "plats": [
+        {
+          "nom": { "fr": "Velouté de topinambour", "en": "Jerusalem artichoke velouté", "de": "Topinambur-Velouté", "es": "Velouté de topinambo", "nl": "Topinamboer-veloutésoep" },
+          "desc": { "fr": "Noisettes torréfiées, huile de livèche", "en": "Toasted hazelnuts, lovage oil", "de": "Geröstete Haselnüsse, Liebstocköl", "es": "Avellanas tostadas, aceite de levístico", "nl": "Gebrande hazelnoten, lavasolie" },
+          "prix": "18 €",
+          "photo": ""
+        },
+        {
+          "nom": { "fr": "Foie gras de canard mi-cuit", "en": "Duck foie gras, mi-cuit", "de": "Entenfoie gras, mi-cuit", "es": "Foie gras de pato, mi-cuit", "nl": "Eendenfoie gras, mi-cuit" },
+          "desc": { "fr": "Chutney de figues du verger, brioche toastée", "en": "Orchard fig chutney, toasted brioche", "de": "Feigenchutney aus dem Obstgarten, geröstete Brioche", "es": "Chutney de higos del huerto, brioche tostada", "nl": "Vijgenchutney uit de boomgaard, geroosterde brioche" },
+          "prix": "24 €",
+          "photo": ""
+        },
+        {
+          "nom": { "fr": "Tartare de truite", "en": "Trout tartare", "de": "Forellentatar", "es": "Tartar de trucha", "nl": "Forellentartaar" },
+          "desc": { "fr": "Crème d'aneth, pickles d'oignon rouge", "en": "Dill cream, pickled red onion", "de": "Dillcreme, eingelegte rote Zwiebeln", "es": "Crema de eneldo, encurtido de cebolla roja", "nl": "Dilroom, ingelegde rode ui" },
+          "prix": "21 €",
+          "photo": ""
+        }
+      ]
+    },
+    {
+      "nom": { "fr": "Plats", "en": "Mains", "de": "Hauptgerichte", "es": "Platos principales", "nl": "Hoofdgerechten" },
+      "plats": [
+        {
+          "nom": { "fr": "Filet de bœuf des pâtures", "en": "Pasture-raised beef fillet", "de": "Rinderfilet von der Weide", "es": "Solomillo de ternera de pasto", "nl": "Runderfilet van de weide" },
+          "desc": { "fr": "Jus corsé au vin rouge, légumes racines confits", "en": "Red wine jus, confit root vegetables", "de": "Kräftiger Rotweinjus, confierte Wurzelgemüse", "es": "Jugo intenso al vino tinto, verduras de raíz confitadas", "nl": "Krachtige rodewijnjus, geconfijte wortelgroenten" },
+          "prix": "42 €",
+          "photo": ""
+        },
+        {
+          "nom": { "fr": "Sandre rôti sur peau", "en": "Pan-roasted zander, crispy skin", "de": "Gebratener Zander mit knuspriger Haut", "es": "Lucioperca asada con piel crujiente", "nl": "Gebakken snoekbaars, krokante huid" },
+          "desc": { "fr": "Beurre blanc au safran, poireaux brûlés", "en": "Saffron beurre blanc, charred leeks", "de": "Safran-Beurre-blanc, geröstete Lauch", "es": "Beurre blanc al azafrán, puerros tostados", "nl": "Saffraan-beurre-blanc, geschroeide prei" },
+          "prix": "38 €",
+          "photo": ""
+        },
+        {
+          "nom": { "fr": "Pigeon fermier en deux cuissons", "en": "Farmhouse pigeon, two ways", "de": "Bauernhof-Taube, zweifach gegart", "es": "Pichón de granja en dos cocciones", "nl": "Boerderijduif op twee bereidingswijzen" },
+          "desc": { "fr": "Cerises acidulées, polenta crémeuse", "en": "Tart cherries, creamy polenta", "de": "Säuerliche Kirschen, cremige Polenta", "es": "Cerezas ácidas, polenta cremosa", "nl": "Zurige kersen, romige polenta" },
+          "prix": "44 €",
+          "photo": ""
+        }
+      ]
+    },
+    {
+      "nom": { "fr": "Desserts", "en": "Desserts", "de": "Desserts", "es": "Postres", "nl": "Desserts" },
+      "plats": [
+        {
+          "nom": { "fr": "Soufflé chaud au Grand Marnier", "en": "Warm Grand Marnier soufflé", "de": "Warmes Grand-Marnier-Soufflé", "es": "Suflé caliente de Grand Marnier", "nl": "Warme Grand Marnier-soufflé" },
+          "desc": { "fr": "Minute, pour deux personnes", "en": "Made to order, for two", "de": "Frisch zubereitet, für zwei Personen", "es": "Al momento, para dos personas", "nl": "Op het moment bereid, voor twee personen" },
+          "prix": "16 €",
+          "photo": ""
+        },
+        {
+          "nom": { "fr": "Tarte fine aux poires", "en": "Thin pear tart", "de": "Feine Birnentarte", "es": "Tarta fina de peras", "nl": "Fijne perentaart" },
+          "desc": { "fr": "Glace miel-lavande maison", "en": "House-made honey-lavender ice cream", "de": "Hausgemachtes Honig-Lavendel-Eis", "es": "Helado de miel y lavanda de la casa", "nl": "Huisgemaakt honing-lavendelijs" },
+          "prix": "14 €",
+          "photo": ""
+        },
+        {
+          "nom": { "fr": "Sphère chocolat grand cru", "en": "Grand cru chocolate sphere", "de": "Grand-Cru-Schokoladenkugel", "es": "Esfera de chocolate grand cru", "nl": "Grand cru chocoladebol" },
+          "desc": { "fr": "Cœur caramel, feuille d'or", "en": "Caramel heart, gold leaf", "de": "Karamellkern, Blattgold", "es": "Corazón de caramelo, pan de oro", "nl": "Karamelhart, bladgoud" },
+          "prix": "17 €",
+          "photo": ""
+        }
+      ]
+    }
+  ]
+}

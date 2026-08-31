@@ -1,24 +1,28 @@
 // Le Méandre — données structurées : carte du restaurant, gîte, spa,
 // réservoir de photos du carrousel, recrutement, agenda. Chargé avant
 // index.html ; lu par Component._localizedContent() / Component._agendaVals()
-// (index.html). Fichier à modifier pour changer un plat, un gîte, une date
+// (index.html). Fichier à modifier pour changer un gîte, une date
 // d'agenda — pour un texte d'interface, voir site-data-ui.js.
+//
+// Le menu et la galerie photo sont éditables sans coder via Decap CMS
+// (voir /admin) : ils vivent dans data/menu.json et data/galerie.json et
+// sont chargés ici en fetch(). window.MEANDRE_MENU / MEANDRE_POOL démarrent
+// vides puis se remplissent quand la promesse ci-dessous se résout ;
+// Component.componentDidMount() (index.html) attend cette promesse et
+// redéclenche un rendu pour afficher les données une fois arrivées.
 
-// ── Carte du restaurant (3 catégories × 3 plats) ──
-window.MEANDRE_MENU = [
-  { nom: { fr: 'Entrées', en: 'Starters', de: 'Vorspeisen', es: 'Entrantes', nl: 'Voorgerechten' }, plats: [
-    { nom: { fr: 'Velouté de topinambour', en: 'Jerusalem artichoke velouté', de: 'Topinambur-Velouté', es: 'Velouté de topinambo', nl: 'Topinamboer-veloutésoep' }, desc: { fr: 'Noisettes torréfiées, huile de livèche', en: 'Toasted hazelnuts, lovage oil', de: 'Geröstete Haselnüsse, Liebstocköl', es: 'Avellanas tostadas, aceite de levístico', nl: 'Gebrande hazelnoten, lavasolie' }, prix: '18 €' },
-    { nom: { fr: 'Foie gras de canard mi-cuit', en: 'Duck foie gras, mi-cuit', de: 'Entenfoie gras, mi-cuit', es: 'Foie gras de pato, mi-cuit', nl: 'Eendenfoie gras, mi-cuit' }, desc: { fr: 'Chutney de figues du verger, brioche toastée', en: 'Orchard fig chutney, toasted brioche', de: 'Feigenchutney aus dem Obstgarten, geröstete Brioche', es: 'Chutney de higos del huerto, brioche tostada', nl: 'Vijgenchutney uit de boomgaard, geroosterde brioche' }, prix: '24 €' },
-    { nom: { fr: 'Tartare de truite', en: 'Trout tartare', de: 'Forellentatar', es: 'Tartar de trucha', nl: 'Forellentartaar' }, desc: { fr: "Crème d'aneth, pickles d'oignon rouge", en: 'Dill cream, pickled red onion', de: 'Dillcreme, eingelegte rote Zwiebeln', es: 'Crema de eneldo, encurtido de cebolla roja', nl: 'Dilroom, ingelegde rode ui' }, prix: '21 €' }] },
-  { nom: { fr: 'Plats', en: 'Mains', de: 'Hauptgerichte', es: 'Platos principales', nl: 'Hoofdgerechten' }, plats: [
-    { nom: { fr: 'Filet de bœuf des pâtures', en: 'Pasture-raised beef fillet', de: 'Rinderfilet von der Weide', es: 'Solomillo de ternera de pasto', nl: 'Runderfilet van de weide' }, desc: { fr: 'Jus corsé au vin rouge, légumes racines confits', en: 'Red wine jus, confit root vegetables', de: 'Kräftiger Rotweinjus, confierte Wurzelgemüse', es: 'Jugo intenso al vino tinto, verduras de raíz confitadas', nl: 'Krachtige rodewijnjus, geconfijte wortelgroenten' }, prix: '42 €' },
-    { nom: { fr: 'Sandre rôti sur peau', en: 'Pan-roasted zander, crispy skin', de: 'Gebratener Zander mit knuspriger Haut', es: 'Lucioperca asada con piel crujiente', nl: 'Gebakken snoekbaars, krokante huid' }, desc: { fr: 'Beurre blanc au safran, poireaux brûlés', en: 'Saffron beurre blanc, charred leeks', de: 'Safran-Beurre-blanc, geröstete Lauch', es: 'Beurre blanc al azafrán, puerros tostados', nl: 'Saffraan-beurre-blanc, geschroeide prei' }, prix: '38 €' },
-    { nom: { fr: 'Pigeon fermier en deux cuissons', en: 'Farmhouse pigeon, two ways', de: 'Bauernhof-Taube, zweifach gegart', es: 'Pichón de granja en dos cocciones', nl: 'Boerderijduif op twee bereidingswijzen' }, desc: { fr: 'Cerises acidulées, polenta crémeuse', en: 'Tart cherries, creamy polenta', de: 'Säuerliche Kirschen, cremige Polenta', es: 'Cerezas ácidas, polenta cremosa', nl: 'Zurige kersen, romige polenta' }, prix: '44 €' }] },
-  { nom: { fr: 'Desserts', en: 'Desserts', de: 'Desserts', es: 'Postres', nl: 'Desserts' }, plats: [
-    { nom: { fr: 'Soufflé chaud au Grand Marnier', en: 'Warm Grand Marnier soufflé', de: 'Warmes Grand-Marnier-Soufflé', es: 'Suflé caliente de Grand Marnier', nl: 'Warme Grand Marnier-soufflé' }, desc: { fr: 'Minute, pour deux personnes', en: 'Made to order, for two', de: 'Frisch zubereitet, für zwei Personen', es: 'Al momento, para dos personas', nl: 'Op het moment bereid, voor twee personen' }, prix: '16 €' },
-    { nom: { fr: 'Tarte fine aux poires', en: 'Thin pear tart', de: 'Feine Birnentarte', es: 'Tarta fina de peras', nl: 'Fijne perentaart' }, desc: { fr: 'Glace miel-lavande maison', en: 'House-made honey-lavender ice cream', de: 'Hausgemachtes Honig-Lavendel-Eis', es: 'Helado de miel y lavanda de la casa', nl: 'Huisgemaakt honing-lavendelijs' }, prix: '14 €' },
-    { nom: { fr: 'Sphère chocolat grand cru', en: 'Grand cru chocolate sphere', de: 'Grand-Cru-Schokoladenkugel', es: 'Esfera de chocolate grand cru', nl: 'Grand cru chocoladebol' }, desc: { fr: "Cœur caramel, feuille d'or", en: 'Caramel heart, gold leaf', de: 'Karamellkern, Blattgold', es: 'Corazón de caramelo, pan de oro', nl: 'Karamelhart, bladgoud' }, prix: '17 €' }] }
-];
+// ── Carte du restaurant — chargée depuis data/menu.json (édition via /admin) ──
+window.MEANDRE_MENU = [];
+
+// ── Réservoir de photos du carrousel — chargé depuis data/galerie.json (édition via /admin) ──
+window.MEANDRE_POOL = [];
+
+window.MEANDRE_DATA_READY = Promise.all([
+  fetch('./data/menu.json').then(r => r.json()).then(d => { window.MEANDRE_MENU = d.categories || []; }).catch(() => {}),
+  fetch('./data/galerie.json').then(r => r.json()).then(d => {
+    window.MEANDRE_POOL = (d.photos || []).map((p, i) => ({ slot: 'site-car-' + (i + 1), src: p.photo, ph: p.legende }));
+  }).catch(() => {}),
+]);
 
 // ── Le gîte (4 chambres louables indépendamment, au sein d'une même maison) ──
 // (slotA-D sont les clés de persistance des photos déposées dans chaque
@@ -63,20 +67,6 @@ window.MEANDRE_SPAS = [
     slotA: 'site-spa-a', slotB: 'site-spa-b', slotC: 'site-spa-c', slotD: 'site-spa-d',
     srcA: './images/spa/spa5.jpg', srcB: './images/spa/spa1.jpg', srcC: './images/spa/spa3.jpg', srcD: './images/spa/spa4.jpg',
     phA: { fr: 'Le Spa — vue', en: 'The Spa — view', de: 'Der Spa — Ansicht', es: 'El Spa — vista', nl: 'De Spa — aanzicht' }, dir: 'ltr' }
-];
-
-// ── Réservoir de légendes pour le carrousel photo du restaurant ──
-// (le carrousel affiche automatiquement les entrées qui ont une photo (src) ;
-// nbPhotosCarrousel, une prop éditable, ne sert qu'à plafonner ce nombre)
-window.MEANDRE_POOL = [
-  { slot: 'site-car-1', src: './images/restaurant/restaurant_1.JPG', ph: { fr: 'Photo 1 — plat', en: 'Photo 1 — dish', de: 'Foto 1 — Gericht', es: 'Foto 1 — plato', nl: 'Foto 1 — gerecht' } },
-  { slot: 'site-car-2', src: './images/restaurant/restaurant_2.JPG', ph: { fr: 'Photo 2 — salle', en: 'Photo 2 — dining room', de: 'Foto 2 — Speisesaal', es: 'Foto 2 — sala', nl: 'Foto 2 — eetzaal' } },
-  { slot: 'site-car-3', src: './images/restaurant/restaurant_4.JPG', ph: { fr: 'Photo 3 — ambiance', en: 'Photo 3 — atmosphere', de: 'Foto 3 — Atmosphäre', es: 'Foto 3 — ambiente', nl: 'Foto 3 — sfeer' } },
-  { slot: 'site-car-4', ph: { fr: 'Photo 4 — dessert', en: 'Photo 4 — dessert', de: 'Foto 4 — Dessert', es: 'Foto 4 — postre', nl: 'Foto 4 — dessert' } },
-  { slot: 'site-car-5', ph: { fr: 'Photo 5 — terrasse', en: 'Photo 5 — terrace', de: 'Foto 5 — Terrasse', es: 'Foto 5 — terraza', nl: 'Foto 5 — terras' } },
-  { slot: 'site-car-6', ph: { fr: 'Photo 6 — cave', en: 'Photo 6 — cellar', de: 'Foto 6 — Weinkeller', es: 'Foto 6 — bodega', nl: 'Foto 6 — kelder' } },
-  { slot: 'site-car-7', ph: { fr: 'Photo 7 — cuisine', en: 'Photo 7 — kitchen', de: 'Foto 7 — Küche', es: 'Foto 7 — cocina', nl: 'Foto 7 — keuken' } },
-  { slot: 'site-car-8', ph: { fr: 'Photo 8 — détail', en: 'Photo 8 — detail', de: 'Foto 8 — Detail', es: 'Foto 8 — detalle', nl: 'Foto 8 — detail' } }
 ];
 
 // ── Recrutement : postes ouverts (liste vide = candidatures spontanées uniquement) ──

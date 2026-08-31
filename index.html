@@ -571,6 +571,9 @@ class Component extends DCLogic {
     this._startLoader();
     this._onKeydown = (e) => { if (e.key === 'Escape' && this.state.lightboxSrc) this.closeLightbox(); };
     document.addEventListener('keydown', this._onKeydown);
+    // Menu et galerie arrivent en fetch() (site-data-content.js) ; une fois
+    // chargés, setState({}) force renderVals() à relire les données à jour.
+    if (window.MEANDRE_DATA_READY) window.MEANDRE_DATA_READY.then(() => this.setState({}));
   }
   componentDidUpdate() { this._setupReveal(); }
   componentWillUnmount() {
