@@ -76,6 +76,10 @@ collections:
         label: "Galerie du restaurant"
         file: "data/galerie.json"
         fields:
+          - label: "Bandeau (haut de la page Restaurant)"
+            name: "bandeau"
+            widget: "image"
+            required: false
           - label: "Photos"
             name: "photos"
             widget: "list"
@@ -93,3 +97,109 @@ collections:
                   - { label: "Allemand", name: "de", widget: "string" }
                   - { label: "Espagnol", name: "es", widget: "string" }
                   - { label: "Néerlandais", name: "nl", widget: "string" }
+
+  - name: "agenda"
+    label: "Agenda"
+    files:
+      - name: "agenda"
+        label: "Événements à venir"
+        file: "data/agenda.json"
+        fields:
+          - label: "Événements"
+            name: "evenements"
+            widget: "list"
+            summary: "{{fields.date}} — {{fields.titre.fr}}"
+            fields:
+              - label: "Date"
+                name: "date"
+                widget: "date"
+                date_format: "YYYY-MM-DD"
+                hint: "L'événement disparaît automatiquement de la page une fois la date passée."
+              - label: "Titre"
+                name: "titre"
+                widget: "object"
+                fields:
+                  - { label: "Français", name: "fr", widget: "string" }
+                  - { label: "Anglais", name: "en", widget: "string" }
+                  - { label: "Allemand", name: "de", widget: "string" }
+                  - { label: "Espagnol", name: "es", widget: "string" }
+                  - { label: "Néerlandais", name: "nl", widget: "string" }
+              - label: "Description"
+                name: "desc"
+                widget: "object"
+                fields:
+                  - { label: "Français", name: "fr", widget: "string" }
+                  - { label: "Anglais", name: "en", widget: "string" }
+                  - { label: "Allemand", name: "de", widget: "string" }
+                  - { label: "Espagnol", name: "es", widget: "string" }
+                  - { label: "Néerlandais", name: "nl", widget: "string" }
+              - label: "Photo"
+                name: "photo"
+                widget: "image"
+                required: false
+                hint: "Ex : affiche d'un concert. Facultatif — l'événement s'affiche sans photo si absente."
+
+  - name: "gites-photos"
+    label: "Photos des gîtes"
+    files:
+      - name: "gites"
+        label: "Photos des 4 chambres"
+        file: "data/gites.json"
+        fields:
+          - label: "Chambres (dans l'ordre : 1, 2, 3, 4)"
+            name: "chambres"
+            widget: "list"
+            summary: "{{fields.srcA}}"
+            fields:
+              - { label: "Photo principale", name: "srcA", widget: "image" }
+              - { label: "Photo détail 1", name: "srcB", widget: "image" }
+              - { label: "Photo détail 2", name: "srcC", widget: "image" }
+              - { label: "Photo détail 3", name: "srcD", widget: "image" }
+
+  - name: "spa-photos"
+    label: "Photos du spa"
+    files:
+      - name: "spa"
+        label: "Photos du spa"
+        file: "data/spa.json"
+        fields:
+          - label: "Bandeau (haut de la page Spa)"
+            name: "bandeau"
+            widget: "image"
+            required: false
+          - { label: "Photo principale", name: "srcA", widget: "image" }
+          - { label: "Photo détail 1", name: "srcB", widget: "image" }
+          - { label: "Photo détail 2", name: "srcC", widget: "image" }
+          - { label: "Photo détail 3", name: "srcD", widget: "image" }
+
+  - name: "photos-site"
+    label: "Photos du site"
+    files:
+      - name: "images"
+        label: "Photos uniques"
+        file: "data/images.json"
+        fields:
+          - label: "Photo d'accueil (grand fond, page d'accueil)"
+            name: "hero"
+            widget: "image"
+            required: false
+          - label: "Vignette Restaurant (page d'accueil)"
+            name: "accueilRestaurant"
+            widget: "image"
+            required: false
+          - label: "Vignette Gîtes (page d'accueil)"
+            name: "accueilGites"
+            widget: "image"
+            required: false
+          - label: "Vignette Spa (page d'accueil)"
+            name: "accueilSpa"
+            widget: "image"
+            required: false
+          - label: "Affiche À emporter"
+            name: "aEmporterAffiche"
+            widget: "image"
+            required: false
+          - label: "Photo page Contact"
+            name: "contact"
+            widget: "image"
+            required: false

@@ -105,7 +105,7 @@
 <sc-if value="{{ pageAccueil }}" hint-placeholder-val="{{ true }}">
 <main style="animation:var(--anim,fadeUp) .5s ease both">
   <div class="reveal hero-block">
-    <image-slot id="site-hero" class="cms-editable" data-cms-name="Hero — Accueil" shape="rect" placeholder="{{ t.phHero }}" onClick="{{ openLightbox }}" style="cursor:pointer"></image-slot>
+    <image-slot id="site-hero" src="{{ heroSrc }}" class="cms-editable" data-cms-name="Hero — Accueil" shape="rect" placeholder="{{ t.phHero }}" onClick="{{ openLightbox }}" style="cursor:pointer"></image-slot>
     <div class="hero-overlay" style="background:color-mix(in srgb,var(--bg,#0a0a08) {{ voilePct }},transparent)">
       <div class="hero-kicker">{{ heroSur }}</div>
       <div class="hero-title">{{ nomDomaine }}</div>
@@ -123,7 +123,7 @@
   </div>
   <div class="reveal home-cards">
     <div class="home-card" onClick="{{ goRestaurant }}" style-hover="background:var(--bg2,#0f0e0b)">
-      <div class="home-card-photo" onClick="{{ openLightbox }}"><image-slot id="site-acc-rest" class="cms-editable" data-cms-name="Accueil — Vignette Restaurant" shape="rect" placeholder="{{ t.phAccRest }}"></image-slot></div>
+      <div class="home-card-photo" onClick="{{ openLightbox }}"><image-slot id="site-acc-rest" src="{{ accRestSrc }}" class="cms-editable" data-cms-name="Accueil — Vignette Restaurant" shape="rect" placeholder="{{ t.phAccRest }}"></image-slot></div>
       <div class="home-card-body">
         <div class="card-title">{{ t.cardRestTitle }}</div>
         <div class="card-desc">{{ t.cardRestDesc }}</div>
@@ -131,7 +131,7 @@
       </div>
     </div>
     <div class="home-card" onClick="{{ goGites }}" style-hover="background:var(--bg2,#0f0e0b)">
-      <div class="home-card-photo" onClick="{{ openLightbox }}"><image-slot id="site-acc-gites" class="cms-editable" data-cms-name="Accueil — Vignette Gîtes" shape="rect" placeholder="{{ t.phAccGites }}"></image-slot></div>
+      <div class="home-card-photo" onClick="{{ openLightbox }}"><image-slot id="site-acc-gites" src="{{ accGitesSrc }}" class="cms-editable" data-cms-name="Accueil — Vignette Gîtes" shape="rect" placeholder="{{ t.phAccGites }}"></image-slot></div>
       <div class="home-card-body">
         <div class="card-title">{{ t.cardGitesTitle }}</div>
         <div class="card-desc">{{ t.cardGitesDesc }}</div>
@@ -139,7 +139,7 @@
       </div>
     </div>
     <div class="home-card" onClick="{{ goSpa }}" style-hover="background:var(--bg2,#0f0e0b)">
-      <div class="home-card-photo" onClick="{{ openLightbox }}"><image-slot id="site-acc-spa" class="cms-editable" data-cms-name="Accueil — Vignette Spa" shape="rect" placeholder="{{ t.phAccSpa }}"></image-slot></div>
+      <div class="home-card-photo" onClick="{{ openLightbox }}"><image-slot id="site-acc-spa" src="{{ accSpaSrc }}" class="cms-editable" data-cms-name="Accueil — Vignette Spa" shape="rect" placeholder="{{ t.phAccSpa }}"></image-slot></div>
       <div class="home-card-body">
         <div class="card-title">{{ t.cardSpaTitle }}</div>
         <div class="card-desc">{{ t.cardSpaDesc }}</div>
@@ -185,7 +185,7 @@
 <main style="animation:var(--anim,fadeUp) .5s ease both">
   <div class="reveal rest-hero-block">
     <div class="rest-hero-photo">
-      <image-slot id="site-rest-hero" class="cms-editable" data-cms-name="Restaurant — Bandeau" shape="rect" placeholder="{{ t.phRestHero }}" onClick="{{ openLightbox }}" style="cursor:pointer"></image-slot>
+      <image-slot id="site-rest-hero" src="{{ restBandeauSrc }}" class="cms-editable" data-cms-name="Restaurant — Bandeau" shape="rect" placeholder="{{ t.phRestHero }}" onClick="{{ openLightbox }}" style="cursor:pointer"></image-slot>
       <div class="rest-hero-overlay">
         <div class="page-title">{{ t.restTitle }}</div>
       </div>
@@ -283,7 +283,7 @@
       <div class="btn-solid is-compact" onClick="{{ goContact }}" style="margin-top:6px" style-hover="background:var(--orClair,#e0be6d)">{{ t.aemporterCta }}</div>
     </div>
     <div class="takeaway-hero-photo-col">
-      <div class="takeaway-hero-photo" onClick="{{ openLightbox }}"><image-slot id="site-aemporter-hero" src="./images/menus/a_emporter.PNG" class="cms-editable" data-cms-name="À emporter — Affiche de l'offre actuelle" fit="contain" shape="rect" placeholder="{{ t.phAEmporter }}"></image-slot></div>
+      <div class="takeaway-hero-photo" onClick="{{ openLightbox }}"><image-slot id="site-aemporter-hero" src="{{ aEmporterSrc }}" class="cms-editable" data-cms-name="À emporter — Affiche de l'offre actuelle" fit="contain" shape="rect" placeholder="{{ t.phAEmporter }}"></image-slot></div>
       <div class="takeaway-hero-caption">{{ t.aemporterCaption }}</div>
     </div>
   </div>
@@ -344,7 +344,7 @@
 <sc-if value="{{ pageSpa }}" hint-placeholder-val="{{ false }}">
 <main style="animation:var(--anim,fadeUp) .5s ease both">
   <div class="reveal spa-hero">
-    <image-slot id="site-spa-hero" class="cms-editable" data-cms-name="Spa — Bandeau" shape="rect" placeholder="{{ t.phSpaHero }}" onClick="{{ openLightbox }}" style="cursor:pointer"></image-slot>
+    <image-slot id="site-spa-hero" src="{{ spaBandeauSrc }}" class="cms-editable" data-cms-name="Spa — Bandeau" shape="rect" placeholder="{{ t.phSpaHero }}" onClick="{{ openLightbox }}" style="cursor:pointer"></image-slot>
     <div class="spa-hero-overlay">
       <div class="eyebrow-lg">{{ t.spaEyebrow }}</div>
       <div class="page-title">{{ t.spaTitle }}</div>
@@ -402,6 +402,9 @@
     </sc-if>
     <sc-for list="{{ agenda }}" as="ev" hint-placeholder-count="3">
       <div class="agenda-item">
+        <sc-if value="{{ ev.hasPhoto }}" hint-placeholder-val="{{ false }}">
+          <div class="agenda-photo" onClick="{{ openLightbox }}"><image-slot id="{{ ev.slot }}" src="{{ ev.photo }}" class="cms-editable" data-cms-name="{{ ev.titre }}" shape="rect" placeholder="{{ ev.titre }}"></image-slot></div>
+        </sc-if>
         <div class="agenda-date">{{ ev.dateLabel }}</div>
         <div class="title-24">{{ ev.titre }}</div>
         <div class="agenda-desc">{{ ev.desc }}</div>
@@ -425,7 +428,7 @@
       </div>
       <div class="contact-hours-text">{{ t.contactHours }}<br>{{ t.contactHours2 }}</div>
     </div>
-    <div class="contact-photo" onClick="{{ openLightbox }}"><image-slot id="site-contact" class="cms-editable" data-cms-name="Contact — Photo" shape="rect" placeholder="{{ t.phContact }}"></image-slot></div>
+    <div class="contact-photo" onClick="{{ openLightbox }}"><image-slot id="site-contact" src="{{ contactSrc }}" class="cms-editable" data-cms-name="Contact — Photo" shape="rect" placeholder="{{ t.phContact }}"></image-slot></div>
   </div>
   <div class="reveal form-block">
     <div class="divider-row"><div class="divider-flex"></div><div class="title-24-italic">{{ t.formSendBtn }}</div><div class="divider-flex"></div></div>
@@ -818,10 +821,28 @@ class Component extends DCLogic {
     return (MEANDRE_AGENDA || [])
       .filter(ev => ev.date >= today)
       .sort((a, b) => a.date.localeCompare(b.date))
-      .map(ev => ({
+      .map((ev, i) => ({
         dateLabel: new Date(ev.date + 'T00:00:00').toLocaleDateString(LOCALES[lang] || 'fr-FR', { day: 'numeric', month: 'long', year: 'numeric' }),
         titre: ev.titre[lang], desc: ev.desc[lang],
+        slot: 'site-agenda-' + i, photo: ev.photo || '', hasPhoto: !!ev.photo,
       }));
+  }
+
+  // ── Photos uniques du site (hero, vignettes accueil, bandeaux, affiche
+  //    à emporter, photo contact) — data/images.json, data/galerie.json,
+  //    data/spa.json, chargés en fetch() (site-data-content.js). ──
+  _photosVals() {
+    const img = window.MEANDRE_IMAGES || {};
+    return {
+      heroSrc: img.hero || '',
+      accRestSrc: img.accueilRestaurant || '',
+      accGitesSrc: img.accueilGites || '',
+      accSpaSrc: img.accueilSpa || '',
+      aEmporterSrc: img.aEmporterAffiche || '',
+      contactSrc: img.contact || '',
+      restBandeauSrc: window.MEANDRE_GALERIE_BANDEAU || '',
+      spaBandeauSrc: window.MEANDRE_SPA_BANDEAU || '',
+    };
   }
 
   // ── Bandeau photo défilant : photos du restaurant et vues des gîtes
@@ -868,6 +889,7 @@ class Component extends DCLogic {
       ...this._loaderVals(),
       ...this._carouselVals(content.pool),
       ...this._marqueeVals(),
+      ...this._photosVals(),
       afficherPrix: this.props.afficherPrix ?? true,
       telephone: this.props.telephone ?? '06 16 86 68 89',
       email: this.props.email ?? 'contact@lemeandre.com',

@@ -15,10 +15,14 @@ comme n'importe quel HTML.
 |---|---|---|
 | `index.html` | Structure des pages + logique (classe `Component`) | Changer la mise en page, le comportement (nav, carrousel, langue, écran de chargement) |
 | `site-data-ui.js` | Textes de l'interface FR/EN/DE/ES/NL (nav, titres, boutons, formulaires) | Changer un texte, ajouter/corriger une traduction |
-| `site-data-content.js` | Gîtes, spa, agenda, recrutement ; charge aussi `data/menu.json` et `data/galerie.json` en `fetch()` | Changer un gîte, ajouter une date à l'agenda |
+| `site-data-content.js` | Textes des gîtes, du spa, recrutement ; charge aussi tous les `data/*.json` en `fetch()` | Changer un texte de gîte/spa (photos et reste : voir `/admin`) |
 | `data/menu.json` | Carte du restaurant (catégories, plats, description, prix, photo) | Éditable via `/admin` (Decap CMS) — voir plus bas |
-| `data/galerie.json` | Galerie photo du restaurant (carrousel de la page Restaurant) | Éditable via `/admin` (Decap CMS) — voir plus bas |
-| `admin/` | Interface Decap CMS (`index.html` + `config.yml`) | Ne pas éditer à la main sauf pour changer les champs du formulaire |
+| `data/galerie.json` | Galerie + bandeau de la page Restaurant (carrousel) | Éditable via `/admin` |
+| `data/agenda.json` | Événements à venir (date, titre, description, photo) | Éditable via `/admin` |
+| `data/gites.json` | Photos des 4 chambres du gîte | Éditable via `/admin` |
+| `data/spa.json` | Bandeau + photos de la page Spa | Éditable via `/admin` |
+| `data/images.json` | Photos uniques du site (hero, vignettes accueil, affiche à emporter, photo contact) | Éditable via `/admin` |
+| `admin/` | Interface Decap CMS (`index.html` + `config.yml`, 6 collections) | Ne pas éditer à la main sauf pour changer les champs du formulaire |
 | `site-data-loader.js` | Courbes d'animation + tracé vectoriel du logo de l'écran de chargement | Changer le dessin ou le rythme de l'écran de chargement |
 | `site-styles.css` | Feuille de style : classes utilisées par le gabarit (nav, boutons, typographie, mise en page de chaque page) + animations (révélation au scroll, écran de chargement) | Changer une couleur/taille fixe, une media query, l'apparence d'une classe |
 | `support.js` | Moteur du gabarit `.dc.html` (fichier généré) | Ne pas éditer à la main |

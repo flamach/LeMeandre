@@ -1,0 +1,8 @@
+{
+  "chambres": [
+    { "srcA": "/images/gite/gite11.JPG", "srcB": "/images/gite/gite12.JPG", "srcC": "/images/gite/sbd13.JPG", "srcD": "/images/gite/sdb14.JPG" },
+    { "srcA": "/images/gite/gite21.JPG", "srcB": "/images/gite/gite22.JPG", "srcC": "/images/gite/sdb33.JPG", "srcD": "/images/gite/sdb34.JPG" },
+    { "srcA": "/images/gite/gite31.JPG", "srcB": "/images/gite/gite32.JPG", "srcC": "/images/gite/sdb33.JPG", "srcD": "/images/gite/sdb34.JPG" },
+    { "srcA": "/images/gite/gite41.JPG", "srcB": "/images/gite/gite42.JPG", "srcC": "/images/gite/sdb43.JPG", "srcD": "/images/gite/sdb44.JPG" }
+  ]
+}
