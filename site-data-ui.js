@@ -72,7 +72,7 @@ window.MEANDRE_UI = {
     sinceWord: 'DEPUIS',
     phHero: 'Photo du relais — vue extérieure, grand format', phAccRest: 'Plat signature', phAccGites: "Intérieur du gîte", phAccSpa: 'Spa',
     phRestHero: 'Salle du restaurant ou plat — bandeau large', phSpaHero: 'Spa — grand format immersif', phContact: "Photo — allée, portail ou plan d'accès",
-    phAEmporter: "Affiche de l'offre à emporter du moment — format portrait"
+    phAEmporter: "Affiche de l'offre à emporter du moment — format portrait", aemporterCaption: '(photo non contractuelle)'
   },
   en: {
     navRestaurant: 'RESTAURANT', navAEmporter: 'TAKEAWAY', navGites: 'THE COTTAGE', navSpa: 'SPA', navContact: 'CONTACT',
@@ -142,7 +142,7 @@ window.MEANDRE_UI = {
     sinceWord: 'SINCE',
     phHero: 'Inn photo — exterior view, large format', phAccRest: 'Signature dish', phAccGites: 'Cottage interior', phAccSpa: 'Spa',
     phRestHero: 'Dining room or dish — wide banner', phSpaHero: 'Spa — large immersive format', phContact: 'Photo — driveway, gate or access map',
-    phAEmporter: "Current takeaway offer poster — portrait format"
+    phAEmporter: "Current takeaway offer poster — portrait format", aemporterCaption: '(non-contractual photo)'
   },
   de: {
     navRestaurant: 'RESTAURANT', navAEmporter: 'ZUM MITNEHMEN', navGites: 'DAS GÎTE', navSpa: 'SPA', navContact: 'KONTAKT',
@@ -212,7 +212,7 @@ window.MEANDRE_UI = {
     sinceWord: 'SEIT',
     phHero: 'Foto des Gasthofs — Außenansicht, Großformat', phAccRest: 'Signature-Gericht', phAccGites: 'Inneres des Gîte', phAccSpa: 'Spa',
     phRestHero: 'Speisesaal oder Gericht — breites Banner', phSpaHero: 'Spa — großformatig, immersiv', phContact: 'Foto — Zufahrt, Tor oder Lageplan',
-    phAEmporter: 'Plakat des aktuellen Angebots zum Mitnehmen — Hochformat'
+    phAEmporter: 'Plakat des aktuellen Angebots zum Mitnehmen — Hochformat', aemporterCaption: '(unverbindliches Foto)'
   },
   es: {
     navRestaurant: 'RESTAURANTE', navAEmporter: 'PARA LLEVAR', navGites: 'LA CASA RURAL', navSpa: 'SPA', navContact: 'CONTACTO',
@@ -282,7 +282,7 @@ window.MEANDRE_UI = {
     sinceWord: 'DESDE',
     phHero: 'Foto de la posada — vista exterior, gran formato', phAccRest: 'Plato signature', phAccGites: 'Interior de la casa rural', phAccSpa: 'Spa',
     phRestHero: 'Sala del restaurante o plato — banner ancho', phSpaHero: 'Spa — gran formato inmersivo', phContact: 'Foto — camino de acceso, portón o plano de acceso',
-    phAEmporter: 'Cartel de la oferta actual para llevar — formato vertical'
+    phAEmporter: 'Cartel de la oferta actual para llevar — formato vertical', aemporterCaption: '(foto no contractual)'
   },
   nl: {
     navRestaurant: 'RESTAURANT', navAEmporter: 'AFHALEN', navGites: 'DE GÎTE', navSpa: 'SPA', navContact: 'CONTACT',
@@ -352,6 +352,6 @@ window.MEANDRE_UI = {
     sinceWord: 'SINDS',
     phHero: 'Foto van de herberg — buitenaanzicht, groot formaat', phAccRest: 'Signature gerecht', phAccGites: 'Interieur van de gîte', phAccSpa: 'Spa',
     phRestHero: 'Eetzaal of gerecht — brede banner', phSpaHero: 'Spa — groot immersief formaat', phContact: 'Foto — oprijlaan, poort of toegangsplan',
-    phAEmporter: 'Poster van het huidige afhaalaanbod — staand formaat'
+    phAEmporter: 'Poster van het huidige afhaalaanbod — staand formaat', aemporterCaption: '(niet-contractuele foto)'
   }
 };

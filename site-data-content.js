@@ -29,46 +29,49 @@ window.MEANDRE_GITES = [
     capacite: { fr: 'CHAMBRE INDÉPENDANTE', en: 'INDEPENDENT ROOM', de: 'UNABHÄNGIGES ZIMMER', es: 'HABITACIÓN INDEPENDIENTE', nl: 'ONAFHANKELIJKE KAMER' },
     desc: { fr: "L'une des quatre chambres du gîte, aménagée avec soin et réservable indépendamment des trois autres.", en: "One of the cottage's four rooms, carefully appointed and bookable independently of the other three.", de: 'Eines der vier Zimmer des Gîte, sorgfältig eingerichtet und unabhängig von den anderen drei buchbar.', es: 'Una de las cuatro habitaciones de la casa rural, cuidada con esmero y reservable de forma independiente de las otras tres.', nl: 'Een van de vier kamers van de gîte, zorgvuldig ingericht en onafhankelijk van de andere drie te boeken.' },
     equip: { fr: [], en: [], de: [], es: [], nl: [] },
-    slotA: 'site-g1a', slotB: 'site-g1b', slotC: 'site-g1c', slotD: 'site-g1d', srcA: './images/gite1_1.JPG',
+    slotA: 'site-g1a', slotB: 'site-g1b', slotC: 'site-g1c', slotD: 'site-g1d', srcA: './images/gite/gite11.JPG', srcB: './images/gite/gite12.JPG', srcC: './images/gite/sbd13.JPG', srcD: './images/gite/sdb14.JPG',
     phA: { fr: 'Chambre 1 — vue', en: 'Room 1 — view', de: 'Zimmer 1 — Ansicht', es: 'Habitación 1 — vista', nl: 'Kamer 1 — aanzicht' } },
   { num: '02',
     nom: { fr: 'Chambre 2', en: 'Room 2', de: 'Zimmer 2', es: 'Habitación 2', nl: 'Kamer 2' },
     capacite: { fr: 'CHAMBRE INDÉPENDANTE', en: 'INDEPENDENT ROOM', de: 'UNABHÄNGIGES ZIMMER', es: 'HABITACIÓN INDEPENDIENTE', nl: 'ONAFHANKELIJKE KAMER' },
     desc: { fr: "L'une des quatre chambres du gîte, aménagée avec soin et réservable indépendamment des trois autres.", en: "One of the cottage's four rooms, carefully appointed and bookable independently of the other three.", de: 'Eines der vier Zimmer des Gîte, sorgfältig eingerichtet und unabhängig von den anderen drei buchbar.', es: 'Una de las cuatro habitaciones de la casa rural, cuidada con esmero y reservable de forma independiente de las otras tres.', nl: 'Een van de vier kamers van de gîte, zorgvuldig ingericht en onafhankelijk van de andere drie te boeken.' },
     equip: { fr: [], en: [], de: [], es: [], nl: [] },
-    slotA: 'site-g2a', slotB: 'site-g2b', slotC: 'site-g2c', slotD: 'site-g2d', srcA: './images/gite2_1.JPG', srcB: './images/gite2_2.JPG',
+    slotA: 'site-g2a', slotB: 'site-g2b', slotC: 'site-g2c', slotD: 'site-g2d', srcA: './images/gite/gite21.JPG', srcB: './images/gite/gite22.JPG', srcC: './images/gite/sdb33.JPG', srcD: './images/gite/sdb34.JPG',
     phA: { fr: 'Chambre 2 — vue', en: 'Room 2 — view', de: 'Zimmer 2 — Ansicht', es: 'Habitación 2 — vista', nl: 'Kamer 2 — aanzicht' } },
   { num: '03',
     nom: { fr: 'Chambre 3', en: 'Room 3', de: 'Zimmer 3', es: 'Habitación 3', nl: 'Kamer 3' },
     capacite: { fr: 'CHAMBRE INDÉPENDANTE', en: 'INDEPENDENT ROOM', de: 'UNABHÄNGIGES ZIMMER', es: 'HABITACIÓN INDEPENDIENTE', nl: 'ONAFHANKELIJKE KAMER' },
     desc: { fr: "L'une des quatre chambres du gîte, aménagée avec soin et réservable indépendamment des trois autres.", en: "One of the cottage's four rooms, carefully appointed and bookable independently of the other three.", de: 'Eines der vier Zimmer des Gîte, sorgfältig eingerichtet und unabhängig von den anderen drei buchbar.', es: 'Una de las cuatro habitaciones de la casa rural, cuidada con esmero y reservable de forma independiente de las otras tres.', nl: 'Een van de vier kamers van de gîte, zorgvuldig ingericht en onafhankelijk van de andere drie te boeken.' },
     equip: { fr: [], en: [], de: [], es: [], nl: [] },
-    slotA: 'site-g3a', slotB: 'site-g3b', slotC: 'site-g3c', slotD: 'site-g3d', srcA: './images/gite3_1.JPG', srcB: './images/gite3_2.JPG',
+    slotA: 'site-g3a', slotB: 'site-g3b', slotC: 'site-g3c', slotD: 'site-g3d', srcA: './images/gite/gite31.JPG', srcB: './images/gite/gite32.JPG', srcC: './images/gite/sdb33.JPG', srcD: './images/gite/sdb34.JPG',
     phA: { fr: 'Chambre 3 — vue', en: 'Room 3 — view', de: 'Zimmer 3 — Ansicht', es: 'Habitación 3 — vista', nl: 'Kamer 3 — aanzicht' } },
   { num: '04',
     nom: { fr: 'Chambre 4', en: 'Room 4', de: 'Zimmer 4', es: 'Habitación 4', nl: 'Kamer 4' },
     capacite: { fr: 'CHAMBRE INDÉPENDANTE', en: 'INDEPENDENT ROOM', de: 'UNABHÄNGIGES ZIMMER', es: 'HABITACIÓN INDEPENDIENTE', nl: 'ONAFHANKELIJKE KAMER' },
     desc: { fr: "L'une des quatre chambres du gîte, aménagée avec soin et réservable indépendamment des trois autres.", en: "One of the cottage's four rooms, carefully appointed and bookable independently of the other three.", de: 'Eines der vier Zimmer des Gîte, sorgfältig eingerichtet und unabhängig von den anderen drei buchbar.', es: 'Una de las cuatro habitaciones de la casa rural, cuidada con esmero y reservable de forma independiente de las otras tres.', nl: 'Een van de vier kamers van de gîte, zorgvuldig ingericht en onafhankelijk van de andere drie te boeken.' },
     equip: { fr: [], en: [], de: [], es: [], nl: [] },
-    slotA: 'site-g4a', slotB: 'site-g4b', slotC: 'site-g4c', slotD: 'site-g4d', srcA: './images/gite4_1.JPG', srcB: './images/gite4_2.JPG',
+    slotA: 'site-g4a', slotB: 'site-g4b', slotC: 'site-g4c', slotD: 'site-g4d', srcA: './images/gite/gite41.JPG', srcB: './images/gite/gite42.JPG', srcC: './images/gite/sdb43.JPG', srcD: './images/gite/sdb44.JPG',
     phA: { fr: 'Chambre 4 — vue', en: 'Room 4 — view', de: 'Zimmer 4 — Ansicht', es: 'Habitación 4 — vista', nl: 'Kamer 4 — aanzicht' } }
 ];
 
-// ── Le spa ── (slot = clé de persistance de la photo déposée)
+// ── Le spa ── (slotA-D = clés de persistance des photos déposées dans chaque image-slot)
 window.MEANDRE_SPAS = [
   { nom: { fr: 'Le Spa', en: 'The Spa', de: 'Der Spa', es: 'El Spa', nl: 'De Spa' },
     sur: { fr: 'DÉTENTE · EAU CHAUDE', en: 'RELAXATION · WARM WATER', de: 'ENTSPANNUNG · WARMES WASSER', es: 'RELAJACIÓN · AGUA CALIENTE', nl: 'ONTSPANNING · WARM WATER' },
     desc: { fr: "Un spa privatif, pour se détendre en toute intimité. La lumière du jardin entre à travers les arbres ; on n'entend que l'eau.", en: 'A private spa, to unwind in complete privacy. Light from the garden filters through the trees; all you hear is the water.', de: 'Ein privater Spa, um sich in aller Ruhe zu entspannen. Das Licht des Gartens fällt durch die Bäume; man hört nur das Wasser.', es: 'Un spa privado, para relajarse con total intimidad. La luz del jardín se filtra entre los árboles; solo se oye el agua.', nl: 'Een privéspa, om in alle rust te ontspannen. Het licht van de tuin valt door de bomen; je hoort alleen het water.' },
     info: { fr: 'Eau chauffée', en: 'Heated water', de: 'Beheiztes Wasser', es: 'Agua climatizada', nl: 'Verwarmd water' },
-    slot: 'site-spa-piscine', src: '', ph: { fr: 'Le Spa', en: 'The Spa', de: 'Der Spa', es: 'El Spa', nl: 'De Spa' }, dir: 'ltr' }
+    slotA: 'site-spa-a', slotB: 'site-spa-b', slotC: 'site-spa-c', slotD: 'site-spa-d',
+    srcA: './images/spa/spa5.jpg', srcB: './images/spa/spa1.jpg', srcC: './images/spa/spa3.jpg', srcD: './images/spa/spa4.jpg',
+    phA: { fr: 'Le Spa — vue', en: 'The Spa — view', de: 'Der Spa — Ansicht', es: 'El Spa — vista', nl: 'De Spa — aanzicht' }, dir: 'ltr' }
 ];
 
 // ── Réservoir de légendes pour le carrousel photo du restaurant ──
-// (nbPhotosCarrousel, une prop éditable, détermine combien d'entre elles sont utilisées)
+// (le carrousel affiche automatiquement les entrées qui ont une photo (src) ;
+// nbPhotosCarrousel, une prop éditable, ne sert qu'à plafonner ce nombre)
 window.MEANDRE_POOL = [
-  { slot: 'site-car-1', src: './images/restaurant1.JPEG', ph: { fr: 'Photo 1 — plat', en: 'Photo 1 — dish', de: 'Foto 1 — Gericht', es: 'Foto 1 — plato', nl: 'Foto 1 — gerecht' } },
-  { slot: 'site-car-2', src: './images/restaurant2.JPEG', ph: { fr: 'Photo 2 — salle', en: 'Photo 2 — dining room', de: 'Foto 2 — Speisesaal', es: 'Foto 2 — sala', nl: 'Foto 2 — eetzaal' } },
-  { slot: 'site-car-3', ph: { fr: 'Photo 3 — ambiance', en: 'Photo 3 — atmosphere', de: 'Foto 3 — Atmosphäre', es: 'Foto 3 — ambiente', nl: 'Foto 3 — sfeer' } },
+  { slot: 'site-car-1', src: './images/restaurant/restaurant_1.JPG', ph: { fr: 'Photo 1 — plat', en: 'Photo 1 — dish', de: 'Foto 1 — Gericht', es: 'Foto 1 — plato', nl: 'Foto 1 — gerecht' } },
+  { slot: 'site-car-2', src: './images/restaurant/restaurant_2.JPG', ph: { fr: 'Photo 2 — salle', en: 'Photo 2 — dining room', de: 'Foto 2 — Speisesaal', es: 'Foto 2 — sala', nl: 'Foto 2 — eetzaal' } },
+  { slot: 'site-car-3', src: './images/restaurant/restaurant_4.JPG', ph: { fr: 'Photo 3 — ambiance', en: 'Photo 3 — atmosphere', de: 'Foto 3 — Atmosphäre', es: 'Foto 3 — ambiente', nl: 'Foto 3 — sfeer' } },
   { slot: 'site-car-4', ph: { fr: 'Photo 4 — dessert', en: 'Photo 4 — dessert', de: 'Foto 4 — Dessert', es: 'Foto 4 — postre', nl: 'Foto 4 — dessert' } },
   { slot: 'site-car-5', ph: { fr: 'Photo 5 — terrasse', en: 'Photo 5 — terrace', de: 'Foto 5 — Terrasse', es: 'Foto 5 — terraza', nl: 'Foto 5 — terras' } },
   { slot: 'site-car-6', ph: { fr: 'Photo 6 — cave', en: 'Photo 6 — cellar', de: 'Foto 6 — Weinkeller', es: 'Foto 6 — bodega', nl: 'Foto 6 — kelder' } },

@@ -55,13 +55,13 @@
         </g>
       </sc-for>
     </svg>
-    <img src="./images/logo_transparent_ST.png" alt="{{ nomDomaine }}" class="loader-fill" style="opacity:{{ loaderImgOpacity }}">
+    <img src="./images/logo/logo_transparent_ST.png" alt="{{ nomDomaine }}" class="loader-fill" style="opacity:{{ loaderImgOpacity }}">
   </div>
 </div>
 </sc-if>
 <!-- ============ NAVIGATION (fixe, partagée par toutes les pages) ============ -->
 <nav class="site-nav">
-  <div class="site-logo" onClick="{{ goAccueil }}"><img class="site-logo-img" src="./images/logo_transparent_ST.png" alt="{{ nomDomaine }}"><sc-if value="{{ logoMono }}" hint-placeholder-val="{{ false }}"><span class="gold">{{ monogramme }}</span></sc-if><sc-if value="{{ logoFull }}" hint-placeholder-val="{{ true }}"><span>{{ nomNavA }}</span><span class="gold">{{ nomNavB }}</span></sc-if></div>
+  <div class="site-logo" onClick="{{ goAccueil }}"><img class="site-logo-img" src="./images/logo/logo_transparent_ST.png" alt="{{ nomDomaine }}"><sc-if value="{{ logoMono }}" hint-placeholder-val="{{ false }}"><span class="gold">{{ monogramme }}</span></sc-if><sc-if value="{{ logoFull }}" hint-placeholder-val="{{ true }}"><span>{{ nomNavA }}</span><span class="gold">{{ nomNavB }}</span></sc-if></div>
   <div class="site-nav-burger" onClick="{{ toggleMenu }}" role="button" aria-label="Menu">
     <sc-if value="{{ menuOpen }}" hint-placeholder-val="{{ false }}">✕</sc-if>
     <sc-if value="{{ menuClosed }}" hint-placeholder-val="{{ true }}">☰</sc-if>
@@ -282,7 +282,10 @@
       <div class="prose-70-tight">{{ t.aemporterParagraph }}</div>
       <div class="btn-solid is-compact" onClick="{{ goContact }}" style="margin-top:6px" style-hover="background:var(--orClair,#e0be6d)">{{ t.aemporterCta }}</div>
     </div>
-    <div class="takeaway-hero-photo" onClick="{{ openLightbox }}"><image-slot id="site-aemporter-hero" src="./images/a_emporter.PNG" class="cms-editable" data-cms-name="À emporter — Affiche de l'offre actuelle" fit="contain" shape="rect" placeholder="{{ t.phAEmporter }}"></image-slot></div>
+    <div class="takeaway-hero-photo-col">
+      <div class="takeaway-hero-photo" onClick="{{ openLightbox }}"><image-slot id="site-aemporter-hero" src="./images/menus/a_emporter.PNG" class="cms-editable" data-cms-name="À emporter — Affiche de l'offre actuelle" fit="contain" shape="rect" placeholder="{{ t.phAEmporter }}"></image-slot></div>
+      <div class="takeaway-hero-caption">{{ t.aemporterCaption }}</div>
+    </div>
   </div>
   <div class="reveal info-cards">
     <div class="info-card">
@@ -351,7 +354,12 @@
   <div class="spa-list">
     <sc-for list="{{ spas }}" as="s" hint-placeholder-count="1">
       <div class="reveal spa-row" style="direction:{{ s.dir }}">
-        <div class="spa-photo" onClick="{{ openLightbox }}"><image-slot id="{{ s.slot }}" src="{{ s.src }}" class="cms-editable" data-cms-name="{{ s.nom }}" shape="rect" placeholder="{{ s.ph }}"></image-slot></div>
+        <div class="gite-photos">
+          <div class="gite-photo-main" onClick="{{ openLightbox }}"><image-slot id="{{ s.slotA }}" src="{{ s.srcA }}" class="cms-editable" data-cms-name="{{ s.phA }}" shape="rect" placeholder="{{ s.phA }}"></image-slot></div>
+          <div class="gite-photo-detail" onClick="{{ openLightbox }}"><image-slot id="{{ s.slotB }}" src="{{ s.srcB }}" class="cms-editable" data-cms-name="{{ s.nom }} — Détail 1" shape="rect" placeholder="{{ t.gitesDetail1 }}"></image-slot></div>
+          <div class="gite-photo-detail is-inner" onClick="{{ openLightbox }}"><image-slot id="{{ s.slotC }}" src="{{ s.srcC }}" class="cms-editable" data-cms-name="{{ s.nom }} — Détail 2" shape="rect" placeholder="{{ t.gitesDetail2 }}"></image-slot></div>
+          <div class="gite-photo-detail is-inner" onClick="{{ openLightbox }}"><image-slot id="{{ s.slotD }}" src="{{ s.srcD }}" class="cms-editable" data-cms-name="{{ s.nom }} — Détail 3" shape="rect" placeholder="{{ t.gitesDetail3 }}"></image-slot></div>
+        </div>
         <div class="spa-text">
           <div class="divider-row"><div class="divider-line is-short"></div><div class="eyebrow">{{ s.sur }}</div></div>
           <div class="title-38">{{ s.nom }}</div>
@@ -649,13 +657,15 @@ class Component extends DCLogic {
     }, 1000);
   }
   _carouselSlideCount() {
-    return Math.max(3, Math.min(8, Math.round(this.props.nbPhotosCarrousel ?? 5)));
+    const filled = MEANDRE_POOL.filter(x => x.src).length;
+    const cap = Math.max(1, Math.min(8, Math.round(this.props.nbPhotosCarrousel ?? 5)));
+    return Math.max(1, Math.min(filled, cap));
   }
   _carouselVals(pool) {
     const n = this._carouselSlideCount();
     const car = this.state.car % n;
     return {
-      carSlides: pool.slice(0, n),
+      carSlides: pool.filter(x => x.src).slice(0, n),
       carX: (-car * 100) + '%',
       carPrev: () => this.setState(s => ({ car: (s.car - 1 + n) % n })),
       carNext: () => this.setState(s => ({ car: (s.car + 1) % n })),
@@ -791,7 +801,7 @@ class Component extends DCLogic {
     const t = MEANDRE_UI[lang];
     const menu = MEANDRE_MENU.map(cat => ({ nom: cat.nom[lang], plats: cat.plats.map(pl => ({ nom: pl.nom[lang], desc: pl.desc[lang], prix: pl.prix })) }));
     const gites = MEANDRE_GITES.map(g => ({ num: g.num, nom: g.nom[lang], capacite: g.capacite[lang], desc: g.desc[lang], equip: g.equip[lang], slotA: g.slotA, slotB: g.slotB, slotC: g.slotC, slotD: g.slotD, srcA: g.srcA || '', srcB: g.srcB || '', srcC: g.srcC || '', srcD: g.srcD || '', phA: g.phA[lang] }));
-    const spas = MEANDRE_SPAS.map(s => ({ nom: s.nom[lang], sur: s.sur[lang], desc: s.desc[lang], info: s.info[lang], slot: s.slot, src: s.src || '', ph: s.ph[lang], dir: s.dir }));
+    const spas = MEANDRE_SPAS.map(s => ({ nom: s.nom[lang], sur: s.sur[lang], desc: s.desc[lang], info: s.info[lang], slotA: s.slotA, slotB: s.slotB, slotC: s.slotC, slotD: s.slotD, srcA: s.srcA || '', srcB: s.srcB || '', srcC: s.srcC || '', srcD: s.srcD || '', phA: s.phA[lang], dir: s.dir }));
     const pool = MEANDRE_POOL.map(x => ({ slot: x.slot, src: x.src || '', ph: x.ph[lang] }));
     const agenda = this._agendaVals(lang);
     return { t, menu, gites, spas, pool, agenda, agendaEmpty: agenda.length === 0 };
@@ -811,14 +821,13 @@ class Component extends DCLogic {
       }));
   }
 
-  // ── Bandeau photo défilant : toutes les photos déposées sur le site,
-  //    dans l'ordre restaurant → gîtes → spa, recalculé depuis les mêmes
-  //    données sources (donc toujours à jour si une photo est ajoutée). ──
+  // ── Bandeau photo défilant : photos du restaurant et vues des gîtes
+  //    (hors salles de bain), recalculé depuis les mêmes données sources
+  //    (donc toujours à jour si une photo est ajoutée). ──
   _marqueeVals() {
     const restaurantImgs = MEANDRE_POOL.map(x => x.src).filter(Boolean);
-    const gitesImgs = MEANDRE_GITES.flatMap(g => [g.srcA, g.srcB, g.srcC, g.srcD]).filter(Boolean);
-    const spaImgs = MEANDRE_SPAS.map(s => s.src).filter(Boolean);
-    const images = [...restaurantImgs, ...gitesImgs, ...spaImgs];
+    const gitesImgs = MEANDRE_GITES.flatMap(g => [g.srcA, g.srcB]).filter(Boolean);
+    const images = [...restaurantImgs, ...gitesImgs];
     // Doublé pour boucler sans coupure (l'animation CSS défile de 0% à -50%).
     const marqueeImages = [...images, ...images].map((src, i) => ({ src, key: i }));
     return { marqueeImages };

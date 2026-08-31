@@ -281,7 +281,9 @@ a{color:var(--or,#c9a24b);text-decoration:none}a:hover{color:var(--orClair,#e0be
 /* ── À emporter ── */
 .takeaway-hero{max-width:1100px;margin:0 auto;padding:80px 24px 60px;display:grid;grid-template-columns:repeat(auto-fit,minmax(min(320px,100%),1fr));gap:50px;align-items:center}
 .takeaway-hero-text{display:flex;flex-direction:column;gap:16px}
-.takeaway-hero-photo{width:clamp(240px,32vw,380px);height:clamp(360px,48vw,570px);margin:0 auto;cursor:pointer}
+.takeaway-hero-photo-col{width:clamp(240px,32vw,380px);margin:0 auto;display:flex;flex-direction:column;gap:8px;align-items:center}
+.takeaway-hero-photo{width:100%;height:clamp(360px,48vw,570px);cursor:pointer}
+.takeaway-hero-caption{font-size:11px;font-style:italic;color:color-mix(in srgb,var(--txt,#f2ede3) 50%,transparent)}
 
 /* ── Gîtes ── */
 .gites-list{max-width:1100px;margin:0 auto;padding:0 24px 60px;display:flex;flex-direction:column;gap:70px}
@@ -304,7 +306,6 @@ a{color:var(--or,#c9a24b);text-decoration:none}a:hover{color:var(--orClair,#e0be
 .spa-hero-overlay{position:absolute;inset:0;background:color-mix(in srgb,var(--bg,#0a0a08) 55%,transparent);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:16px;text-align:center;padding:0 24px;pointer-events:none}
 .spa-list{max-width:1100px;margin:0 auto;padding:90px 24px;display:flex;flex-direction:column;gap:80px}
 .spa-row{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(320px,100%),1fr));gap:50px;align-items:center}
-.spa-photo{height:clamp(260px,45vw,420px);direction:ltr;cursor:pointer}
 .spa-text{display:flex;flex-direction:column;gap:16px;direction:ltr}
 .practice-block{border-top:1px solid color-mix(in srgb,var(--or,#c9a24b) 28%,transparent);border-bottom:1px solid color-mix(in srgb,var(--or,#c9a24b) 28%,transparent);background:var(--bg2,#0f0e0b)}
 .practice-inner{max-width:860px;margin:0 auto;padding:70px 24px;display:flex;flex-direction:column;gap:28px;text-align:center;align-items:center}
