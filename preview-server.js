@@ -14,7 +14,7 @@ const fs = require('fs');
 const path = require('path');
 
 const PORT = 8080;
-const root = __dirname;
+const root = path.join(__dirname, 'public_html');
 const types = {
   '.html': 'text/html; charset=utf-8',
   '.js': 'text/javascript; charset=utf-8',

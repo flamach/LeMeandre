@@ -11,7 +11,13 @@ comme n'importe quel HTML.
 
 ## Fichiers du projet
 
-| Fichier | Rôle | À éditer pour... |
+Tous les fichiers servis par le site (ci-dessous) vivent dans `public_html/`
+— c'est ce dossier, et lui seul, qui est déployé sur Hostinger (voir
+"Déploiement" plus bas). Les scripts à la racine du dépôt
+(`preview-server.js`, `Apercu-du-site.bat`) sont des outils de dev, jamais
+déployés.
+
+| Fichier (dans `public_html/`) | Rôle | À éditer pour... |
 |---|---|---|
 | `index.html` | Structure des pages + logique (classe `Component`) | Changer la mise en page, le comportement (nav, carrousel, langue, écran de chargement) |
 | `site-data-ui.js` | Textes de l'interface FR/EN/DE/ES/NL (nav, titres, boutons, formulaires) | Changer un texte, ajouter/corriger une traduction |
@@ -149,13 +155,12 @@ au lieu de GitHub.
 
 - [ ] Rien à reconfigurer côté authentification CMS : le proxy Cloudflare
       Workers et la GitHub OAuth App sont indépendants de l'hébergeur.
-- [ ] Copier l'intégralité du dépôt (y compris `admin/`, `data/`,
-      `images/uploads/`) vers Hostinger — Hostinger n'ayant pas de
-      déploiement Git natif, prévoir soit un envoi manuel (FTP/gestionnaire
-      de fichiers) après chaque édition dans `/admin`, soit une GitHub
-      Action de déploiement FTP déclenchée sur chaque push vers `main`
-      (recommandé, pour que les modifications faites dans `/admin` arrivent
-      sur Hostinger sans intervention manuelle).
+- [x] Déploiement automatique en place : `.github/workflows/deploy-hostinger.yml`
+      envoie le contenu de `public_html/` (y compris `admin/`, `data/`,
+      `images/uploads/`) vers le `public_html/` de Hostinger par FTP à
+      chaque push sur `main` — les modifications faites dans `/admin`
+      arrivent donc sur Hostinger sans intervention manuelle. Secrets
+      requis côté GitHub : `FTP_HOST`, `FTP_USERNAME`, `FTP_PASSWORD`.
 - [ ] Vérifier que `data/menu.json` et `data/galerie.json` sont bien servis
       tels quels par Hostinger (fichiers statiques, aucun traitement serveur
       requis).
