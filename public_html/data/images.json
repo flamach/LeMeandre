@@ -1,8 +1,8 @@
 {
   "hero": "",
-  "accueilRestaurant": "",
-  "accueilGites": "",
-  "accueilSpa": "",
+  "accueilRestaurant": "/images/restaurant/restaurant_4.JPG",
+  "accueilGites": "/images/gite/gite42.JPG",
+  "accueilSpa": "/images/spa/spa2.jpg",
   "aEmporterAffiche": "/images/menus/a_emporter.PNG",
   "contact": ""
 }
