@@ -220,14 +220,20 @@
     </sc-for>
     <div class="menu-tiers">
       <div class="menu-tier">
+        <div class="menu-tier-title">{{ t.menuBistrotTitle }}</div>
+        <div class="menu-tier-sub">{{ t.menuBistrotSub }}</div>
+        <div class="menu-tier-sub">{{ t.menuBistrotNote }}</div>
+        <sc-if value="{{ afficherPrix }}" hint-placeholder-val="{{ true }}"><div class="menu-tier-price">19,50 €</div></sc-if>
+      </div>
+      <div class="menu-tier">
         <div class="menu-tier-title">{{ t.menuTerroirTitle }}</div>
         <div class="menu-tier-sub">{{ t.menuTerroirSub }}</div>
-        <sc-if value="{{ afficherPrix }}" hint-placeholder-val="{{ true }}"><div class="menu-tier-price">68 €</div></sc-if>
+        <sc-if value="{{ afficherPrix }}" hint-placeholder-val="{{ true }}"><div class="menu-tier-price">26 €</div></sc-if>
       </div>
       <div class="menu-tier">
         <div class="menu-tier-title">{{ t.menuEstreeTitle }}</div>
         <div class="menu-tier-sub">{{ t.menuEstreeSub }}</div>
-        <sc-if value="{{ afficherPrix }}" hint-placeholder-val="{{ true }}"><div class="menu-tier-price">95 €</div></sc-if>
+        <sc-if value="{{ afficherPrix }}" hint-placeholder-val="{{ true }}"><div class="menu-tier-price">39 €</div></sc-if>
       </div>
     </div>
   </div>
