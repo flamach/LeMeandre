@@ -15,10 +15,10 @@ jobs:
       - name: FTP deploy
         uses: SamKirkland/FTP-Deploy-Action@v4.3.5
         with:
-          server: ${{ secrets.FTP_SERVER }}
+          server: ${{ secrets.FTP_HOST }}
           username: ${{ secrets.FTP_USERNAME }}
           password: ${{ secrets.FTP_PASSWORD }}
-          server-dir: ${{ vars.SERVER_DIR || 'public_html/' }}
+          server-dir: /public_html/
           exclude: |
             **/.git*
             **/.git*/**
