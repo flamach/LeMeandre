@@ -11,8 +11,8 @@ backend:
 # déployé le proxy OAuth (voir README).
 local_backend: true
 
-media_folder: "images/uploads"
-public_folder: "/images/uploads"
+media_folder: "public_html/images"
+public_folder: "/images"
 
 collections:
   - name: "menu"
@@ -20,7 +20,7 @@ collections:
     files:
       - name: "menu"
         label: "Carte"
-        file: "data/menu.json"
+        file: "public_html/data/menu.json"
         fields:
           - label: "Catégories"
             name: "categories"
@@ -74,7 +74,7 @@ collections:
     files:
       - name: "galerie"
         label: "Galerie du restaurant"
-        file: "data/galerie.json"
+        file: "public_html/data/galerie.json"
         fields:
           - label: "Bandeau (haut de la page Restaurant)"
             name: "bandeau"
@@ -103,7 +103,7 @@ collections:
     files:
       - name: "agenda"
         label: "Événements à venir"
-        file: "data/agenda.json"
+        file: "public_html/data/agenda.json"
         fields:
           - label: "Événements"
             name: "evenements"
@@ -144,7 +144,7 @@ collections:
     files:
       - name: "gites"
         label: "Photos des 4 chambres"
-        file: "data/gites.json"
+        file: "public_html/data/gites.json"
         fields:
           - label: "Chambres (dans l'ordre : 1, 2, 3, 4)"
             name: "chambres"
@@ -161,7 +161,7 @@ collections:
     files:
       - name: "spa"
         label: "Photos du spa"
-        file: "data/spa.json"
+        file: "public_html/data/spa.json"
         fields:
           - label: "Bandeau (haut de la page Spa)"
             name: "bandeau"
@@ -177,7 +177,7 @@ collections:
     files:
       - name: "images"
         label: "Photos uniques"
-        file: "data/images.json"
+        file: "public_html/data/images.json"
         fields:
           - label: "Photo d'accueil (grand fond, page d'accueil)"
             name: "hero"
